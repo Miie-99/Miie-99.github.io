@@ -2,29 +2,223 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <title>同人女跳坑模拟器（Demo）</title>
+  <title>同人女跳坑模拟器</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- 顶部四大属性 -->
-  <div id="top-bar">
-    <div>CP热度：<span id="stat-cpHeat">60</span></div>
-    <div>自己热度：<span id="stat-selfHeat">10</span></div>
-    <div>厨力：<span id="stat-power">5</span></div>
-    <div>精神状况：<span id="stat-mental">80</span></div>
-  </div>
 
-  <!-- 事件区 -->
-  <main id="main">
-    <h1 id="event-title">事件标题</h1>
-    <p id="event-text">这里是事件描述。</p>
-    <div id="options"></div>
+  <!-- ===== 页面一：基础信息 ===== -->
+  <main id="start-page-1" class="main-wrap">
+    <header class="page-header">
+      <h1>同人女跳坑模拟器</h1>
+      <p>先写下你和你家产品，再决定你的主坑类型。</p>
+    </header>
+
+    <section class="block">
+      <h2>基础信息</h2>
+
+      <label class="field-label">
+        <span>玩家名字（可留空）</span>
+        <input id="input-playerName" type="text" placeholder="例如：小X、我…" />
+      </label>
+
+      <div class="block" style="padding:8px 10px; margin:10px -10px 8px;">
+        <strong style="font-size:13px;">主推 CP</strong>
+        <div class="row" style="margin-top:6px;">
+          <div class="col">
+            <label class="field-label">
+              <span>左位（攻）</span>
+              <input id="input-main-left" type="text" placeholder="例如：A" />
+            </label>
+          </div>
+          <div class="col" style="max-width:40px; align-self:center; text-align:center;">
+            ×
+          </div>
+          <div class="col">
+            <label class="field-label">
+              <span>右位（受）</span>
+              <input id="input-main-right" type="text" placeholder="例如：B" />
+            </label>
+          </div>
+        </div>
+        <div class="help">后续事件会自动将它们组合成 “A×B” 这样的文本。</div>
+      </div>
+
+      <div class="block" style="padding:8px 10px; margin:10px -10px 0;">
+        <strong style="font-size:13px;">对家 CP</strong>
+        <div class="row" style="margin-top:6px;">
+          <div class="col">
+            <label class="field-label">
+              <span>左位（攻）</span>
+              <input id="input-rival-left" type="text" placeholder="例如：B" />
+            </label>
+          </div>
+          <div class="col" style="max-width:40px; align-self:center; text-align:center;">
+            ×
+          </div>
+          <div class="col">
+            <label class="field-label">
+              <span>右位（受）</span>
+              <input id="input-rival-right" type="text" placeholder="例如：A" />
+            </label>
+          </div>
+        </div>
+        <div class="help">如果没有特别对家，也可以先随便填一对当假想对家。</div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>主坑类型</h2>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="fandomType" value="3d" checked />
+          <span>三次元（真人/爱豆/综艺/舞台）</span>
+        </label>
+        <label>
+          <input type="radio" name="fandomType" value="2d" />
+          <span>二次元（动画/漫画/游戏）</span>
+        </label>
+        <label>
+          <input type="radio" name="fandomType" value="2_5d" />
+          <span>二点五次元（舞台剧/声优企划等）</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="block">
+      <button id="btn-to-page2" class="btn">
+        下一步：抽取 / 选择身份
+      </button>
+      <div id="start-summary" class="help"></div>
+    </section>
   </main>
 
-  <!-- 底部提示 -->
-  <footer>
-    <small>这是一个测试Demo，只做一件事：展示一个事件 + 两个选项。</small>
-  </footer>
+  <!-- ===== 页面二：身份老虎机 ===== -->
+  <main id="start-page-2" class="main-wrap hidden">
+    <header class="page-header">
+      <h1>身份</h1>
+      <p>你在现实中的状态，会影响你在同人圈的玩法。</p>
+    </header>
+
+    <section class="block">
+      <h2>身份方式</h2>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="identityMode" value="random" checked />
+          <span>抽取身份（老虎机）</span>
+        </label>
+        <label>
+          <input type="radio" name="identityMode" value="manual" />
+          <span>自选身份</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="block" id="identity-random">
+      <h2>抽取身份</h2>
+      <div class="slot-wrap">
+        <div class="slot-cell">
+          <div id="slot-left" class="slot-text">？？？</div>
+        </div>
+        <div class="slot-cell">
+          <div id="slot-right" class="slot-text">？？？</div>
+        </div>
+      </div>
+      <button id="btn-spin" class="btn btn-secondary">
+        抽一抽
+      </button>
+      <div id="identity-result" class="help" style="margin-top:6px;">
+        当前身份：尚未抽取
+      </div>
+    </section>
+
+    <section class="block hidden" id="identity-manual">
+      <h2>自选身份</h2>
+      <label class="field-label">
+        <span>状态 / 特性</span>
+        <select id="select-left"></select>
+      </label>
+      <label class="field-label">
+        <span>职业 / 身份</span>
+        <select id="select-right"></select>
+      </label>
+      <div id="identity-manual-result" class="help" style="margin-top:6px;">
+        当前身份：尚未选择
+      </div>
+    </section>
+
+    <section class="block">
+      <button id="btn-back-page1" class="btn btn-secondary">返回修改基础信息</button>
+      <button id="btn-start-game" class="btn" style="margin-left:8px;">
+        开始游戏
+      </button>
+    </section>
+  </main>
+
+  <!-- ===== 游戏主界面 ===== -->
+  <main id="game-container" class="main-wrap hidden">
+    <header class="page-header">
+      <h1>游戏中</h1>
+      <p>每月 4 次行动，你会慢慢走向不同的同人人生。</p>
+    </header>
+
+    <section class="block">
+      <div class="block-header">
+        <div class="stat-item">
+          <div class="stat-label">CP 热度</div>
+          <div class="stat-value" id="stat-cpHeat">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">自己热度</div>
+          <div class="stat-value" id="stat-selfHeat">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">厨力</div>
+          <div class="stat-value" id="stat-power">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">精神状况</div>
+          <div class="stat-value" id="stat-mental">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">时间</div>
+          <div class="stat-value" id="stat-time">第 1 月 · 4/4</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="game-main">
+      <section id="event-panel" class="block">
+        <h2 id="event-title">事件标题</h2>
+        <p id="event-text">事件内容。</p>
+        <div id="event-options"></div>
+      </section>
+
+      <aside id="side-panel" class="block">
+        <h2>状态</h2>
+        <div class="side-stats-row">
+          <span>热情值</span><span id="stat-passion">0</span>
+        </div>
+        <div class="side-stats-row">
+          <span>体力</span><span id="stat-energy">0</span>
+        </div>
+        <div class="side-stats-row">
+          <span>经济</span><span id="stat-money">0</span>
+        </div>
+        <div class="side-stats-row">
+          <span>社交</span><span id="stat-social">0</span>
+        </div>
+        <hr />
+        <div class="help">
+          玩家：<span id="info-player"></span><br />
+          主推：<span id="info-maincp"></span><br />
+          对家：<span id="info-rivalcp"></span><br />
+          身份：<span id="info-identity"></span><br />
+          主坑：<span id="info-fandom"></span>
+        </div>
+      </aside>
+    </section>
+  </main>
 
   <script src="main.js"></script>
 </body>
