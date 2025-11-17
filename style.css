@@ -251,6 +251,25 @@ button {
   margin-bottom: 4px;
 }
 
+/* 属性变化提示 */
+.stat-diff {
+  margin-left: 4px;
+  font-size: 11px;
+  vertical-align: middle;
+  opacity: 1;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.stat-diff.pos {
+  color: #137333; /* 绿色 */
+}
+.stat-diff.neg {
+  color: #b31237; /* AO3 红 */
+}
+.stat-diff.fade {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
 /* 手机适配：主要靠上面 flex-wrap + 单列布局已经差不多 */
 
 @media (min-width: 900px) {
@@ -263,4 +282,25 @@ button {
   #side-panel {
     flex: 1;
   }
+}
+
+/* 属性变化提示（右侧或顶部数值旁的浮动数字）+
+   在显示后会做渐隐动画并移除 */
+.stat-diff {
+  margin-left: 6px;
+  font-size: 11px;
+  vertical-align: middle;
+  opacity: 1;
+  transition: opacity 0.9s ease, transform 0.9s ease;
+  display: inline-block;
+}
+.stat-diff.pos {
+  color: #137333; /* 绿色 */
+}
+.stat-diff.neg {
+  color: #b31237; /* AO3 红 */
+}
+.stat-diff.fade {
+  opacity: 0;
+  transform: translateY(-6px);
 }

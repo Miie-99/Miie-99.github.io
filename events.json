@@ -1,0 +1,160 @@
+{
+  "random": [
+    {
+      "id": "e1",
+      "title": "刷主坑tag",
+      "text": "你打开主坑的tag，看到有人在夸【MAIN_CP】，也有人在暗戳戳吹【RIVAL_CP】。",
+      "options": [
+        {
+          "label": "只看主推相关，给喜欢的作者点几个小红心。",
+          "effects": { "cpHeat": 3, "passion": 2, "mental": 1 }
+        },
+        {
+          "label": "顺便点开对家tag，看他们到底在吵什么。",
+          "effects": { "cpHeat": 2, "selfHeat": 1, "passion": 3, "mental": -2, "social": 1 }
+        }
+      ]
+    },
+    {
+      "id": "e2",
+      "title": "现实来敲门",
+      "text": "现实有点忙：工作/课业突然堆了上来。你本来打算今晚补完最新一话。",
+      "options": [
+        {
+          "label": "先把现实任务清一清，今晚不追更。",
+          "effects": { "energy": -5, "money": 5, "passion": -2, "mental": 2 }
+        },
+        {
+          "label": "硬着头皮熬夜追更，再说现实的事。",
+          "effects": { "energy": -15, "passion": 4, "mental": -3 }
+        }
+      ]
+    }
+  ],
+
+  "browse": [
+    {
+      "id": "browse_1",
+      "title": "树洞岛长文",
+      "label": "刷树洞岛上最新长文",
+      "text": "你在树洞岛上刷到一篇长文，熬夜看完后心里满是【MAIN_CP】的画面。",
+      "effects": { "cpHeat": 3, "passion": 3, "mental": -1, "energy": -2 }
+    },
+    {
+      "id": "browse_2",
+      "title": "围栏网吃瓜",
+      "label": "刷围栏网看瓜",
+      "text": "围栏网上的瓜又多了一条，你看得又累又满足。",
+      "effects": { "selfHeat": 1, "social": 2, "mental": -3, "energy": -1 }
+    },
+    {
+      "id": "browse_3",
+      "title": "A-3 文库长篇",
+      "label": "看 A-3 文库的长篇",
+      "text": "你打开文库看完一篇长篇，脑袋里全是人物的日常设定。",
+      "effects": { "cpHeat": 2, "passion": 2, "power": 1, "mental": -2, "energy": -2 }
+    }
+  ],
+
+  "create": [
+    {
+      "id": "create_1",
+      "title": "写短打",
+      "label": "写一篇 3000 字短打",
+      "text": "你写完一篇短打，稍微有点疲惫但成就感满满。",
+      "effects": { "power": 2, "selfHeat": 2, "passion": 2, "energy": -5 }
+    },
+    {
+      "id": "create_2",
+      "title": "上色插图",
+      "label": "画一张上色插图",
+      "text": "你画了一整天，终于完成一张插图。",
+      "effects": { "power": 3, "selfHeat": 3, "passion": 2, "energy": -8, "money": -2 }
+    }
+  ],
+
+  "follow": [
+    {
+      "id": "follow_1",
+      "title": "追最新一话",
+      "label": "追最新一话",
+      "text": "最新一话太甜了，让你精神小幅回暖。",
+      "effects": { "cpHeat": 3, "passion": 3, "energy": -2, "mental": 1 }
+    },
+    {
+      "id": "follow_2",
+      "title": "看现场/演出",
+      "label": "看现场/演出",
+      "text": "现场气氛炸裂，你的热情被点燃。",
+      "effects": { "cpHeat": 4, "passion": 4, "energy": -4, "money": -10 }
+    }
+  ],
+
+  "social": [
+    {
+      "id": "social_1",
+      "title": "安利帖",
+      "label": "在圈内安利/发帖",
+      "text": "你写了一段热情的安利文，收获了几条回应。",
+      "effects": { "social": 3, "selfHeat": 1, "passion": 1 }
+    },
+    {
+      "id": "social_2",
+      "title": "线下聚会",
+      "label": "线下约饭/应援",
+      "text": "和同好线下聚会，很开心但消耗不少体力与金钱。",
+      "effects": { "social": 5, "passion": 3, "energy": -5, "money": -8 }
+    }
+  ],
+
+  "study": [
+    {
+      "id": "study_1",
+      "title": "上课提升",
+      "label": "上写作/美术/剪辑课",
+      "text": "上完课后你的技能提升了一点，感觉更有把握了。",
+      "effects": { "power": 2, "energy": -4, "money": -5, "mental": 1 }
+    },
+    {
+      "id": "study_2",
+      "title": "自学一小时",
+      "label": "自学/练习一小时",
+      "text": "自学一小时，虽然累但收获颇丰。",
+      "effects": { "power": 1, "energy": -2, "passion": 1 }
+    }
+  ],
+
+  "real": [
+    {
+      "id": "real_1",
+      "title": "处理现实事务",
+      "label": "处理现实工作/学习",
+      "text": "你处理完现实事务，短期内同人生活被压缩了。",
+      "effects": { "energy": -5, "money": 5, "passion": -2 }
+    },
+    {
+      "id": "real_rest_1",
+      "title": "好好休息",
+      "label": "休息放松",
+      "text": "好好休息后精神状态有所恢复。",
+      "effects": { "mental": 3, "energy": 5, "passion": -1 }
+    }
+  ],
+
+  "explore": [
+    {
+      "id": "explore_1",
+      "title": "扫新番",
+      "label": "扫一眼新番/新作",
+      "text": "新鲜感来临，但对主坑的关注略有下降。",
+      "effects": { "cpHeat": -1, "passion": -1, "mental": 1 }
+    },
+    {
+      "id": "explore_2",
+      "title": "朋友安利",
+      "label": "被朋友安利新CP",
+      "text": "你被新CP吸引，短期分散了部分注意力。",
+      "effects": { "cpHeat": -2, "passion": -2, "social": 1 }
+    }
+  ]
+}

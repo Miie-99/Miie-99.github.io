@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>同人女跳坑模拟器</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -192,6 +193,10 @@
         <h2 id="event-title">事件标题</h2>
         <p id="event-text">事件内容。</p>
         <div id="event-options"></div>
+        <hr />
+        <div id="event-log" class="help" style="max-height:160px; overflow-y:auto; margin-top:8px;">
+          <!-- 历史记录：每条格式为 “第 X 月 · 行动 Y：...｜属性变化” -->
+        </div>
       </section>
 
       <aside id="side-panel" class="block">
@@ -219,6 +224,21 @@
       </aside>
     </section>
   </main>
+
+  <!-- 底部行动区（整个游戏页面下方） -->
+  <section id="action-bar" class="main-wrap hidden">
+    <section class="block">
+      <div class="row" id="action-buttons">
+        <button class="btn btn-secondary action-btn" data-action="browse">刷平台冲浪</button>
+        <button class="btn btn-secondary action-btn" data-action="create">创作</button>
+        <button class="btn btn-secondary action-btn" data-action="follow">追更</button>
+        <button class="btn btn-secondary action-btn" data-action="social">社交互动</button>
+        <button class="btn btn-secondary action-btn" data-action="study">学习精进</button>
+        <button class="btn btn-secondary action-btn" data-action="real">现实生活</button>
+        <button class="btn btn-secondary action-btn" data-action="explore">探索新坑</button>
+      </div>
+    </section>
+  </section>
 
   <script src="main.js"></script>
 </body>
