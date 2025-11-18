@@ -8,12 +8,16 @@
                 { txt: "家里有矿的", buff: { money: 5000 }, desc: "钞能力者，开局资金充足" },
                 { txt: "玻璃心的", buff: { san: -20, passion: 20 }, desc: "容易破防，但爱得深沉" },
                 { txt: "手速惊人的", buff: { tech: 20 }, desc: "产粮效率极高" },
-                { txt: "住在A站的", buff: { passion: 30 }, desc: "阅片无数，审美极高" }
+                { txt: "住在X站的", buff: { passion: 30 }, desc: "阅片无数，审美极高" }
+                { txt: "社恐严重的", buff: { passion: -20 }, desc: "阅片无数，审美极高" }
             ],
             roles: [
                 { txt: "社畜", base: { money: 3000, time: 2 } }, // time代表每回合行动力消耗倍率(未实装，简化为体力)
                 { txt: "学生", base: { money: 500, time: 4 } },
                 { txt: "家里蹲", base: { money: 100, time: 6 } },
+                { txt: "农村入", base: { money: 100, time: 6 } },
+                { txt: "私人", base: { money: 0, time: 6 } },
+                { txt: "猫奴", base: { money: 1800, time: 5 } },
                 { txt: "自由职业", base: { money: 1500, time: 5 } }
             ],
             // --- 核心：分离的事件池 ---
