@@ -109,8 +109,8 @@
             getRandomEvent(poolKey) {
                 const pool = DATA.events[poolKey];
                 if (!pool) return null;
-                // 40% 概率触发事件，否则是平淡的日常
-                if (Math.random() > 0.6) {
+                // 75% 概率触发事件，否则是平淡的日常
+                if (Math.random() > 0.7.5) {
                     const evt = pool[Math.floor(Math.random() * pool.length)];
                     // 文本替换
                     const processedEvt = JSON.parse(JSON.stringify(evt)); // deep copy
@@ -237,3 +237,4 @@
                 return Titles.find(t => t.check(State.stats));
             }
         };
+
