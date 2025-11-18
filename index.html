@@ -9,6 +9,15 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap');
         body { font-family: 'Noto Sans SC', sans-serif; background-color: #f3f4f6; overflow: hidden; }
+        /* 强制基础可见性，避免 Tailwind 加载延迟导致的 FOUC */
+        .hidden { display: none !important; }
+        .flex { display: flex !important; }
+        .page-section { display: none !important; }
+        .page-section.active-screen { display: flex !important; flex-direction: column; height: 100vh; width: 100%; }
+        /* 滚动文字视觉效果 */
+        .scrolling { filter: blur(0.6px); opacity: 0.9; }
+        .animate-bounce-once { animation: bounceOnce 0.45s cubic-bezier(.2,.8,.2,1); }
+        @keyframes bounceOnce { 0% { transform: translateY(0); } 60% { transform: translateY(-6px); } 100% { transform: translateY(0); } }
         
         /* --- UI 组件样式 --- */
         .uma-header { background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%); }
@@ -27,6 +36,14 @@
         /* 模态框动画 */
         .modal-enter { animation: fadeIn 0.2s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        /* 确保模态可交互 */
+        #modal-event, #modal-status { pointer-events: auto; }
+        /* 强制隐藏以防 Tailwind 延迟 */
+        .hidden { display: none !important; }
+        /* 确保遮罩层层级最高 */
+        #modal-status, #modal-event, #screen-end { z-index: 50 !important; }
+        /* 解决 Safari/移动端 100vh 兼容问题 */
+        html, body { height: 100%; overflow: hidden; }
     </style>
 </head>
 <body class="h-screen flex flex-col text-gray-800">
@@ -36,9 +53,9 @@
     <!-- ========================================== -->
 
     <!-- SCREEN 1: Setup -->
-    <div id="screen-setup" class="flex-1 flex flex-col items-center justify-center p-4 w-full max-w-md mx-auto">
+    <div id="screen-setup" class="page-section active-screen flex-1 flex flex-col items-center justify-center p-4 w-full max-w-md mx-auto">
         <div class="bg-white w-full p-6 rounded-xl shadow-xl space-y-4">
-            <h1 class="text-2xl font-bold text-center text-blue-600">同人女模拟器 <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Re:Dive</span></h1>
+            <h1 class="text-2xl font-bold text-center text-blue-600">同人女跳坑模拟器 <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">赛马娘版</span></h1>
             
             <div class="grid grid-cols-2 gap-4">
                 <div><label class="text-xs font-bold text-gray-500">本命CP (我推)</label><input type="text" id="inp-cp" value="AB" class="w-full border rounded p-2 mt-1"></div>
@@ -61,7 +78,7 @@
     </div>
 
     <!-- SCREEN 2: Main Game -->
-    <div id="screen-game" class="hidden flex-col h-full w-full max-w-md mx-auto bg-gray-50 relative">
+    <div id="screen-game" class="page-section flex-col h-full w-full max-w-md mx-auto bg-gray-50 relative">
         <!-- Header Stats -->
         <div class="uma-header p-3 text-white shadow-md z-10">
             <div class="flex justify-between items-end mb-2">
@@ -139,7 +156,7 @@
     </div>
 
     <!-- SCREEN 3: Ending -->
-    <div id="screen-end" class="hidden fixed inset-0 bg-gray-900 z-50 overflow-y-auto flex flex-col items-center py-10">
+    <div id="screen-end" class="page-section fixed inset-0 bg-gray-900 z-50 overflow-y-auto flex flex-col items-center py-10">
         <div class="bg-gray-800 text-white p-6 rounded-xl max-w-md w-[90%] border border-gray-600">
             <h2 class="text-2xl font-bold text-center text-yellow-400 mb-2" id="end-title">结局标题</h2>
             <p class="text-center text-gray-400 text-sm italic mb-6" id="end-desc">结局描述</p>
@@ -163,7 +180,21 @@
             <h3 id="evt-title" class="font-bold text-lg text-gray-800 mb-2">事件标题</h3>
             <p id="evt-text" class="text-sm text-gray-600 mb-4 leading-relaxed">事件内容...</p>
             <div id="evt-effects" class="text-xs bg-gray-50 p-2 rounded mb-4 space-y-1 text-gray-500"></div>
-            <button onclick="UI.closeModal()" class="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700">确定</button>
+            <!-- 连续事件按钮容器（UI 会动态填充） -->
+            <div id="evt-actions" class="mb-2"></div>
+            <button data-default="evt-ok" onclick="UI.closeModal()" class="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700">确定</button>
+        </div>
+    </div>
+
+    <!-- Status Modal (雷达图) -->
+    <div id="modal-status" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" style="display: none;">
+        <div class="bg-white rounded-lg max-w-md w-full p-5 shadow-2xl modal-enter">
+            <h3 class="font-bold text-lg text-gray-800 mb-2">当前属性倾向</h3>
+            <div class="flex justify-center mb-4">
+                <svg id="status-radar" width="300" height="300" viewBox="0 0 200 200"></svg>
+            </div>
+            <div id="status-comment" class="text-sm text-gray-600 mb-4"></div>
+            <button onclick="UI.closeStatusModal()" class="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700">关闭</button>
         </div>
     </div>
 
@@ -176,6 +207,32 @@
     
     <!-- Initialize Lucide Icons -->
     <script>lucide.createIcons();</script>
+
+    <!-- 防御性初始化：确保首次加载时没有模态遮挡，并保证 setup 屏为激活屏 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                // 强制隐藏模态（以防被意外打开）
+                const me = document.getElementById('modal-event');
+                const ms = document.getElementById('modal-status');
+                if (me) me.classList.add('hidden');
+                if (ms) ms.classList.add('hidden');
+
+                // 确保只有 setup 为 active-screen
+                document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active-screen'));
+                const setup = document.getElementById('screen-setup');
+                if (setup) setup.classList.add('active-screen');
+
+                // 兼容性：确保关闭按钮有事件
+                const statusClose = document.querySelector('#modal-status button');
+                if (statusClose) {
+                    statusClose.addEventListener('click', function(){ document.getElementById('modal-status').classList.add('hidden'); });
+                }
+            } catch (e) {
+                console.warn('Init guard failed', e);
+            }
+        });
+    </script>
 
 </body>
 </html>

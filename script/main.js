@@ -7,33 +7,50 @@
                 const btn = document.getElementById('btn-spin');
                 const pEl = document.getElementById('slot-prefix');
                 const rEl = document.getElementById('slot-role');
-                
-                btn.disabled = true;
-                pEl.classList.add('scrolling');
-                rEl.classList.add('scrolling');
 
-                // 动画
+                btn.disabled = true;
+
+                // 选择最终结果
+                const finalPf = DATA.prefixes[Math.floor(Math.random() * DATA.prefixes.length)];
+                const finalRl = DATA.roles[Math.floor(Math.random() * DATA.roles.length)];
+
+                State.identity = { prefix: finalPf, role: finalRl };
+
+                // 递归滚动实现阻尼效果
+                const runSlot = (el, dataArray, finalItem, delay) => {
+                    el.classList.add('scrolling');
+                    // 随机显示过程项
+                    const item = dataArray[Math.floor(Math.random() * dataArray.length)];
+                    el.innerText = item.txt || item;
+
+                    if (delay > 300) {
+                        // 停止并显示最终
+                        el.classList.remove('scrolling');
+                        el.innerText = finalItem.txt || finalItem;
+                        el.classList.add('animate-bounce-once');
+                        setTimeout(() => el.classList.remove('animate-bounce-once'), 600);
+                        return;
+                    }
+
+                    setTimeout(() => runSlot(el, dataArray, finalItem, delay * 1.12), delay);
+                };
+
+                // 启动两个滚轮，稍微错开时间
+                runSlot(pEl, DATA.prefixes, finalPf, 40);
+                setTimeout(() => runSlot(rEl, DATA.roles, finalRl, 40), 220);
+
+                // 当两个滚轮基本停下时显示描述与开始按钮
                 setTimeout(() => {
-                    pEl.classList.remove('scrolling');
-                    rEl.classList.remove('scrolling');
-                    
-                    const pf = DATA.prefixes[Math.floor(Math.random() * DATA.prefixes.length)];
-                    const rl = DATA.roles[Math.floor(Math.random() * DATA.roles.length)];
-                    
-                    pEl.innerText = pf.txt;
-                    rEl.innerText = rl.txt;
-                    
-                    State.identity = { prefix: pf, role: rl };
-                    
                     const descEl = document.getElementById('identity-desc');
-                    descEl.innerHTML = `<strong>效果:</strong> ${pf.desc} <br> <strong>初始:</strong> 金钱${rl.base.money}`;
+                    descEl.innerHTML = `<strong>效果:</strong> ${finalPf.desc} <br> <strong>初始:</strong> 金钱${finalRl.base.money}`;
                     descEl.classList.remove('hidden');
 
                     const startBtn = document.getElementById('btn-start');
                     startBtn.disabled = false;
                     startBtn.classList.remove('bg-gray-400');
                     startBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
-                }, 1000);
+                    btn.disabled = false;
+                }, 1500);
             },
 
             start() {
@@ -55,9 +72,7 @@
                     State.modify(State.identity.prefix.buff);
                 }
 
-                document.getElementById('screen-setup').classList.add('hidden');
-                document.getElementById('screen-game').classList.remove('hidden');
-                document.getElementById('screen-game').classList.add('flex');
+                UI.switchScreen('screen-game');
 
                 UI.render();
                 UI.log(`你转生成为了【${State.identity.prefix.txt}${State.identity.role.txt}】`, "blue");
