@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap');
+body { font-family: 'Noto Sans SC', sans-serif; background-color: #f3f4f6; overflow: hidden; }
+
+/* --- UI 组件样式 --- */
+.uma-header { background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%); }
+.stat-bar-bg { background-color: #e5e7eb; border-radius: 9999px; height: 8px; overflow: hidden; }
+.stat-bar-fill { height: 100%; border-radius: 9999px; transition: width 0.5s ease-in-out; }
+
+/* 老虎机样式 */
+.slot-window {
+    height: 50px; overflow: hidden; background: #f0f9ff;
+    border: 2px solid #3b82f6; border-radius: 8px;
+    display: flex; justify-content: center; align-items: center;
+    font-weight: bold; color: #1e40af;
+}
+.scrolling { animation: scrollText 0.1s infinite linear; }
+
+/* 模态框动画 */
+.modal-enter { animation: fadeIn 0.2s ease-out forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+/* 兼容性小调整 */
+.text-outline { text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff; }
+.slot-window { font-size: 1rem; }

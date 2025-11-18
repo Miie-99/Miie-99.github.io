@@ -3,707 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>同人女跳坑模拟器</title>
+    <title>同人女跳坑模拟器 (Modular Refactor)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap');
-        
-        body {
-            font-family: 'Noto Sans SC', sans-serif;
-            background-color: #f3f4f6;
-            overflow-x: hidden;
-        }
-
-        /* UI配色 */
-        .uma-header {
-            background: linear-gradient(135deg, #6ee7b7 0%, #3b82f6 100%);
-        }
-        
-        .uma-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        .stat-bar-bg {
-            background-color: #e5e7eb;
-            border-radius: 9999px;
-            height: 10px;
-            overflow: hidden;
-        }
-        
-        .stat-bar-fill {
-            height: 100%;
-            border-radius: 9999px;
-            transition: width 0.5s ease-in-out;
-        }
-
-        /* 老虎机动画 */
-        .slot-machine-window {
-            height: 60px;
-            overflow: hidden;
-            background: #f0f9ff;
-            border: 3px solid #3b82f6;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #1e40af;
-        }
-
-        .scrolling {
-            animation: scrollText 0.1s infinite linear;
-        }
-
-        .dialog-box {
-            background: rgba(255, 255, 255, 0.95);
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 16px;
-            min-height: 100px;
-        }
-
-        .event-modal {
-            background: rgba(0, 0, 0, 0.5);
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 50;
-        }
-
-        /* 蜘蛛网图 SVG */
-        .radar-chart {
-            width: 100%;
-            height: auto;
-            max-width: 300px;
-            margin: 0 auto;
-        }
-        
-        .text-outline {
-            text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
-        }
-        
-        .platform-tag {
-            font-size: 0.75rem;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-right: 4px;
-            display: inline-block;
-        }
-        .platform-wb { background: #fca5a5; color: #7f1d1d; }
-        .platform-lof { background: #86efac; color: #14532d; }
-        .platform-ao3 { background: #ef4444; color: white; }
-        .platform-x { background: #3b82f6; color: white; }
-        .platform-gp { background: #fcd34d; color: #78350f; } /* 狗屁/小群 */
-
-    </style>
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body class="text-gray-800 h-screen flex flex-col">
+<body class="h-screen flex flex-col text-gray-800">
 
-    <!-- 1. 开始页面 / 设定页面 -->
-    <div id="setup-screen" class="flex-1 flex flex-col items-center justify-center p-4 max-w-md mx-auto w-full">
-        <h1 class="text-3xl font-bold mb-6 text-center text-blue-600">同人女跳坑模拟器<br><span class="text-sm text-gray-500">爬墙 Edition</span></h1>
-        
-        <div class="w-full space-y-4 bg-white p-6 rounded-xl shadow-lg">
-            <div>
-                <label class="block text-sm font-medium text-gray-700">我的CP (本命)</label>
-                <input type="text" id="cp-name" value="AB" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="例如: 伏八">
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700">对家/逆家 (死敌)</label>
-                <input type="text" id="rival-name" value="BA" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="例如: 八伏">
+    <!-- ========================================== -->
+    <!--               VIEW LAYER (HTML)            -->
+    <!-- ========================================== -->
+
+    <!-- SCREEN 1: Setup -->
+    <div id="screen-setup" class="flex-1 flex flex-col items-center justify-center p-4 w-full max-w-md mx-auto">
+        <div class="bg-white w-full p-6 rounded-xl shadow-xl space-y-4">
+            <h1 class="text-2xl font-bold text-center text-blue-600">同人女模拟器 <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Re:Dive</span></h1>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div><label class="text-xs font-bold text-gray-500">本命CP (我推)</label><input type="text" id="inp-cp" value="AB" class="w-full border rounded p-2 mt-1"></div>
+                <div><label class="text-xs font-bold text-gray-500">对家CP (雷点)</label><input type="text" id="inp-rival" value="BA" class="w-full border rounded p-2 mt-1"></div>
             </div>
 
-            <div class="mt-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">抽取转生身份</label>
-                <div class="flex gap-2 mb-2">
-                    <div id="slot-prefix" class="slot-machine-window w-1/2">???</div>
-                    <div id="slot-role" class="slot-machine-window w-1/2">???</div>
+            <div class="border-t pt-4">
+                <p class="text-xs font-bold text-gray-500 mb-2">身份抽卡</p>
+                <div class="flex gap-2 mb-3">
+                    <div id="slot-prefix" class="slot-window w-1/2">???</div>
+                    <div id="slot-role" class="slot-window w-1/2">???</div>
                 </div>
-                <button onclick="spinIdentity()" id="spin-btn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-4 rounded transition">
-                    🎲 开始摇号
-                </button>
+                <button onclick="Game.spinIdentity()" id="btn-spin" class="w-full bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 rounded">🎲 摇号</button>
             </div>
 
-            <div id="identity-result" class="hidden p-3 bg-blue-50 rounded text-sm text-blue-800">
-                <p><strong>身份效果：</strong><span id="identity-buff"></span></p>
-            </div>
-
-            <button onclick="startGame()" id="start-game-btn" disabled class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow transition opacity-50 cursor-not-allowed mt-6">
-                跳坑！开始产粮
-            </button>
+            <div id="identity-desc" class="hidden text-xs bg-blue-50 p-2 rounded text-blue-700"></div>
+            
+            <button onclick="Game.start()" id="btn-start" disabled class="w-full bg-gray-400 text-white font-bold py-3 rounded mt-4 transition-colors">开始爬坑</button>
         </div>
     </div>
 
-    <!-- 2. 游戏主界面 -->
-    <div id="game-screen" class="hidden flex-col h-full max-w-md mx-auto w-full bg-gray-50 relative">
-        
-        <!-- 顶部状态栏 (四大维) -->
-        <div class="uma-header p-4 text-white rounded-b-xl shadow-md z-10">
+    <!-- SCREEN 2: Main Game -->
+    <div id="screen-game" class="hidden flex-col h-full w-full max-w-md mx-auto bg-gray-50 relative">
+        <!-- Header Stats -->
+        <div class="uma-header p-3 text-white shadow-md z-10">
             <div class="flex justify-between items-end mb-2">
                 <div>
-                    <div class="text-xs opacity-90">第 <span id="year-disp">1</span> 年 <span id="month-disp">1</span> 月 <span id="week-disp">上旬</span></div>
-                    <div class="font-bold text-lg" id="turn-phase">阶段: 刚入坑</div>
+                    <div class="text-xs opacity-80"><span id="disp-date">1年1月</span> | <span id="disp-phase">入坑</span></div>
+                    <div class="font-bold text-lg">SAN值: <span id="val-san">100</span></div>
                 </div>
-                <div class="text-right">
-                    <div class="text-xs">精神状态(San)</div>
-                    <div class="font-bold text-xl flex items-center gap-1 justify-end">
-                         <span id="val-san">100</span> <i data-lucide="brain" class="w-4 h-4"></i>
-                    </div>
+                <div class="text-right text-xs">
+                    <div>CP热度 <span id="val-cpheat">0</span></div>
+                    <div>我的热度 <span id="val-myheat">0</span></div>
                 </div>
             </div>
-
-            <!-- 核心四维 -->
-            <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                <div>
-                    <div class="flex justify-between text-xs mb-1"><span>CP热度</span> <span id="val-cpheat">0</span></div>
-                    <div class="stat-bar-bg"><div id="bar-cpheat" class="stat-bar-fill bg-red-400" style="width: 10%"></div></div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-xs mb-1"><span>我的热度</span> <span id="val-myheat">0</span></div>
-                    <div class="stat-bar-bg"><div id="bar-myheat" class="stat-bar-fill bg-purple-400" style="width: 0%"></div></div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-xs mb-1"><span>厨力/爱</span> <span id="val-love">50</span></div>
-                    <div class="stat-bar-bg"><div id="bar-love" class="stat-bar-fill bg-pink-500" style="width: 50%"></div></div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-xs mb-1"><span>技术/产出力</span> <span id="val-tech">10</span></div>
-                    <div class="stat-bar-bg"><div id="bar-tech" class="stat-bar-fill bg-blue-400" style="width: 10%"></div></div>
-                </div>
+            <!-- Bars -->
+            <div class="space-y-1">
+                <div class="flex justify-between text-xs"><span>厨力(Love)</span><span id="val-love">50</span></div>
+                <div class="stat-bar-bg"><div id="bar-love" class="stat-bar-fill bg-pink-400" style="width: 50%"></div></div>
+                <div class="flex justify-between text-xs"><span>产出力(Tech)</span><span id="val-tech">10</span></div>
+                <div class="stat-bar-bg"><div id="bar-tech" class="stat-bar-fill bg-blue-400" style="width: 10%"></div></div>
             </div>
         </div>
 
-        <!-- 中间：立绘/事件反馈区 -->
-        <div class="flex-1 overflow-y-auto p-4 flex flex-col relative">
-            <!-- 资源栏 (侧边或悬浮) -->
-            <div class="bg-white p-2 rounded-lg shadow flex justify-around text-xs font-bold text-gray-600 mb-4">
-                <div class="flex items-center gap-1"><i data-lucide="zap" class="w-3 h-3 text-yellow-500"></i> 热情: <span id="val-passion">100</span></div>
-                <div class="flex items-center gap-1"><i data-lucide="battery" class="w-3 h-3 text-green-500"></i> 体力: <span id="val-stamina">100</span></div>
-                <div class="flex items-center gap-1"><i data-lucide="coins" class="w-3 h-3 text-yellow-600"></i> 存款: <span id="val-money">1000</span></div>
-                <div class="flex items-center gap-1"><i data-lucide="users" class="w-3 h-3 text-blue-500"></i> 现充: <span id="val-social">50</span></div>
+        <!-- Main Content Area -->
+        <div class="flex-1 overflow-y-auto p-3 relative flex flex-col">
+            <!-- Resources -->
+            <div class="grid grid-cols-4 gap-2 mb-3 text-xs font-bold text-gray-600 bg-white p-2 rounded shadow-sm">
+                <div class="text-center"><i data-lucide="zap" class="inline w-3"></i> <span id="val-passion">100</span></div>
+                <div class="text-center"><i data-lucide="battery" class="inline w-3"></i> <span id="val-stamina">100</span></div>
+                <div class="text-center"><i data-lucide="coins" class="inline w-3"></i> <span id="val-money">1000</span></div>
+                <div class="text-center"><i data-lucide="users" class="inline w-3"></i> <span id="val-social">50</span></div>
             </div>
 
-            <!-- 主要文本显示 -->
-            <div class="dialog-box shadow-inner flex-1 flex flex-col justify-end mb-4 relative">
-                 <div class="absolute top-2 right-2 opacity-10 text-6xl">💬</div>
-                 <div id="game-log" class="space-y-2 text-sm overflow-y-auto max-h-60">
-                    <p class="text-gray-500 italic">只要点击下方行动，时间就会流动...</p>
-                 </div>
+            <!-- Target -->
+            <div class="bg-yellow-50 border border-yellow-200 p-2 rounded text-xs text-yellow-800 mb-3 flex justify-between items-center">
+                <span>🎯 目标: 半年本宣</span>
+                <span>进度: <span id="val-works">0</span>/3</span>
             </div>
 
-            <!-- 目标提示 -->
-            <div class="bg-yellow-50 border border-yellow-200 rounded p-2 text-xs text-yellow-800 mb-2">
-                🎯 当前目标: <span id="current-goal">半年内出本小料合集 (进度: <span id="work-count">0</span>/3 篇)</span>
+            <!-- Log Area -->
+            <div class="flex-1 bg-white border rounded-lg p-3 shadow-inner overflow-y-auto max-h-[40vh]" id="game-log">
+                <div class="text-center text-gray-400 text-xs mt-4">--- 故事开始 ---</div>
             </div>
         </div>
 
-        <!-- 底部行动卡片 -->
-        <div class="p-4 bg-white border-t border-gray-200 pb-8">
+        <!-- Action Dock -->
+        <div class="bg-white border-t p-3 pb-6">
             <div class="grid grid-cols-3 gap-2">
-                <button onclick="doAction('work')" class="p-2 rounded bg-gray-100 hover:bg-gray-200 border border-gray-300 flex flex-col items-center">
-                    <i data-lucide="briefcase" class="mb-1 text-gray-600"></i>
-                    <span class="text-xs font-bold">现充/打工</span>
-                    <span class="text-[10px] text-gray-400">金钱↑ 社交↑</span>
+                <!-- Row 1 -->
+                <button onclick="Game.action('work')" class="action-btn bg-green-50 border-green-200 text-green-800 hover:bg-green-100">
+                    <div class="font-bold text-sm">🏢 现充/打工</div>
+                    <div class="text-[10px] opacity-70">金钱↑ 社交↑</div>
                 </button>
-                <button onclick="doAction('create')" class="p-2 rounded bg-blue-50 hover:bg-blue-100 border border-blue-200 flex flex-col items-center">
-                    <i data-lucide="pen-tool" class="mb-1 text-blue-600"></i>
-                    <span class="text-xs font-bold">产粮/约稿</span>
-                    <span class="text-[10px] text-gray-400">热度↑ 技术↑</span>
+                <button onclick="Game.action('create')" class="action-btn bg-blue-50 border-blue-200 text-blue-800 hover:bg-blue-100">
+                    <div class="font-bold text-sm">🎨 产粮/约稿</div>
+                    <div class="text-[10px] opacity-70">热度↑ 技术↑</div>
                 </button>
-                <button onclick="doAction('consume')" class="p-2 rounded bg-pink-50 hover:bg-pink-100 border border-pink-200 flex flex-col items-center">
-                    <i data-lucide="eye" class="mb-1 text-pink-600"></i>
-                    <span class="text-xs font-bold">嗑糖/爬楼</span>
-                    <span class="text-[10px] text-gray-400">厨力↑ San↓</span>
+                <button onclick="Game.action('consume')" class="action-btn bg-pink-50 border-pink-200 text-pink-800 hover:bg-pink-100">
+                    <div class="font-bold text-sm">🍬 嗑糖/爬楼</div>
+                    <div class="text-[10px] opacity-70">厨力↑ San↓</div>
                 </button>
-                <button onclick="doAction('social')" class="p-2 rounded bg-purple-50 hover:bg-purple-100 border border-purple-200 flex flex-col items-center">
-                    <i data-lucide="message-circle" class="mb-1 text-purple-600"></i>
-                    <span class="text-xs font-bold">混圈/扩列</span>
-                    <span class="text-[10px] text-gray-400">热度↑ 风险↑</span>
+                <!-- Row 2 -->
+                <button onclick="Game.action('social')" class="action-btn bg-purple-50 border-purple-200 text-purple-800 hover:bg-purple-100">
+                    <div class="font-bold text-sm">💬 混圈/扩列</div>
+                    <div class="text-[10px] opacity-70">热度↑ 风险↑</div>
                 </button>
-                <button onclick="doAction('rest')" class="p-2 rounded bg-green-50 hover:bg-green-100 border border-green-200 flex flex-col items-center">
-                    <i data-lucide="coffee" class="mb-1 text-green-600"></i>
-                    <span class="text-xs font-bold">睡觉/退网</span>
-                    <span class="text-[10px] text-gray-400">体力↑ San↑</span>
+                <button onclick="Game.action('rest')" class="action-btn bg-gray-100 border-gray-300 text-gray-800 hover:bg-gray-200">
+                    <div class="font-bold text-sm">🛌 睡觉/退网</div>
+                    <div class="text-[10px] opacity-70">体力↑ San↑</div>
                 </button>
-                <button onclick="showStatus()" class="p-2 rounded bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 flex flex-col items-center">
-                    <i data-lucide="clipboard-list" class="mb-1 text-yellow-600"></i>
-                    <span class="text-xs font-bold">查看状态</span>
-                    <span class="text-[10px] text-gray-400">详细数据</span>
+                <button onclick="UI.toggleStatus()" class="bg-yellow-50 border border-yellow-200 rounded flex flex-col items-center justify-center hover:bg-yellow-100">
+                    <i data-lucide="clipboard-list" class="w-5 h-5 text-yellow-600"></i>
+                    <div class="text-[10px] text-yellow-800">状态</div>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- 3. 结局/结算页面 -->
-    <div id="end-screen" class="hidden flex-col items-center justify-center p-4 min-h-screen bg-gray-900 text-white overflow-y-auto">
-        <div class="max-w-md w-full bg-gray-800 p-6 rounded-xl shadow-2xl border border-gray-700 my-8">
-            <h2 class="text-3xl font-bold text-center mb-2 text-yellow-400">退坑/完结纪念</h2>
-            <p class="text-center text-gray-400 text-sm mb-6" id="end-reason">由于热情耗尽，你在这个坑的旅程结束了。</p>
+    <!-- SCREEN 3: Ending -->
+    <div id="screen-end" class="hidden fixed inset-0 bg-gray-900 z-50 overflow-y-auto flex flex-col items-center py-10">
+        <div class="bg-gray-800 text-white p-6 rounded-xl max-w-md w-[90%] border border-gray-600">
+            <h2 class="text-2xl font-bold text-center text-yellow-400 mb-2" id="end-title">结局标题</h2>
+            <p class="text-center text-gray-400 text-sm italic mb-6" id="end-desc">结局描述</p>
             
-            <!-- 蜘蛛网图容器 -->
-            <div class="relative w-64 h-64 mx-auto mb-6 bg-gray-700 rounded-full flex items-center justify-center">
-                <svg id="radar-svg" viewBox="0 0 200 200" class="w-full h-full overflow-visible">
-                    <!-- 这里的图形会通过JS生成 -->
-                </svg>
+            <div class="flex justify-center mb-6">
+                <svg id="radar-chart" width="200" height="200" viewBox="0 0 200 200"></svg>
             </div>
 
-            <div class="text-center mb-6">
-                <div class="text-gray-400 text-xs uppercase tracking-wide">最终评价</div>
-                <div class="text-2xl font-bold text-white mt-1" id="final-title">绝世大触</div>
-                <div class="text-sm text-gray-300 mt-2 px-4 italic" id="final-desc">"虽然退坑了，但江湖上还流传着你的传说..."</div>
+            <div class="bg-gray-900 p-3 rounded text-sm space-y-2 mb-4">
+                <div class="flex justify-between border-b border-gray-700 pb-1"><span>最终热度</span><span id="end-stat-heat" class="text-red-400"></span></div>
+                <div class="flex justify-between border-b border-gray-700 pb-1"><span>产出作品</span><span id="end-stat-works" class="text-blue-400"></span></div>
+                <div class="flex justify-between"><span>存款结余</span><span id="end-stat-money" class="text-green-400"></span></div>
             </div>
-
-            <div class="space-y-2 bg-gray-900 p-4 rounded border border-gray-700 text-sm mb-6">
-                <div class="flex justify-between"><span>产出作品:</span> <span id="end-works" class="text-blue-400">0</span></div>
-                <div class="flex justify-between"><span>粉丝数量:</span> <span id="end-fans" class="text-pink-400">0</span></div>
-                <div class="flex justify-between"><span>存款剩余:</span> <span id="end-money" class="text-green-400">0</span></div>
-                <div class="flex justify-between"><span>精神状态:</span> <span id="end-san" class="text-red-400">0</span></div>
-            </div>
-
-            <button onclick="location.reload()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded transition">
-                爬下一个坑 (重来)
-            </button>
+            <button onclick="location.reload()" class="w-full bg-blue-600 py-3 rounded font-bold hover:bg-blue-500">再次入坑</button>
         </div>
     </div>
 
-    <!-- 事件弹窗 -->
-    <div id="event-modal" class="hidden event-modal">
-        <div class="bg-white p-6 rounded-lg max-w-sm w-[90%] shadow-2xl transform transition-all scale-100">
-            <h3 id="event-title" class="text-lg font-bold mb-2 text-purple-700">事件发生!</h3>
-            <div id="event-content" class="text-gray-700 mb-4 text-sm leading-relaxed">
-                内容...
-            </div>
-            <button onclick="closeEvent()" class="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700">确定</button>
+    <!-- Event Modal -->
+    <div id="modal-event" class="hidden fixed inset-0 bg-black/60 z-40 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-sm w-full p-5 shadow-2xl modal-enter">
+            <h3 id="evt-title" class="font-bold text-lg text-gray-800 mb-2">事件标题</h3>
+            <p id="evt-text" class="text-sm text-gray-600 mb-4 leading-relaxed">事件内容...</p>
+            <div id="evt-effects" class="text-xs bg-gray-50 p-2 rounded mb-4 space-y-1 text-gray-500"></div>
+            <button onclick="UI.closeModal()" class="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700">确定</button>
         </div>
     </div>
 
-    <script>
-        // --- 游戏数据配置 ---
-        
-        const PREFIXES = [
-            { text: "下楼梯骨折的", buff: "social-", desc: "现充度降低，但会有同情分" },
-            { text: "天赋异禀的", buff: "tech+", desc: "每次产粮技术额外+5" },
-            { text: "家里有矿的", buff: "money+", desc: "初始金钱+5000" },
-            { text: "玻璃心的", buff: "san-", desc: "San值消耗翻倍，但容易产出emo文学" },
-            { text: "住在A站的", buff: "passion+", desc: "热情上限更高" },
-            { text: "绝赞拖延症的", buff: "stamina-", desc: "体力消耗增加" },
-            { text: "嘴巴很硬的", buff: "rival+", desc: "更容易和对家吵架" },
-            { text: "现充大忙人", buff: "time-", desc: "每周行动后额外扣体力" }
-        ];
-
-        const ROLES = [
-            { text: "社畜", type: "draw", stat: { money: 2000, time: 2 } },
-            { text: "学生", type: "write", stat: { money: 500, time: 4 } },
-            { text: "自由职业", type: "mix", stat: { money: 1000, time: 5 } },
-            { text: "无业游民", type: "consumer", stat: { money: 100, time: 6 } }
-        ];
-
-        // 游戏状态
-        let state = {
-            turn: 1, // 1-48 (4周 * 12月)
-            cpName: "",
-            rivalName: "",
-            identity: { prefix: null, role: null },
-            stats: {
-                cpHeat: 10,    // CP圈子热度
-                myHeat: 0,     // 个人热度
-                love: 50,      // 厨力
-                san: 80,       // San值 (精神)
-                passion: 100,  // 热情 (归零退坑)
-                stamina: 100,  // 体力
-                money: 1000,   // 存款
-                social: 30,    // 现充/社交
-                tech: 10       // 技术/文笔画力
-            },
-            works: 0, // 作品数
-            flags: {
-                halfYearGoalMet: false,
-                toxic: false, // 是否变成疯狗
-                goddess: false // 是否变成女神
-            },
-            history: []
-        };
-
-        // --- 逻辑函数 ---
-
-        // 1. 初始化与摇号
-        function spinIdentity() {
-            const pEl = document.getElementById('slot-prefix');
-            const rEl = document.getElementById('slot-role');
-            const btn = document.getElementById('spin-btn');
-            const startBtn = document.getElementById('start-game-btn');
-            
-            btn.disabled = true;
-            pEl.classList.add('scrolling');
-            rEl.classList.add('scrolling');
-
-            // 模拟滚动动画
-            let interval = setInterval(() => {
-                pEl.innerText = PREFIXES[Math.floor(Math.random() * PREFIXES.length)].text;
-                rEl.innerText = ROLES[Math.floor(Math.random() * ROLES.length)].text;
-            }, 50);
-
-            setTimeout(() => {
-                clearInterval(interval);
-                pEl.classList.remove('scrolling');
-                rEl.classList.remove('scrolling');
-                
-                // 锁定结果
-                const finalPrefix = PREFIXES[Math.floor(Math.random() * PREFIXES.length)];
-                const finalRole = ROLES[Math.floor(Math.random() * ROLES.length)];
-                
-                state.identity.prefix = finalPrefix;
-                state.identity.role = finalRole;
-                
-                // 应用初始Buff
-                document.getElementById('identity-buff').innerText = `${finalPrefix.desc} + 职业特性`;
-                document.getElementById('identity-result').classList.remove('hidden');
-                
-                // 应用数值
-                if (finalPrefix.buff === "money+") state.stats.money += 5000;
-                if (finalPrefix.buff === "passion+") state.stats.passion = 150;
-                state.stats.money += finalRole.stat.money;
-
-                btn.innerText = "重摇 (并不)";
-                btn.disabled = true; // 只能摇一次 (硬核)
-                startBtn.disabled = false;
-                startBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-            }, 1500);
-        }
-
-        function startGame() {
-            state.cpName = document.getElementById('cp-name').value || "AB";
-            state.rivalName = document.getElementById('rival-name').value || "BA";
-            
-            document.getElementById('setup-screen').classList.add('hidden');
-            document.getElementById('game-screen').classList.remove('hidden');
-            document.getElementById('game-screen').classList.add('flex');
-            
-            updateUI();
-            addLog(`你(${state.identity.prefix.text}${state.identity.role.text}) 垂直入坑了 ${state.cpName}！`, "system");
-            lucide.createIcons();
-        }
-
-        // 2. 回合行动系统
-        function doAction(type) {
-            // 检查体力
-            if (state.stats.stamina <= 10 && type !== 'rest') {
-                alert("体力不足，必须休息！");
-                return;
-            }
-
-            let msg = "";
-            let eventTrigger = false;
-
-            // 基础消耗
-            state.stats.stamina -= 15;
-            state.stats.passion -= 2; // 每回合自然消退
-            state.turn++;
-
-            switch(type) {
-                case 'work':
-                    state.stats.money += 500;
-                    state.stats.social += 5;
-                    state.stats.passion -= 5; // 工作消磨热情
-                    msg = "做了一周的社畜/现充，赚了点钱，但感觉离二次元远了。";
-                    break;
-                case 'create':
-                    const skillGain = state.identity.prefix.buff === "tech+" ? 10 : 5;
-                    state.stats.tech += skillGain;
-                    state.stats.myHeat += 2;
-                    state.stats.stamina -= 10; // 额外体力
-                    state.works += 0.5; // 进度
-                    msg = "爆肝产粮！虽然很累，但看到点赞数增加了。";
-                    if (Math.random() > 0.7) eventTrigger = true;
-                    break;
-                case 'consume':
-                    state.stats.love += 5;
-                    state.stats.san -= 5; // 看多了容易看到黑泥
-                    state.stats.passion += 5;
-                    msg = "刷了一整天tag，吃到了粮也吃到了屎。";
-                    if (Math.random() > 0.6) eventTrigger = true;
-                    break;
-                case 'social':
-                    state.stats.myHeat += 5;
-                    state.stats.san -= 8; // 社交消耗精神
-                    state.stats.social -= 5; // 混圈其实是减少现充度的
-                    msg = "在小群里水了一天，听了很多八卦。";
-                    eventTrigger = true;
-                    break;
-                case 'rest':
-                    state.stats.stamina += 50;
-                    state.stats.san += 10;
-                    if(state.stats.stamina > 100) state.stats.stamina = 100;
-                    state.stats.passion -= 5; // 休息不产粮会冷淡
-                    msg = "睡了一大觉，断网保平安。";
-                    break;
-            }
-
-            addLog(msg);
-            updateUI();
-
-            // 检查事件
-            if (eventTrigger || Math.random() > 0.8) {
-                setTimeout(triggerRandomEvent, 500);
-            } else {
-                checkGameStatus();
-            }
-        }
-
-        // 3. 事件系统 (基于同人女语料库)
-        const EVENTS = [
-            {
-                title: "AO3 绝世好文",
-                text: "在A站读到一篇《{cp}》的清水文，文笔惊为天人，这是什么神仙太太！",
-                effect: () => { state.stats.love += 20; state.stats.passion += 20; state.stats.san += 10; }
-            },
-            {
-                title: "KY 出没",
-                text: "你在发{cp}的糖，评论区突然有人问：'只有我觉得{rival}更真吗？'，你感到一阵恶心。",
-                effect: () => { state.stats.san -= 15; state.stats.passion -= 5; }
-            },
-            {
-                title: "官方背刺",
-                text: "最新连载里，官方居然给了{rival}一个对视特写！这是在卖腐吗？官方你有心吗？",
-                effect: () => { state.stats.san -= 30; state.stats.cpHeat += 20; state.stats.love -= 10; }
-            },
-            {
-                title: "小团体炸了",
-                text: "你所在的那个'洁癖只有我们'的小群聊天记录被泄露了，里面吐槽大手的记录被挂到了微博广场。",
-                effect: () => { state.stats.myHeat += 50; state.stats.san -= 50; state.stats.social -= 20; state.flags.toxic = true; }
-            },
-            {
-                title: "约稿翻车",
-                text: "花大价钱约的图，画手居然把{cp}的左右位画反了！甚至还不如你自己画的火柴人。",
-                effect: () => { state.stats.money -= 500; state.stats.san -= 20; }
-            },
-            {
-                title: "老福特限流",
-                text: "你写的万字长车被老福特屏弊了，申诉了三次也没过。心好累。",
-                effect: () => { state.stats.passion -= 15; state.stats.myHeat -= 5; }
-            },
-            {
-                title: "蓝鸟女神互关",
-                text: "你在推特/X上发的画被樱花妹女神转推了！由于语言不通，你们只能互发emoji。",
-                effect: () => { state.stats.myHeat += 30; state.stats.tech += 5; state.stats.passion += 10; }
-            },
-            {
-                title: "冷圈极地",
-                text: "产了一周的粮，只有3个赞，其中一个还是你自己点的。这就是北极圈吗？",
-                effect: () => { state.stats.passion -= 20; state.stats.san -= 5; }
-            },
-            {
-                title: "谷子出新",
-                text: "官方出了新的吧唧（徽章），但是是盲袋，而且{cp}两个人是分Hidden款。",
-                effect: () => { 
-                    if(state.stats.money > 200) {
-                        state.stats.money -= 200; 
-                        state.stats.love += 10;
-                        return "你没忍住All in了一盒。钱包痛并在快乐着。";
-                    } else {
-                        state.stats.san -= 10;
-                        return "没钱买，看着别人晒谷，流下了贫穷的泪水。";
-                    }
-                }
-            }
-        ];
-
-        function triggerRandomEvent() {
-            const evt = EVENTS[Math.floor(Math.random() * EVENTS.length)];
-            let content = evt.text.replace(/{cp}/g, state.cpName).replace(/{rival}/g, state.rivalName);
-            
-            // 执行效果
-            const resultText = evt.effect();
-            if (resultText) content += `<br><br><span class='text-blue-600'>${resultText}</span>`;
-
-            showEventModal(evt.title, content);
-        }
-
-        function showEventModal(title, content) {
-            document.getElementById('event-title').innerText = title;
-            document.getElementById('event-content').innerHTML = content;
-            document.getElementById('event-modal').classList.remove('hidden');
-        }
-
-        function closeEvent() {
-            document.getElementById('event-modal').classList.add('hidden');
-            checkGameStatus();
-        }
-
-        // 4. 状态检查与更新
-        function checkGameStatus() {
-            // 检查半年目标
-            if (state.turn === 24) {
-                if (state.works >= 3) {
-                    showEventModal("半年结算", "你的小料合集顺利出产！在圈内小有名气。");
-                    state.stats.myHeat += 50;
-                    state.stats.passion += 30;
-                } else {
-                    showEventModal("半年结算", "半年过去了，你窗了（没产出）。看着别人的本子，你感到羞愧。");
-                    state.stats.san -= 20;
-                    state.stats.myHeat -= 10;
-                }
-            }
-
-            // 检查退坑条件
-            if (state.stats.passion <= 0) {
-                endGame("淡坑退圈");
-            } else if (state.stats.san <= 0) {
-                endGame("破防退网");
-            } else if (state.stats.money < -500) {
-                endGame("破产卖号");
-            } else if (state.turn > 48) {
-                endGame("一周年纪念");
-            }
-        }
-
-        function updateUI() {
-            // 更新文本
-            const month = Math.ceil(state.turn / 4);
-            const week = state.turn % 4 || 4;
-            const weekStr = ["", "第一周", "第二周", "第三周", "第四周"][week];
-            
-            document.getElementById('year-disp').innerText = 1;
-            document.getElementById('month-disp').innerText = month;
-            document.getElementById('week-disp').innerText = weekStr;
-            document.getElementById('work-count').innerText = Math.floor(state.works);
-
-            // 更新数值
-            updateStat('san', state.stats.san, 100);
-            updateStat('cpheat', state.stats.cpHeat, 100);
-            updateStat('myheat', state.stats.myHeat, 200);
-            updateStat('love', state.stats.love, 100);
-            updateStat('tech', state.stats.tech, 100);
-            
-            document.getElementById('val-passion').innerText = state.stats.passion;
-            document.getElementById('val-stamina').innerText = state.stats.stamina;
-            document.getElementById('val-money').innerText = state.stats.money;
-            document.getElementById('val-social').innerText = state.stats.social;
-
-            // 阶段文字
-            let phaseText = "萌新入坑";
-            if (state.stats.myHeat > 50) phaseText = "小有名气";
-            if (state.stats.myHeat > 150) phaseText = "圈内大手";
-            if (state.stats.san < 30) phaseText = "疯狗模式";
-            document.getElementById('turn-phase').innerText = "阶段: " + phaseText;
-        }
-
-        function updateStat(id, val, max) {
-            const el = document.getElementById(`val-${id}`);
-            const bar = document.getElementById(`bar-${id}`);
-            if (el) el.innerText = val;
-            if (bar) {
-                let pct = (val / max) * 100;
-                if (pct > 100) pct = 100;
-                if (pct < 0) pct = 0;
-                bar.style.width = pct + '%';
-            }
-        }
-
-        function addLog(msg, type="normal") {
-            const log = document.getElementById('game-log');
-            const p = document.createElement('p');
-            p.className = type === "system" ? "text-blue-600 font-bold" : "text-gray-700";
-            p.innerHTML = `Processing... ${msg}`; // 假装loading
-            setTimeout(() => {
-                 p.innerHTML = `<span class="text-xs text-gray-400">[第${state.turn}周]</span> ${msg}`;
-            }, 100);
-            log.appendChild(p);
-            log.scrollTop = log.scrollHeight;
-        }
-
-        // 5. 结局与绘图
-        function endGame(reason) {
-            document.getElementById('game-screen').classList.add('hidden');
-            document.getElementById('end-screen').classList.remove('hidden');
-            document.getElementById('end-screen').classList.add('flex');
-            
-            document.getElementById('end-reason').innerText = `结局原因: ${reason}`;
-            document.getElementById('end-works').innerText = Math.floor(state.works);
-            document.getElementById('end-fans').innerText = state.stats.myHeat * 100 + Math.floor(Math.random()*50);
-            document.getElementById('end-money').innerText = state.stats.money;
-            document.getElementById('end-san').innerText = state.stats.san;
-
-            // 称号计算
-            let title = "默默无闻的路人";
-            let desc = "你在坑边走了走，没带走一片云彩。";
-
-            if (state.stats.myHeat > 180 && state.stats.tech > 80) {
-                title = "神仙太太 (镇圈之宝)";
-                desc = "你的每一条粮都被供在超话加精，退坑那天全网哀嚎。";
-            } else if (state.stats.money > 10000) {
-                title = "富婆 / 钞能力者";
-                desc = "虽然不产粮，但你约遍了全圈画手，是所有人的金主爸爸。";
-            } else if (state.stats.san < 20 && state.stats.passion > 50) {
-                title = "深渊凝视者 (疯狗)";
-                desc = "为了维护CP，你撕遍了对家、拆家和官方。你的ID让人闻风丧胆。";
-            } else if (state.stats.works > 10 && state.stats.myHeat < 50) {
-                title = "为爱发电的苦行僧";
-                desc = "虽然没人看，但你真的很爱他们。这就够了。";
-            } else if (state.flags.toxic) {
-                title = "挂人博主 / 瓜主";
-                desc = "比起磕CP，你似乎更擅长整理吃瓜文档。";
-            }
-
-            document.getElementById('final-title').innerText = title;
-            document.getElementById('final-desc').innerText = desc;
-
-            renderRadarChart();
-        }
-
-        function renderRadarChart() {
-            // 简单的SVG雷达图绘制
-            const svg = document.getElementById('radar-svg');
-            const center = 100;
-            const radius = 80;
-            const stats = [
-                state.stats.love, // 厨力
-                state.stats.myHeat, // 热度
-                state.stats.tech, // 技术
-                state.stats.money, // 财力
-                state.stats.san // San值
-            ];
-            const maxVals = [100, 200, 100, 5000, 100];
-            const labels = ["厨力", "热度", "技术", "财力", "San值"];
-            
-            // 背景网格
-            let bgHtml = `<circle cx="100" cy="100" r="80" fill="#374151" stroke="#4b5563" stroke-width="1"/>`;
-            bgHtml += `<circle cx="100" cy="100" r="40" fill="none" stroke="#4b5563" stroke-width="1"/>`;
-            
-            // 计算点
-            let points = [];
-            let labelHtml = "";
-            
-            for (let i = 0; i < 5; i++) {
-                const angle = (Math.PI * 2 * i) / 5 - Math.PI / 2;
-                // 归一化 0-1
-                let ratio = stats[i] / maxVals[i];
-                if(ratio > 1) ratio = 1;
-                if(ratio < 0.1) ratio = 0.1;
-                
-                const x = center + radius * ratio * Math.cos(angle);
-                const y = center + radius * ratio * Math.sin(angle);
-                points.push(`${x},${y}`);
-
-                // 标签坐标
-                const lx = center + (radius + 15) * Math.cos(angle);
-                const ly = center + (radius + 15) * Math.sin(angle);
-                labelHtml += `<text x="${lx}" y="${ly}" fill="#fbbf24" font-size="10" text-anchor="middle" alignment-baseline="middle">${labels[i]}</text>`;
-            }
-
-            const polyPoints = points.join(" ");
-            const dataHtml = `<polygon points="${polyPoints}" fill="rgba(59, 130, 246, 0.6)" stroke="#3b82f6" stroke-width="2"/>`;
-            
-            svg.innerHTML = bgHtml + dataHtml + labelHtml;
-        }
-
-    </script>
+    <!-- logic moved to external file for maintainability -->
+    <script src="assets/main.js"></script>
 </body>
-
 </html>
+```
+
