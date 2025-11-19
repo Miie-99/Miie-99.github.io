@@ -27,8 +27,7 @@
                     { title: "加班地狱", text: "老板让你连夜改PPT，你错过了晚上的CP群语音。", effect: { money: 800, san: -10, passion: -5 } },
                     { title: "掉马危机", text: "同事看到了你的屏保，问：'这是同性恋漫画吗？' 你吓出一身冷汗。", effect: { san: -15, social: -5 } },
                     { title: "发奖金了", text: "项目结款！你立刻把钱换成了谷子（周边）。", effect: { money: 2000, love: 10 } },
-                    { title: "遇到同好", text: "新来的实习生居然也是{cp}姐！世界真小。", effect: { social: 15, san: 10, passion: 10 } }
-                    ,
+                    { title: "遇到同好", text: "新来的实习生居然也是{cp}姐！世界真小。", effect: { social: 15, san: 10, passion: 10 } },
                     { title: "社死瞬间", text: "开会投屏忘关浏览器，全公司都看到了你写的《强制爱》大纲，HR建议你注意心理健康。", effect: { social: -20, san: -20, money: 200 } },
                     { title: "虚伪的现充", text: "同事问你周末去哪浪，你笑着说在家躺平，其实坐了5小时高铁去漫展只为给摊主塞一封信。", effect: { money: -500, passion: 30, social: 5 } },
                     { title: "隐藏款掉落", text: "新来的实习生工位上摆着你CP的绝版吧唧，你试探了一句‘你也吃这对？’，她说是代购送的。", effect: { san: -10, social: 10 } },
@@ -50,7 +49,7 @@
                     { title: "被大V转了", text: "你的产出被圈内大手转发，通知栏炸了！", effect: { myHeat: 50, passion: 20, love: 5 } },
                     { title: "发到热评区", text: "你的片段被搬上热评区，几条真诚评论让你暖到心坎里。", effect: { myHeat: 15, passion: 10 } },
                     { title: "被误解为抄袭", text: "有人质疑你的素材来源，留言里有指责也有质疑。", effect: { san: -15, myHeat: -5 } },
-                    { title: "合作邀约", text: "一位圈内作者私信邀你合作，你的作品可能迎来联动机会。", effect: { social: 10, tech: 5 } }
+                    { title: "合作邀约", text: "一位圈内作者私信邀你合作，你的作品可能迎来联动机会。", effect: { social: 10, tech: 5 } },
                 { title: "查资料黑洞", text: "本想写个考据向正剧，结果查阅维多利亚时期餐具礼仪查了整整一通宵，正文一个字没动。", effect: { tech: 20, stamina: -20, works: 0 } },
         { title: "冷圈自萌", text: "这真的太冷了，全网只有你在产粮。你既是作者又是读者，自己割大腿肉喂自己，含泪吃下。", effect: { san: -10, passion: 30, myHeat: 5 } },
         { title: "评论区很多", text: "这篇文意外爆火！但评论区全是'哈哈哈哈'和'搞快点'，你期待的长评小作文一篇都没有。", effect: { myHeat: 40, san: 5, passion: -5 } },
@@ -63,7 +62,7 @@
                     { title: "神仙太太", text: "在AO3读到一篇绝世好文，哭得稀里哗啦。", effect: { love: 20, passion: 10, san: 10 } },
                     { title: "OOC警告", text: "不仅逆了你的CP，还把你推写成了恋爱脑。我想吐。", effect: { san: -20, passion: -5 } },
                     { title: "官方发糖", text: "最新一集动画里他们牵手了（并没有，是你显微镜看错了）。", effect: { love: 15, san: 5 } },
-                    { title: "由于版权原因", text: "你收藏的几十个本子链接全部失效了。", effect: { san: -15, passion: -10 } }
+                    { title: "由于版权原因", text: "你收藏的几十个本子链接全部失效了。", effect: { san: -15, passion: -10 } },
                 { title: "海鲜市场", text: "在闲鱼高价收到了梦情谷子！收到货打开一看，快递暴力运输，那个绝美镭射票折角了，你的心也折了。", effect: { money: -300, san: -20, love: 5 } },
         { title: "官谷刺客", text: "官方出了新的合作款周边，丑得惊天动地但竟然是限定。你一边骂官方抢钱一边诚实地付了款。", effect: { money: -200, san: -5, love: 10 } },
         { title: "北极圈民", text: "你点开了一个古早tag，发现上一条粮是2014年发的。你在坟头蹦迪，试图用洛阳铲挖出一点旧糖渣。", effect: { passion: 5, san: -15 } },
@@ -76,8 +75,7 @@
                     { title: "由于太现充", text: "群里在聊CP，你在聊今晚吃什么，被冷落了。", effect: { social: 10, myHeat: -5 } },
                     { title: "小团体撕逼", text: "群主和管理吵起来了，你被要求站队。", effect: { san: -20, social: -10 } },
                     { title: "扩列成功", text: "在微博勾搭到了一个同城同好，相谈甚欢。", effect: { social: 15, passion: 10 } },
-                    { title: "挂人贴", text: "你在广场吐槽了一句，被对家截图挂了。", effect: { myHeat: 30, san: -30, toxic: true } }
-                    ,
+                    { title: "挂人贴", text: "你在广场吐槽了一句，被对家截图挂了。", effect: { myHeat: 30, san: -30, toxic: true } },
                     { title: "无效扩列", text: "加了一个“只吃甜饼不吃刀”的互暖群，结果群主半夜发了几千字的BE虐文，还说这是糖。", effect: { san: -15, social: 5 } },
                     { title: "赛博背刺", text: "和你聊得最好的亲友突然退群了，私聊才发现她们拉了一个没有你的新群，正在吐槽你的文风太古早。", effect: { san: -50, myHeat: 10, toxic: true } },
                     { title: "海鲜市场", text: "试图在海鲜市场收物扩列，结果卖家是你的前圈对家，她认出了你的ID并在朋友圈挂了你的地址。", effect: { san: -30, money: -200, social: -20 } },
@@ -90,7 +88,7 @@
                 rest: [
                     { title: "深度睡眠", text: "梦里什么都有，梦里你的CP结婚了。", effect: { stamina: 40, san: 20 } },
                     { title: "断网保平安", text: "不看SNS的一天，世界如此美好。", effect: { san: 15, passion: -5 } },
-                    { title: "生病了", text: "熬夜太多抵抗力下降，不得不去医院。", effect: { money: -200, stamina: 20 } }
+                    { title: "生病了", text: "熬夜太多抵抗力下降，不得不去医院。", effect: { money: -200, stamina: 20 } },
                     { title: "电子阳痿", text: "突然对什么都提不起劲。不想看文，不想打游戏，不想刷推。只想躺在床上盯着天花板发呆。", effect: { stamina: 30, passion: -20, love: -10 } },
                     { title: "腱鞘炎犯了", text: "长时间拿笔导致手腕剧痛，医生警告你必须休息。你看着未完成的稿子，含泪给读者发了请假条。", effect: { stamina: -10, san: -10, works: 0 } },
                 { title: "岁月静好", text: "收拾了一下乱成猪窝的房间，把谷子整整齐齐摆进展示柜。看着痛柜，你觉得这破世界还是值得活的。", effect: { san: 30, stamina: -10, love: 20 } },
@@ -202,4 +200,5 @@ const CHAINS = {
         }
     }
 };
+
 
