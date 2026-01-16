@@ -1,63 +1,177 @@
-        // ==========================================
-        // MODULE: STATE (js/state.js)
-        // 管理游戏核心数值
-        // ==========================================
-        const State = {
-            turn: 1,
-            maxTurn: 48, // 48周 = 1年
-            cp: "AB",
-            rival: "BA",
-            identity: { prefix: null, role: null },
-            // 核心七维属性
-            stats: {
-                san: 100,      // 精神 (理智) -> 0 结局: 发疯
-                passion: 100,  // 热情 (爱)   -> 0 结局: 退坑
-                stamina: 100,  // 体力       -> 消耗品
-                money: 1000,   // 金钱       -> 0 结局: 破产
-                social: 50,    // 现充       -> 影响特殊事件
-                tech: 10,      // 技术       -> 影响产出品质
-                combat: 0,     // 战斗/斗争欲（用于社交事件、争论等）
-                love: 50,      // 厨力       -> 结局评分
-                myHeat: 0,     // 个人热度    -> 结局评分
-                cpHeat: 10     // 圈子热度    -> 环境变量
-            },
-            progress: { works: 0 },
-            flags: { toxic: false, goddess: false },
-            history: [],
-            // 连续事件状态：当 active=true 时底部常规行动被禁用
-            chain: {
-                active: false,
-                id: null,
-                step: null,
-                data: null
-            },
+// ==========================================
+// MODULE: STATE (js/state.js)
+// 管理游戏核心数值 - v2.0
+// ==========================================
+const State = {
+    turn: 1,
+    maxTurn: 48, // 48周 = 1年
+    cp: "AB",
+    rival: "BA",
+    identity: { prefix: null, role: null },
 
-            // 属性倾向 (用于雷达图)：范围 0-100，50 为中立
-            alignment: {
-                gong: 50,   // "公" 倾向
-                ma: 50,     // "嬷" 倾向
-                ttk: 50,    // ttk 风格
-                mmr: 50,    // mmr 风格
-                toxic: 50,  // 毒唯倾向
-                purity: 50, // 洁癖
-                omnivory: 50 // 杂食/杂食性
-            },
+    // 【v2.0】核心属性 - 调整初始值
+    stats: {
+        san: 80,        // 精神值 (从100降到80，增加压力感)
+        passion: 80,    // 热情 (从100降到80)
+        stamina: 100,   // 体力
+        money: 1000,    // 金钱
+        social: 40,     // 社交 (从50降到40)
+        tech: 10,       // 技术
+        combat: 0,      // 战斗力
+        love: 40,       // 厨力 (从50降到40)
+        myHeat: 0,      // 个人热度
+        cpHeat: 15      // CP热度 (从10提高到15)
+    },
 
-            // 状态修改器
-            modify(effects) {
-                let changes = [];
-                for (let key in effects) {
-                    if (key === 'works') {
-                        this.progress.works += effects[key];
-                    } else if (key === 'toxic' || key === 'goddess') {
-                        this.flags[key] = effects[key];
-                    } else if (this.stats.hasOwnProperty(key)) {
-                        this.stats[key] += effects[key];
-                        // 边界限制
-                        if (key === 'stamina' && this.stats[key] > 100) this.stats[key] = 100;
-                        if (key === 'san' && this.stats[key] > 100) this.stats[key] = 100;
+    progress: { works: 0 },
+    flags: { toxic: false, goddess: false },
+    history: [],
+
+    // 连续事件状态
+    chain: {
+        active: false,
+        id: null,
+        step: null,
+        data: null
+    },
+
+    // 属性倾向 (雷达图用)
+    alignment: {
+        gong: 50,
+        ma: 50,
+        ttk: 50,
+        mmr: 50,
+        toxic: 50,
+        purity: 50,
+        omnivory: 50
+    },
+
+    // 【新增】成就记录
+    achievements: [],
+
+    // 【新增】新闻历史
+    newsHistory: [],
+
+    // 【v3.0】行动统计
+    actionCounts: {
+        work: 0,
+        create: 0,
+        consume: 0,
+        social: 0,
+        rest: 0
+    },
+
+    // 【v3.0】消费追踪（用于氪金鲸鱼成就）
+    totalSpent: 0,
+
+    // 【v3.0】关键时刻记录（用于人生总结）
+    keyMoments: [],
+
+    // 【v3.0】初始CP热度（用于圈子缔造者结局）
+    initialCpHeat: 15,
+
+    // 【v3.0】最低SAN值记录（用于浴火重生成就）
+    minSan: 80,
+
+    // 状态修改器
+    modify(effects) {
+        let changes = [];
+        for (let key in effects) {
+            if (key === 'works') {
+                this.progress.works += effects[key];
+                changes.push({ key: 'works', delta: effects[key] });
+            } else if (key === 'toxic' || key === 'goddess') {
+                this.flags[key] = effects[key];
+            } else if (this.stats.hasOwnProperty(key)) {
+                this.stats[key] += effects[key];
+                changes.push({ key, delta: effects[key] });
+
+                // 边界限制
+                if (key === 'stamina') {
+                    if (this.stats[key] > 100) this.stats[key] = 100;
+                    if (this.stats[key] < 0) this.stats[key] = 0;
+                }
+                if (key === 'san') {
+                    if (this.stats[key] > 100) this.stats[key] = 100;
+                    // 【v3.0】追踪最低SAN值
+                    if (this.stats[key] < this.minSan) {
+                        this.minSan = this.stats[key];
+                    }
+                    // 浴火重生成就条件
+                    if (this.stats[key] < 20) {
+                        this.flags.phoenixEligible = true;
                     }
                 }
-                return changes;
+                if (key === 'passion') {
+                    if (this.stats[key] > 120) this.stats[key] = 120;
+                }
+                if (key === 'love') {
+                    if (this.stats[key] > 100) this.stats[key] = 100;
+                }
+                // 【v3.0】追踪消费
+                if (key === 'money' && effects[key] < 0) {
+                    this.totalSpent += Math.abs(effects[key]);
+                }
             }
+        }
+        return changes;
+    },
+
+    // 【v3.0】记录关键时刻
+    addKeyMoment(text, type = 'neutral') {
+        this.keyMoments.push({
+            turn: this.turn,
+            text: text,
+            type: type // 'positive', 'negative', 'neutral'
+        });
+        // 最多保留10个关键时刻
+        if (this.keyMoments.length > 10) {
+            this.keyMoments.shift();
+        }
+    },
+
+    // 【v3.0】修改属性倾向
+    modifyAlignment(changes) {
+        if (!changes) return;
+        for (let key in changes) {
+            if (this.alignment.hasOwnProperty(key)) {
+                this.alignment[key] += changes[key];
+                // 边界限制 0-100
+                if (this.alignment[key] < 0) this.alignment[key] = 0;
+                if (this.alignment[key] > 100) this.alignment[key] = 100;
+            }
+        }
+    },
+
+    // 【新增】重置状态（用于新游戏）
+    reset() {
+        this.turn = 1;
+        this.cp = "AB";
+        this.rival = "BA";
+        this.identity = { prefix: null, role: null };
+        this.stats = {
+            san: 80,
+            passion: 80,
+            stamina: 100,
+            money: 1000,
+            social: 40,
+            tech: 10,
+            combat: 0,
+            love: 40,
+            myHeat: 0,
+            cpHeat: 15
         };
+        this.progress = { works: 0 };
+        this.flags = { toxic: false, goddess: false, phoenixEligible: false };
+        this.history = [];
+        this.chain = { active: false, id: null, step: null, data: null };
+        this.alignment = { gong: 50, ma: 50, ttk: 50, mmr: 50, toxic: 50, purity: 50, omnivory: 50 };
+        this.achievements = [];
+        this.newsHistory = [];
+        this.actionCounts = { work: 0, create: 0, consume: 0, social: 0, rest: 0 };
+        this.totalSpent = 0;
+        this.keyMoments = [];
+        this.initialCpHeat = 15;
+        this.minSan = 80;
+    }
+};

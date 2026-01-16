@@ -1,233 +1,389 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>同人女跳坑模拟器 (Modular Refactor)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap');
-        body { font-family: 'Noto Sans SC', sans-serif; background-color: #f3f4f6; overflow: hidden; }
-        /* 强制基础可见性，避免 Tailwind 加载延迟导致的 FOUC */
-        .hidden { display: none !important; }
-        .flex { display: flex !important; }
-        .page-section { display: none !important; }
-        .page-section.active-screen { display: flex !important; flex-direction: column; height: 100vh; width: 100%; }
-        /* 滚动文字视觉效果 */
-        .scrolling { filter: blur(0.6px); opacity: 0.9; }
-        .animate-bounce-once { animation: bounceOnce 0.45s cubic-bezier(.2,.8,.2,1); }
-        @keyframes bounceOnce { 0% { transform: translateY(0); } 60% { transform: translateY(-6px); } 100% { transform: translateY(0); } }
-        
-        /* --- UI 组件样式 --- */
-        .uma-header { background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%); }
-        .stat-bar-bg { background-color: #e5e7eb; border-radius: 9999px; height: 8px; overflow: hidden; }
-        .stat-bar-fill { height: 100%; border-radius: 9999px; transition: width 0.5s ease-in-out; }
-        
-        /* 老虎机样式 */
-        .slot-window {
-            height: 50px; overflow: hidden; background: #f0f9ff;
-            border: 2px solid #3b82f6; border-radius: 8px;
-            display: flex; justify-content: center; align-items: center;
-            font-weight: bold; color: #1e40af;
-        }
-        .scrolling { animation: scrollText 0.1s infinite linear; }
+    <title>同人女跳坑模拟器 ✨</title>
+    <meta name="description" content="体验同人圈生活的养成模拟游戏，创作、嗑糖、社交、生存！">
 
-        /* 模态框动画 */
-        .modal-enter { animation: fadeIn 0.2s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind (fallback utilities) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Theme -->
+    <link rel="stylesheet" href="assets/theme.css">
+
+    <style>
+        /* 基础重置和保障 */
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .page-section {
+            display: none !important;
+        }
+
+        .page-section.active-screen {
+            display: flex !important;
+            flex-direction: column;
+            height: 100vh;
+            width: 100%;
+        }
+
+        /* 老虎机动画 */
+        .scrolling {
+            filter: blur(1px);
+            animation: scrollText 0.08s infinite linear;
+        }
+
+        @keyframes scrollText {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-3px);
+            }
+        }
+
+        .animate-bounce-once {
+            animation: bounceOnce 0.5s cubic-bezier(.2, .8, .2, 1);
+        }
+
+        @keyframes bounceOnce {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-8px) scale(1.05);
+            }
+
+            100% {
+                transform: translateY(0) scale(1);
+            }
+        }
+
         /* 确保模态可交互 */
-        #modal-event, #modal-status { pointer-events: auto; }
-        /* 强制隐藏以防 Tailwind 延迟 */
-        .hidden { display: none !important; }
-        /* 确保遮罩层层级最高 */
-        #modal-status, #modal-event, #screen-end { z-index: 50 !important; }
-        /* 解决 Safari/移动端 100vh 兼容问题 */
-        html, body { height: 100%; overflow: hidden; }
+        #modal-event,
+        #modal-status {
+            pointer-events: auto;
+            z-index: 50 !important;
+        }
     </style>
 </head>
-<body class="h-screen flex flex-col text-gray-800">
 
-    <!-- ========================================== -->
-    <!--               VIEW LAYER (HTML)            -->
-    <!-- ========================================== -->
+<body class="theme-cute h-screen flex flex-col text-gray-800">
 
-    <!-- SCREEN 1: Setup -->
-    <div id="screen-setup" class="page-section active-screen flex-1 flex flex-col items-center justify-center p-4 w-full max-w-md mx-auto">
-        <div class="bg-white w-full p-6 rounded-xl shadow-xl space-y-4">
-            <h1 class="text-2xl font-bold text-center text-blue-600">同人女跳坑模拟器 <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">赛马娘版</span></h1>
-            
+    <!-- ============================================ -->
+    <!--              SCREEN 1: 开始设置               -->
+    <!-- ============================================ -->
+    <div id="screen-setup"
+        class="page-section active-screen flex-1 flex flex-col items-center justify-center p-4 w-full max-w-md mx-auto">
+        <!-- 装饰背景 -->
+        <div class="floating-decoration deco-star" style="top: 10%; left: 15%;"></div>
+        <div class="floating-decoration deco-star" style="top: 20%; right: 20%; animation-delay: 1s;"></div>
+        <div class="floating-decoration deco-star" style="bottom: 30%; left: 10%; animation-delay: 2s;"></div>
+
+        <div class="cute-card w-full p-6 space-y-5">
+            <!-- 标题 -->
+            <div class="text-center">
+                <h1
+                    class="text-2xl font-bold bg-gradient-to-r from-primary-500 via-accent-400 to-warm-400 bg-clip-text text-transparent">
+                    同人女跳坑模拟器
+                </h1>
+                <p class="text-xs text-neutral-500 mt-1">✨ 柔和二次元版 ✨</p>
+            </div>
+
+            <!-- CP设置 -->
             <div class="grid grid-cols-2 gap-4">
-                <div><label class="text-xs font-bold text-gray-500">本命CP (我推)</label><input type="text" id="inp-cp" value="AB" class="w-full border rounded p-2 mt-1"></div>
-                <div><label class="text-xs font-bold text-gray-500">对家CP (雷点)</label><input type="text" id="inp-rival" value="BA" class="w-full border rounded p-2 mt-1"></div>
-            </div>
-
-            <div class="border-t pt-4">
-                <p class="text-xs font-bold text-gray-500 mb-2">身份抽卡</p>
-                <div class="flex gap-2 mb-3">
-                    <div id="slot-prefix" class="slot-window w-1/2">???</div>
-                    <div id="slot-role" class="slot-window w-1/2">???</div>
-                </div>
-                <button onclick="Game.spinIdentity()" id="btn-spin" class="w-full bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 rounded">🎲 摇号</button>
-            </div>
-
-            <div id="identity-desc" class="hidden text-xs bg-blue-50 p-2 rounded text-blue-700"></div>
-            
-            <button onclick="Game.start()" id="btn-start" disabled class="w-full bg-gray-400 text-white font-bold py-3 rounded mt-4 transition-colors">开始爬坑</button>
-        </div>
-    </div>
-
-    <!-- SCREEN 2: Main Game -->
-    <div id="screen-game" class="page-section flex-col h-full w-full max-w-md mx-auto bg-gray-50 relative">
-        <!-- Header Stats -->
-        <div class="uma-header p-3 text-white shadow-md z-10">
-            <div class="flex justify-between items-end mb-2">
                 <div>
-                    <div class="text-xs opacity-80"><span id="disp-date">1年1月</span> | <span id="disp-phase">入坑</span></div>
-                    <div class="font-bold text-lg">SAN值: <span id="val-san">100</span></div>
+                    <label class="text-xs font-bold text-primary-600 flex items-center gap-1">
+                        <span>💕</span> 本命CP
+                    </label>
+                    <input type="text" id="inp-cp" value="AB"
+                        class="w-full border-2 border-primary-200 rounded-xl p-2.5 mt-1 focus:border-primary-400 focus:outline-none transition-colors bg-white/80">
                 </div>
-                <div class="text-right text-xs">
-                    <div>CP热度 <span id="val-cpheat">0</span></div>
-                    <div>我的热度 <span id="val-myheat">0</span></div>
+                <div>
+                    <label class="text-xs font-bold text-danger-500 flex items-center gap-1">
+                        <span>💔</span> 雷点CP
+                    </label>
+                    <input type="text" id="inp-rival" value="BA"
+                        class="w-full border-2 border-danger-200 rounded-xl p-2.5 mt-1 focus:border-danger-400 focus:outline-none transition-colors bg-white/80">
                 </div>
             </div>
-            <!-- Bars -->
-            <div class="space-y-1">
-                <div class="flex justify-between text-xs"><span>厨力(Love)</span><span id="val-love">50</span></div>
-                <div class="stat-bar-bg"><div id="bar-love" class="stat-bar-fill bg-pink-400" style="width: 50%"></div></div>
-                <div class="flex justify-between text-xs"><span>产出力(Tech)</span><span id="val-tech">10</span></div>
-                <div class="stat-bar-bg"><div id="bar-tech" class="stat-bar-fill bg-blue-400" style="width: 10%"></div></div>
+
+            <!-- 身份抽卡 -->
+            <div class="border-t-2 border-primary-100 pt-4">
+                <p class="text-xs font-bold text-primary-600 mb-3 flex items-center gap-1">
+                    <span>🎰</span> 身份抽卡
+                </p>
+                <div class="flex gap-3 mb-4">
+                    <div id="slot-prefix" class="cute-slot flex-1">???</div>
+                    <div id="slot-role" class="cute-slot flex-1">???</div>
+                </div>
+                <button onclick="Game.spinIdentity()" id="btn-spin" class="w-full cute-modal-btn py-3 text-base">
+                    🎲 摇号抽卡
+                </button>
+            </div>
+
+            <!-- 身份描述 -->
+            <div id="identity-desc"
+                class="hidden text-xs bg-accent-50 border-2 border-accent-200 p-3 rounded-xl text-accent-700"></div>
+
+            <!-- 开始按钮 -->
+            <button onclick="Game.start()" id="btn-start" disabled
+                class="w-full bg-neutral-300 text-neutral-500 font-bold py-3.5 rounded-xl transition-all duration-300 cursor-not-allowed">
+                🚀 开始爬坑
+            </button>
+        </div>
+
+        <!-- 版本信息 -->
+        <p class="text-xs text-neutral-400 mt-4">v2.0 柔和二次元版 | 数值已重平衡</p>
+    </div>
+
+    <!-- ============================================ -->
+    <!--              SCREEN 2: 游戏主界面             -->
+    <!-- ============================================ -->
+    <div id="screen-game" class="page-section flex-col h-full w-full max-w-md mx-auto relative">
+
+        <!-- 新闻播报条 -->
+        <div class="news-ticker">
+            <div class="news-ticker-content" id="news-ticker-content">
+                <span class="news-item">欢迎来到同人圈！今天也要加油产粮哦~</span>
+                <span class="news-item hot">热门话题：#本命CP太甜了# 正在热议中</span>
+                <span class="news-item">圈内日常：又有太太更新神仙产出了！</span>
+                <span class="news-item happy">小提示：记得休息，身体最重要~</span>
+                <!-- 重复以实现无缝滚动 -->
+                <span class="news-item">欢迎来到同人圈！今天也要加油产粮哦~</span>
+                <span class="news-item hot">热门话题：#本命CP太甜了# 正在热议中</span>
+                <span class="news-item">圈内日常：又有太太更新神仙产出了！</span>
+                <span class="news-item happy">小提示：记得休息，身体最重要~</span>
             </div>
         </div>
 
-        <!-- Main Content Area -->
-        <div class="flex-1 overflow-y-auto p-3 relative flex flex-col">
-            <!-- Resources -->
-            <div class="grid grid-cols-4 gap-2 mb-3 text-xs font-bold text-gray-600 bg-white p-2 rounded shadow-sm">
-                <div class="text-center"><i data-lucide="zap" class="inline w-3"></i> <span id="val-passion">100</span></div>
-                <div class="text-center"><i data-lucide="battery" class="inline w-3"></i> <span id="val-stamina">100</span></div>
-                <div class="text-center"><i data-lucide="coins" class="inline w-3"></i> <span id="val-money">1000</span></div>
-                <div class="text-center"><i data-lucide="users" class="inline w-3"></i> <span id="val-social">50</span></div>
+        <!-- 顶部状态栏 -->
+        <div class="cute-header p-4 text-white">
+            <!-- 日期和阶段 -->
+            <div class="flex justify-between items-center mb-3">
+                <div class="flex items-center gap-2">
+                    <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">
+                        📅 <span id="disp-date">1年1月</span>
+                    </span>
+                    <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">
+                        <span id="disp-phase">🌸 入坑期</span>
+                    </span>
+                </div>
+                <div class="text-right">
+                    <div class="text-2xl font-bold stat-value">
+                        🧠 <span id="val-san">100</span>
+                    </div>
+                    <div class="text-xs opacity-80">SAN值</div>
+                </div>
             </div>
 
-            <!-- Target -->
-            <div class="bg-yellow-50 border border-yellow-200 p-2 rounded text-xs text-yellow-800 mb-3 flex justify-between items-center">
-                <span>🎯 目标: 半年本宣</span>
-                <span>进度: <span id="val-works">0</span>/3</span>
+            <!-- 属性条 -->
+            <div class="space-y-2">
+                <div class="stat-bar-container">
+                    <div class="stat-bar-label">
+                        <span>💖 厨力</span>
+                        <span id="val-love">50</span>
+                    </div>
+                    <div class="stat-bar-track">
+                        <div id="bar-love" class="stat-bar-fill love" style="width: 50%"></div>
+                    </div>
+                </div>
+                <div class="stat-bar-container">
+                    <div class="stat-bar-label">
+                        <span>🎨 技术</span>
+                        <span id="val-tech">10</span>
+                    </div>
+                    <div class="stat-bar-track">
+                        <div id="bar-tech" class="stat-bar-fill tech" style="width: 10%"></div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Log Area -->
-            <div class="flex-1 bg-white border rounded-lg p-3 shadow-inner overflow-y-auto max-h-[40vh]" id="game-log">
-                <div class="text-center text-gray-400 text-xs mt-4">--- 故事开始 ---</div>
+            <!-- 热度显示 -->
+            <div class="flex justify-between mt-3 text-sm">
+                <span class="bg-white/15 px-3 py-1 rounded-full">
+                    🔥 CP热度 <span id="val-cpheat" class="font-bold">0</span>
+                </span>
+                <span class="bg-white/15 px-3 py-1 rounded-full">
+                    ⭐ 我的热度 <span id="val-myheat" class="font-bold">0</span>
+                </span>
             </div>
         </div>
 
-        <!-- Action Dock -->
-        <div class="bg-white border-t p-3 pb-6">
-            <div class="grid grid-cols-3 gap-2">
-                <!-- Row 1 -->
-                <button onclick="Game.action('work')" class="action-btn bg-green-50 border-green-200 text-green-800 hover:bg-green-100">
-                    <div class="font-bold text-sm">🏢 现充/打工</div>
-                    <div class="text-[10px] opacity-70">金钱↑ 社交↑</div>
-                </button>
-                <button onclick="Game.action('create')" class="action-btn bg-blue-50 border-blue-200 text-blue-800 hover:bg-blue-100">
-                    <div class="font-bold text-sm">🎨 产粮/约稿</div>
-                    <div class="text-[10px] opacity-70">热度↑ 技术↑</div>
-                </button>
-                <button onclick="Game.action('consume')" class="action-btn bg-pink-50 border-pink-200 text-pink-800 hover:bg-pink-100">
-                    <div class="font-bold text-sm">🍬 嗑糖/爬楼</div>
-                    <div class="text-[10px] opacity-70">厨力↑ San↓</div>
-                </button>
-                <!-- Row 2 -->
-                <button onclick="Game.action('social')" class="action-btn bg-purple-50 border-purple-200 text-purple-800 hover:bg-purple-100">
-                    <div class="font-bold text-sm">💬 混圈/扩列</div>
-                    <div class="text-[10px] opacity-70">热度↑ 风险↑</div>
-                </button>
-                <button onclick="Game.action('rest')" class="action-btn bg-gray-100 border-gray-300 text-gray-800 hover:bg-gray-200">
-                    <div class="font-bold text-sm">🛌 睡觉/退网</div>
-                    <div class="text-[10px] opacity-70">体力↑ San↑</div>
-                </button>
-                <button onclick="UI.toggleStatus()" class="bg-yellow-50 border border-yellow-200 rounded flex flex-col items-center justify-center hover:bg-yellow-100">
-                    <i data-lucide="clipboard-list" class="w-5 h-5 text-yellow-600"></i>
-                    <div class="text-[10px] text-yellow-800">状态</div>
-                </button>
+        <!-- 主内容区域 - 优化布局让日志区最大化 -->
+        <div class="flex-1 overflow-hidden p-2 flex flex-col gap-2 min-h-0">
+            <!-- 资源显示 - 紧凑单行 -->
+            <div class="resource-bar">
+                <span class="res-item"><span class="res-icon">⚡</span><span id="val-passion">100</span></span>
+                <span class="res-item"><span class="res-icon">🔋</span><span id="val-stamina">100</span></span>
+                <span class="res-item"><span class="res-icon">💰</span><span id="val-money">1000</span></span>
+                <span class="res-item"><span class="res-icon">👥</span><span id="val-social">50</span></span>
+                <span class="res-item goal">📝<span id="val-works">0</span>/3</span>
             </div>
+
+            <!-- 日志区域 - 核心展示区，自动填充剩余空间 -->
+            <div class="game-log flex-1 min-h-0" id="game-log">
+                <div class="text-center text-neutral-400 text-sm py-4">
+                    ✨ 故事开始了 ✨
+                </div>
+            </div>
+        </div>
+
+        <!-- 行动按钮区 - 紧凑图标布局 -->
+        <div class="action-bar">
+            <button onclick="Game.action('work')" class="action-btn action-mini type-work" title="现充/打工">
+                <span class="btn-icon">🏢</span>
+                <span class="btn-label">打工</span>
+            </button>
+            <button onclick="Game.action('create')" class="action-btn action-mini type-create" title="产粮/约稿">
+                <span class="btn-icon">🎨</span>
+                <span class="btn-label">产粮</span>
+            </button>
+            <button onclick="Game.action('consume')" class="action-btn action-mini type-consume" title="嗑糖/爬楼">
+                <span class="btn-icon">🍬</span>
+                <span class="btn-label">嗑糖</span>
+            </button>
+            <button onclick="Game.action('social')" class="action-btn action-mini type-social" title="混圈/扩列">
+                <span class="btn-icon">💬</span>
+                <span class="btn-label">社交</span>
+            </button>
+            <button onclick="Game.action('rest')" class="action-btn action-mini type-rest" title="休息/退网">
+                <span class="btn-icon">🛌</span>
+                <span class="btn-label">休息</span>
+            </button>
+            <button onclick="UI.toggleStatus()" class="action-mini" title="查看状态">
+                <span class="btn-icon">📊</span>
+                <span class="btn-label">状态</span>
+            </button>
         </div>
     </div>
 
-    <!-- SCREEN 3: Ending -->
-    <div id="screen-end" class="page-section fixed inset-0 bg-gray-900 z-50 overflow-y-auto flex flex-col items-center py-10">
-        <div class="bg-gray-800 text-white p-6 rounded-xl max-w-md w-[90%] border border-gray-600">
-            <h2 class="text-2xl font-bold text-center text-yellow-400 mb-2" id="end-title">结局标题</h2>
-            <p class="text-center text-gray-400 text-sm italic mb-6" id="end-desc">结局描述</p>
-            
+    <!-- ============================================ -->
+    <!--              SCREEN 3: 结局画面               -->
+    <!-- ============================================ -->
+    <div id="screen-end" class="page-section ending-screen">
+        <div class="ending-card">
+            <h2 class="ending-title" id="end-title">结局标题</h2>
+            <p class="ending-desc" id="end-desc">结局描述</p>
+
+            <!-- 雷达图 -->
             <div class="flex justify-center mb-6">
-                <svg id="radar-chart" width="200" height="200" viewBox="0 0 200 200"></svg>
+                <svg id="radar-chart" width="180" height="180" viewBox="0 0 200 200"></svg>
             </div>
 
-            <div class="bg-gray-900 p-3 rounded text-sm space-y-2 mb-4">
-                <div class="flex justify-between border-b border-gray-700 pb-1"><span>最终热度</span><span id="end-stat-heat" class="text-red-400"></span></div>
-                <div class="flex justify-between border-b border-gray-700 pb-1"><span>产出作品</span><span id="end-stat-works" class="text-blue-400"></span></div>
-                <div class="flex justify-between"><span>存款结余</span><span id="end-stat-money" class="text-green-400"></span></div>
+            <!-- 最终数据 -->
+            <div class="bg-white/10 rounded-xl p-4 space-y-3 mb-6">
+                <div class="flex justify-between text-white/80 border-b border-white/10 pb-2">
+                    <span>🔥 最终热度</span>
+                    <span id="end-stat-heat" class="font-bold text-pink-400"></span>
+                </div>
+                <div class="flex justify-between text-white/80 border-b border-white/10 pb-2">
+                    <span>📝 产出作品</span>
+                    <span id="end-stat-works" class="font-bold text-blue-400"></span>
+                </div>
+                <div class="flex justify-between text-white/80">
+                    <span>💰 存款结余</span>
+                    <span id="end-stat-money" class="font-bold text-green-400"></span>
+                </div>
             </div>
-            <button onclick="location.reload()" class="w-full bg-blue-600 py-3 rounded font-bold hover:bg-blue-500">再次入坑</button>
+
+            <!-- 人生总结 -->
+            <div id="life-summary" class="bg-white/95 rounded-xl p-4 mb-6 text-left max-h-64 overflow-y-auto">
+                <!-- 动态生成的成就、关键时刻、行动统计、评语 -->
+            </div>
+
+            <button onclick="location.reload()" class="cute-modal-btn w-full py-3">
+                🔄 再次入坑
+            </button>
         </div>
     </div>
 
-    <!-- Event Modal -->
-    <div id="modal-event" class="hidden fixed inset-0 bg-black/60 z-40 flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg max-w-sm w-full p-5 shadow-2xl modal-enter">
-            <h3 id="evt-title" class="font-bold text-lg text-gray-800 mb-2">事件标题</h3>
-            <p id="evt-text" class="text-sm text-gray-600 mb-4 leading-relaxed">事件内容...</p>
-            <div id="evt-effects" class="text-xs bg-gray-50 p-2 rounded mb-4 space-y-1 text-gray-500"></div>
-            <!-- 连续事件按钮容器（UI 会动态填充） -->
+    <!-- ============================================ -->
+    <!--                  模态框                       -->
+    <!-- ============================================ -->
+
+    <!-- 事件模态框 -->
+    <div id="modal-event" class="hidden fixed inset-0 cute-modal-overlay z-40 flex items-center justify-center p-4">
+        <div class="cute-modal max-w-sm w-full p-6">
+            <h3 id="evt-title" class="cute-modal-title">事件标题</h3>
+            <p id="evt-text" class="text-sm text-neutral-600 mb-4 leading-relaxed text-center"></p>
+            <div id="evt-effects" class="text-sm bg-neutral-50 p-3 rounded-xl mb-4 space-y-1"></div>
             <div id="evt-actions" class="mb-2"></div>
-            <button data-default="evt-ok" onclick="UI.closeModal()" class="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700">确定</button>
+            <button data-default="evt-ok" onclick="UI.closeModal()" class="cute-modal-btn w-full">
+                确定
+            </button>
         </div>
     </div>
 
-    <!-- Status Modal (雷达图) -->
-    <div id="modal-status" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" style="display: none;">
-        <div class="bg-white rounded-lg max-w-md w-full p-5 shadow-2xl modal-enter">
-            <h3 class="font-bold text-lg text-gray-800 mb-2">当前属性倾向</h3>
+    <!-- 状态模态框 -->
+    <div id="modal-status" class="hidden fixed inset-0 cute-modal-overlay z-50 flex items-center justify-center p-4">
+        <div class="cute-modal max-w-md w-full p-6">
+            <h3 class="cute-modal-title">📊 当前属性倾向</h3>
             <div class="flex justify-center mb-4">
-                <svg id="status-radar" width="300" height="300" viewBox="0 0 200 200"></svg>
+                <svg id="status-radar" width="280" height="280" viewBox="0 0 200 200"></svg>
             </div>
-            <div id="status-comment" class="text-sm text-gray-600 mb-4"></div>
-            <button onclick="UI.closeStatusModal()" class="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700">关闭</button>
+            <div id="status-comment" class="text-sm text-neutral-600 text-center mb-4"></div>
+            <button onclick="UI.closeStatusModal()" class="cute-modal-btn w-full">
+                关闭
+            </button>
         </div>
     </div>
 
-    <!-- JavaScript Modules -->
+    <!-- ============================================ -->
+    <!--                  脚本                         -->
+    <!-- ============================================ -->
     <script src="script/data.js"></script>
     <script src="script/state.js"></script>
     <script src="script/logic.js"></script>
     <script src="script/ui.js"></script>
     <script src="script/main.js"></script>
-    
-    <!-- Initialize Lucide Icons -->
-    <script>lucide.createIcons();</script>
 
-    <!-- 防御性初始化：确保首次加载时没有模态遮挡，并保证 setup 屏为激活屏 -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            try {
-                // 强制隐藏模态（以防被意外打开）
-                const me = document.getElementById('modal-event');
-                const ms = document.getElementById('modal-status');
-                if (me) me.classList.add('hidden');
-                if (ms) ms.classList.add('hidden');
+        // 初始化 Lucide 图标
+        lucide.createIcons();
 
-                // 确保只有 setup 为 active-screen
+        // 页面加载保护
+        document.addEventListener('DOMContentLoaded', function () {
+            try {
+                // 隐藏模态框
+                ['modal-event', 'modal-status'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.classList.add('hidden');
+                        el.style.display = 'none';
+                    }
+                });
+
+                // 确保只有 setup 屏幕激活
                 document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active-screen'));
                 const setup = document.getElementById('screen-setup');
                 if (setup) setup.classList.add('active-screen');
 
-                // 兼容性：确保关闭按钮有事件
-                const statusClose = document.querySelector('#modal-status button');
-                if (statusClose) {
-                    statusClose.addEventListener('click', function(){ document.getElementById('modal-status').classList.add('hidden'); });
-                }
             } catch (e) {
                 console.warn('Init guard failed', e);
             }
@@ -235,4 +391,5 @@
     </script>
 
 </body>
+
 </html>
