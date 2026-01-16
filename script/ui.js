@@ -119,6 +119,35 @@ const UI = {
         box.scrollTop = box.scrollHeight;
     },
 
+    // 【v3.0】事件日志 - 显示标题和完整内容
+    logEvent(event) {
+        const box = document.getElementById('game-log');
+        if (!box || !event) return;
+
+        const entry = document.createElement('div');
+        entry.className = 'log-entry event';
+
+        // 根据事件情感类型添加样式
+        if (event.tags && event.tags.sentiment) {
+            if (event.tags.sentiment === 'positive') {
+                entry.classList.add('positive');
+            } else if (event.tags.sentiment === 'negative') {
+                entry.classList.add('negative');
+            }
+        }
+
+        // 显示标题和内容
+        entry.innerHTML = `
+            <div class="font-bold text-sm mb-1">
+                <span class="text-neutral-400 mr-1 text-xs">W${State.turn}</span>
+                ${event.title}
+            </div>
+            <div class="text-xs text-neutral-600 pl-6">${event.text || ''}</div>
+        `;
+        box.appendChild(entry);
+        box.scrollTop = box.scrollHeight;
+    },
+
     showEventModal(evt) {
         const titleEl = document.getElementById('evt-title');
         const textEl = document.getElementById('evt-text');
@@ -399,13 +428,17 @@ const UI = {
             // 关键时刻
             summaryHtml += '<div class="mb-4"><h4 class="text-lg font-bold text-fuchsia-600 mb-2">📖 关键时刻</h4>';
             if (State.keyMoments && State.keyMoments.length > 0) {
-                summaryHtml += '<ul class="text-sm space-y-1">';
+                summaryHtml += '<div class="space-y-2">';
                 for (let moment of State.keyMoments) {
                     const typeIcon = moment.type === 'positive' ? '💖' : (moment.type === 'negative' ? '💔' : '📌');
+                    const typeColor = moment.type === 'positive' ? 'border-green-300 bg-green-50' : (moment.type === 'negative' ? 'border-red-300 bg-red-50' : 'border-neutral-300 bg-neutral-50');
                     const monthWeek = `第${Math.ceil(moment.turn / 4)}月`;
-                    summaryHtml += `<li class="text-neutral-600">${typeIcon} ${monthWeek}: ${moment.text}</li>`;
+                    summaryHtml += `<div class="p-2 rounded-lg border ${typeColor}">
+                        <div class="font-bold text-neutral-700">${typeIcon} ${moment.title} <span class="text-xs text-neutral-400">(${monthWeek})</span></div>
+                        <div class="text-xs text-neutral-600 mt-1">${moment.content}</div>
+                    </div>`;
                 }
-                summaryHtml += '</ul>';
+                summaryHtml += '</div>';
             } else {
                 summaryHtml += '<p class="text-neutral-500 text-sm">平平淡淡的一年</p>';
             }

@@ -555,10 +555,13 @@ body.theme-cute {
 .ending-screen {
     background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
     min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px 20px;
+    padding: 20px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .ending-card {
@@ -566,27 +569,29 @@ body.theme-cute {
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 24px;
-    padding: 32px;
+    padding: 24px;
     max-width: 400px;
     width: 100%;
     text-align: center;
+    flex-shrink: 0;
+    margin-bottom: 20px;
 }
 
 .ending-title {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
     background: var(--header-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .ending-desc {
     color: rgba(255, 255, 255, 0.7);
-    font-size: 14px;
+    font-size: 13px;
     font-style: italic;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 /* === 装饰元素 === */

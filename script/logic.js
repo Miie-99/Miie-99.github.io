@@ -375,7 +375,8 @@ const Logic = {
 
             State.modify(modifiedEffect);
             UI.showEventModal({ ...event, effect: modifiedEffect });
-            UI.log(`[事件] ${event.title}`, "event");
+            // 【v3.0】使用新的事件日志显示完整内容
+            UI.logEvent(event);
 
             // 【v3.0】记录关键时刻
             this.recordKeyMoment(event, event.tags?.sentiment);
@@ -576,7 +577,8 @@ const Logic = {
                 (event.tags.contentTypes.includes('cp_sweet') || event.tags.contentTypes.includes('rival_pain')));
 
         if (isImportant) {
-            State.addKeyMoment(event.title, sentiment || event.tags?.sentiment || 'neutral');
+            // 传递标题和文本内容
+            State.addKeyMoment(event.title, event.text || '', sentiment || event.tags?.sentiment || 'neutral');
         }
     },
 

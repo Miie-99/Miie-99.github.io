@@ -118,10 +118,11 @@ const State = {
     },
 
     // 【v3.0】记录关键时刻
-    addKeyMoment(text, type = 'neutral') {
+    addKeyMoment(title, content = '', type = 'neutral') {
         this.keyMoments.push({
             turn: this.turn,
-            text: text,
+            title: title,
+            content: content,
             type: type // 'positive', 'negative', 'neutral'
         });
         // 最多保留10个关键时刻
