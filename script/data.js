@@ -151,7 +151,13 @@ const DATA = {
             { title: "带薪搞黄", text: "趁着老板出差，你在工位上偷偷用手机写了一段{cp}两千字的豪车，这种背德感让你文思泉涌，效率极高。", effect: { money: 200, passion: 20, stamina: -5 }, tags: { sentiment: 'positive', contentTypes: ['creation', 'cp_sweet'] } },
             { title: "快递社死", text: "公司的前台帮你签收了快递，大声喊道：'谁的{cp}本子？' 包装盒上大大的R18标识让你想当场离职。", effect: { social: -30, san: -30 }, tags: { sentiment: 'negative', contentTypes: ['social_loss', 'san_loss'] } },
             { title: "现充的误解", text: "同事看你在画{cp}，凑过来说：'这俩男/女的也是兄弟/闺蜜情吗？' 你露出尴尬又不失礼貌的微笑：'是啊，社会主义友情。'", effect: { social: -5, san: -10 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
-            { title: "为了谷子", text: "为了买那个溢价三倍的{cp}场贩限定吧唧，你主动申请了周末加班。老板夸你上进，你只想让他闭嘴给钱。", effect: { money: 600, san: -15, love: 5 }, tags: { sentiment: 'neutral', contentTypes: ['money_gain', 'purchase'] } }
+            { title: "为了谷子", text: "为了买那个溢价三倍的{cp}场贩限定吧唧，你主动申请了周末加班。老板夸你上进，你只想让他闭嘴给钱。", effect: { money: 600, san: -15, love: 5 }, tags: { sentiment: 'neutral', contentTypes: ['money_gain', 'purchase'] } },
+            // 新增：基于真实故事
+            { title: "实习生名场面", text: "实习期间偷偷在工位看{cp}漫画，同事凑过来问：'看什么呢？' 还提到了魔道祖师和陈情令。你的汗当场就下来了。", effect: { san: -25, social: -10 }, tags: { sentiment: 'negative', contentTypes: ['san_loss', 'social_loss'] } },
+            { title: "午休惊魂", text: "午休时间戴着耳机听{cp}广播剧，听到激动处没忍住笑出声，抬头发现全办公室都在看你。", effect: { san: -15, social: -5 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
+            { title: "微信头像盘问", text: "领导突然问你微信头像是谁，你说是'一个游戏角色'。领导追问：'怎么两个人贴那么近？' 你恨不得原地消失。", effect: { san: -20, social: -8 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
+            { title: "公司Wi-Fi翻车", text: "用公司Wi-Fi刷{cp}同人，IT居然发邮件提醒你'注意网络使用规范'。他们是不是看到了什么？", effect: { san: -30, social: -15 }, tags: { sentiment: 'negative', contentTypes: ['san_loss', 'social_loss'] } },
+            { title: "年会才艺", text: "公司年会被逼表演才艺，你唱了一首{cp}的角色曲。没人听懂歌词，但你唱得声泪俱下，同事们面面相觑。", effect: { social: -5, san: -10, passion: 15 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } }
         ],
 
         // 2. 产粮/创作事件池
@@ -201,7 +207,14 @@ const DATA = {
             { title: "体格差神图", text: "刷到一张{cp}神图，身材高大的1单手抱起娇小的0，0的双腿紧紧盘在1腰间，这个体型差让你瞬间嘶哈。", effect: { love: 30, passion: 20 }, tags: { sentiment: 'positive', contentTypes: ['cp_sweet'] } },
             { title: "浴室湿身", text: "首页飘过一张{cp}浴室图，水蒸气缭绕中，她隔着湿透的白衬衫帮她扣扣子，眼神却盯着锁骨上的咬痕。这光影简直是艺术品！", effect: { love: 25, passion: 25, san: 5 }, tags: { sentiment: 'positive', contentTypes: ['cp_sweet', 'san_gain'] } },
             { title: "手书大作", text: "B站刷到一个{cp}播放量百万的手书《Magnet》，画面切到两人手指十指相扣、蝴蝶耳机纠缠的瞬间，配合那个旋律，你泪目了。", effect: { love: 35, passion: 20 }, tags: { sentiment: 'positive', contentTypes: ['cp_sweet'] } },
-            { title: "Cosplay", text: "看到一组{cp}漫展场照，两个Coser还原了原作里的经典壁咚名场面，那个眼神拉丝简直和原著一模一样，评论区都在按头。", effect: { social: 10, love: 20 }, tags: { sentiment: 'positive', contentTypes: ['cp_sweet', 'social_gain'] } }
+            { title: "Cosplay", text: "看到一组{cp}漫展场照，两个Coser还原了原作里的经典壁咚名场面，那个眼神拉丝简直和原著一模一样，评论区都在按头。", effect: { social: 10, love: 20 }, tags: { sentiment: 'positive', contentTypes: ['cp_sweet', 'social_gain'] } },
+            // 新增：基于真实故事
+            { title: "谷子碎了", text: "期待已久的{cp}亚克力立牌到货了，拆快递时手滑摔在地上，裂成了两半。你看着地上的碎片，眼泪不争气地流下来。", effect: { san: -35, money: -80, love: 5 }, tags: { sentiment: 'negative', contentTypes: ['san_loss', 'money_loss'] } },
+            { title: "直播名场面", text: "在看{cp}官方直播时，两位声优/演员互动超甜，弹幕全在刷'真的在一起了吧'。你激动得截了三十张图。", effect: { love: 30, passion: 25, san: 10 }, tags: { sentiment: 'positive', contentTypes: ['cp_sweet', 'san_gain'] } },
+            { title: "限定秒没", text: "{cp}联动限定开售，你定了五个闹钟准时开抢，结果0.5秒售罄。看着'已售完'三个字，你想砸手机。", effect: { san: -25, passion: -10 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
+            { title: "黄牛溢价", text: "抢不到的{cp}限定谷子在闲鱼上已经炒到原价五倍了。你咬咬牙下单，钱包在滴血，但谷子必须要。", effect: { money: -400, love: 15, san: -10 }, tags: { sentiment: 'negative', contentTypes: ['money_loss', 'purchase'] } },
+            { title: "官宣BE", text: "{cp}官方剧情走向BE了。你看着屏幕上的结局字幕，内心毫无波动，因为同人世界里他们永远HE。", effect: { san: -15, passion: 10, love: 5 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
+            { title: "翻车鉴定", text: "高价收的{cp}绝版周边被群里姐妹鉴定为盗版。你看着那个几乎以假乱真的吧唧，陷入了沉默。", effect: { san: -40, money: -200, social: 10 }, tags: { sentiment: 'negative', contentTypes: ['san_loss', 'money_loss'] } }
         ],
 
         // 4. 社交/扩列事件池
@@ -218,7 +231,15 @@ const DATA = {
             { title: "匿名树洞", text: "有人在匿名墙投稿吐槽你的{cp}文风太矫情，评论区居然还有人附和。你一气之下把那个树洞号拉黑了。", effect: { san: -15, myHeat: 5, toxic: true }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
             { title: "only展", text: "去参加了{cp}Only漫展，现场氛围好到爆炸，没有乱七八糟的人员，大家都在疯狂贴贴，你买本子买得停不下来。", effect: { social: 30, money: -500, passion: 20 }, tags: { sentiment: 'positive', contentTypes: ['social_gain', 'money_loss', 'purchase', 'cp_sweet'] } },
             { title: "一眼顶针", text: "{cp}群里混进了一个{rival}视奸号，发言没破绽，但从qq标签被你一眼识破。你带头把他挂了出来，群友纷纷称赞你火眼金睛，守护了这一方净土。", effect: { social: 15, combat: 20, san: 5 }, tags: { sentiment: 'positive', contentTypes: ['social_gain', 'san_gain', 'rival_pain'] } },
-            { title: "互推好文", text: "和一个{cp}同好互推粮单，结果发现彼此的XP惊人的一致！从ABO到Futa设定都能聊，你们相见恨晚，聊了个通宵。", effect: { social: 20, passion: 20, stamina: -20 }, tags: { sentiment: 'positive', contentTypes: ['social_gain', 'cp_sweet'] } }
+            { title: "互推好文", text: "和一个{cp}同好互推粮单，结果发现彼此的XP惊人的一致！从ABO到Futa设定都能聊，你们相见恨晚，聊了个通宵。", effect: { social: 20, passion: 20, stamina: -20 }, tags: { sentiment: 'positive', contentTypes: ['social_gain', 'cp_sweet'] } },
+            // 新增：基于真实故事
+            { title: "演唱会大战", text: "{cp}圈偶像开演唱会，嘉宾阵容引发CP粉大战。你看着曾经并肩作战的姐妹互相拉黑，感觉天塌了。", effect: { san: -35, social: -20, passion: -15 }, tags: { sentiment: 'negative', contentTypes: ['san_loss', 'social_loss'] } },
+            { title: "脱粉回踩", text: "有人在超话发了长文宣布脱粉，还把你当初安利她入坑的聊天记录截图挂了出来，说你'洗脑'她。", effect: { san: -40, social: -15, myHeat: 15 }, tags: { sentiment: 'negative', contentTypes: ['san_loss', 'social_loss'] } },
+            { title: "被家人发现", text: "姐姐闲着没事翻了你的手机，看到了你写的{cp}同人文。她问：'这个...是你写的？' 你恨不得钻进地缝里。", effect: { san: -45, social: -10 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
+            { title: "妈妈的疑问", text: "妈妈打扫你房间时翻到了{cp}本子，晚饭时她欲言又止，最后问：'你是不是有什么想告诉我的？' 你差点呛死。", effect: { san: -50, stamina: -10 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
+            { title: "小红书安利成功", text: "在小红书发了一篇{cp}安利帖，没想到火了！评论区涌入一堆新人问'入坑推荐'，你成了传教士。", effect: { social: 25, myHeat: 35, passion: 20 }, tags: { sentiment: 'positive', contentTypes: ['social_gain', 'heat_gain'] } },
+            { title: "微博抽奖连中", text: "参加{cp}太太的转发抽奖，居然连续中了两次！群里姐妹说你是'欧皇本皇'，太太还亲自私信祝贺。", effect: { san: 20, social: 15, love: 10 }, tags: { sentiment: 'positive', contentTypes: ['san_gain', 'social_gain'] } },
+            { title: "CP粉内战", text: "{cp}圈因为左右位吵起来了，你默默退出了三个群，把五个人拉进了黑名单。这个圈子，累了。", effect: { san: -30, social: -25, passion: -10 }, tags: { sentiment: 'negative', contentTypes: ['san_loss', 'social_loss'] } }
         ],
 
         // 5. 休息/退网事件池
@@ -229,7 +250,13 @@ const DATA = {
             { title: "电子阳痿", text: "突然对什么都提不起劲。不想看{cp}文，不想打游戏，不想刷推。只想躺在床上盯着天花板发呆。", effect: { stamina: 30, passion: -20, love: -10 }, tags: { sentiment: 'negative', contentTypes: [] } },
             { title: "腱鞘炎犯了", text: "长时间画{cp}导致手腕剧痛，医生警告你必须休息。你看着未完成的稿子，含泪给读者发了请假条。", effect: { stamina: -10, san: -10, works: 0 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
             { title: "岁月静好", text: "收拾了一下乱成猪窝的房间，把{cp}谷子整整齐齐摆进展示柜。看着痛柜，你觉得这破世界还是值得活的。", effect: { san: 30, stamina: -10, love: 20 }, tags: { sentiment: 'positive', contentTypes: ['san_gain', 'cp_sweet'] } },
-            { title: "现充体验", text: "强迫自己出门去公园走了两万步，暂时忘记了{cp}。没有网络信号，只有花草树木，你感觉自己体内的毒素被净化了。", effect: { stamina: 20, san: 15, passion: -10 }, tags: { sentiment: 'positive', contentTypes: ['san_gain'] } }
+            { title: "现充体验", text: "强迫自己出门去公园走了两万步，暂时忘记了{cp}。没有网络信号，只有花草树木，你感觉自己体内的毒素被净化了。", effect: { stamina: 20, san: 15, passion: -10 }, tags: { sentiment: 'positive', contentTypes: ['san_gain'] } },
+            // 新增：基于真实故事
+            { title: "翻旧物破防", text: "整理房间时翻出了三年前买的{cp}周边，那时候还在热恋期，现在CP都塌了。你对着一堆吧唧发呆了半小时。", effect: { san: -15, stamina: 20, love: 10 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
+            { title: "和室友出柜", text: "鼓起勇气向室友坦白了自己是{cp}姐的事实，没想到她说：'我也是！' 你们连夜开始了联合嗑糖。", effect: { san: 25, social: 20, passion: 15 }, tags: { sentiment: 'positive', contentTypes: ['san_gain', 'social_gain'] } },
+            { title: "父母的和解", text: "妈妈终于接受了你'喜欢看两个人谈恋爱'的爱好，虽然她还是不太理解为什么'不能是男女'。", effect: { san: 35, stamina: 15 }, tags: { sentiment: 'positive', contentTypes: ['san_gain'] } },
+            { title: "同人文治愈", text: "心情低落的时候翻出收藏夹里最爱的那篇{cp}甜饼，读着读着眼泪就下来了，但是是幸福的眼泪。", effect: { san: 25, stamina: 25, love: 15 }, tags: { sentiment: 'positive', contentTypes: ['san_gain', 'cp_sweet'] } },
+            { title: "清空黑历史", text: "花了一整天把早期写的那些OOC{cp}文全删了，虽然有点心疼，但看着干净的主页，你感觉人生重新开始了。", effect: { san: 20, stamina: -15, myHeat: -10 }, tags: { sentiment: 'positive', contentTypes: ['san_gain'] } }
         ]
     },
 
