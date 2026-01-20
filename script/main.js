@@ -101,6 +101,11 @@ const Game = {
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
         }
+
+        // 初始化App菜单
+        if (typeof Apps !== 'undefined') {
+            Apps.init();
+        }
     },
 
     action(type) {

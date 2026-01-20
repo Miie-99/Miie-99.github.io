@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>同人女跳坑模拟器 ✨</title>
-    <meta name="description" content="体验同人圈生活的养成模拟游戏，创作、嗑糖、社交、生存！">
+    <title>同人女跳坑模拟器 </title>
+    <meta name="description" content="赛马娘版">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -112,7 +112,7 @@
                     class="text-2xl font-bold bg-gradient-to-r from-primary-500 via-accent-400 to-warm-400 bg-clip-text text-transparent">
                     同人女跳坑模拟器
                 </h1>
-                <p class="text-xs text-neutral-500 mt-1">✨ 柔和二次元版 ✨</p>
+                <p class="text-xs text-neutral-500 mt-1">赛马娘版 </p>
             </div>
 
             <!-- CP设置 -->
@@ -159,7 +159,7 @@
         </div>
 
         <!-- 版本信息 -->
-        <p class="text-xs text-neutral-400 mt-4">v2.0 柔和二次元版 | 数值已重平衡</p>
+        <p class="text-xs text-neutral-400 mt-4">v2.0 </p>
     </div>
 
     <!-- ============================================ -->
@@ -170,35 +170,35 @@
         <!-- 新闻播报条 -->
         <div class="news-ticker">
             <div class="news-ticker-content" id="news-ticker-content">
-                <span class="news-item">欢迎来到同人圈！今天也要加油产粮哦~</span>
-                <span class="news-item hot">热门话题：#本命CP太甜了# 正在热议中</span>
+                <span class="news-item">欢迎来到{cp}圈！今天也要加油产粮哦~</span>
+                <span class="news-item hot">热门话题：#{cp}太甜了# 正在热议中</span>
                 <span class="news-item">圈内日常：又有太太更新神仙产出了！</span>
                 <span class="news-item happy">小提示：记得休息，身体最重要~</span>
                 <!-- 重复以实现无缝滚动 -->
-                <span class="news-item">欢迎来到同人圈！今天也要加油产粮哦~</span>
-                <span class="news-item hot">热门话题：#本命CP太甜了# 正在热议中</span>
+                <span class="news-item">欢迎来到{cp}圈！今天也要加油产粮哦~</span>
+                <span class="news-item hot">热门话题：#{cp}太甜了# 正在热议中</span>
                 <span class="news-item">圈内日常：又有太太更新神仙产出了！</span>
                 <span class="news-item happy">小提示：记得休息，身体最重要~</span>
             </div>
         </div>
 
         <!-- 顶部状态栏 -->
-        <div class="cute-header p-4 text-white">
+        <div class="cute-header p-4">
             <!-- 日期和阶段 -->
             <div class="flex justify-between items-center mb-3">
                 <div class="flex items-center gap-2">
-                    <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">
+                    <span class="bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm font-medium">
                         📅 <span id="disp-date">1年1月</span>
                     </span>
-                    <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">
+                    <span class="bg-warm-100 text-warm-800 px-3 py-1 rounded-full text-sm font-medium">
                         <span id="disp-phase">🌸 入坑期</span>
                     </span>
                 </div>
                 <div class="text-right">
-                    <div class="text-2xl font-bold stat-value">
+                    <div class="text-2xl font-bold stat-value text-primary-700">
                         🧠 <span id="val-san">100</span>
                     </div>
-                    <div class="text-xs opacity-80">SAN值</div>
+                    <div class="text-xs text-neutral-600">SAN值</div>
                 </div>
             </div>
 
@@ -361,6 +361,7 @@
     <script src="script/state.js"></script>
     <script src="script/logic.js"></script>
     <script src="script/ui.js"></script>
+    <script src="script/apps.js"></script>
     <script src="script/main.js"></script>
 
     <script>

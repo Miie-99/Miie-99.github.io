@@ -153,7 +153,7 @@ const DATA = {
             { title: "现充的误解", text: "同事看你在画{cp}，凑过来说：'这俩男/女的也是兄弟/闺蜜情吗？' 你露出尴尬又不失礼貌的微笑：'是啊，社会主义友情。'", effect: { social: -5, san: -10 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
             { title: "为了谷子", text: "为了买那个溢价三倍的{cp}场贩限定吧唧，你主动申请了周末加班。老板夸你上进，你只想让他闭嘴给钱。", effect: { money: 600, san: -15, love: 5 }, tags: { sentiment: 'neutral', contentTypes: ['money_gain', 'purchase'] } },
             // 新增：基于真实故事
-            { title: "实习生名场面", text: "实习期间偷偷在工位看{cp}漫画，同事凑过来问：'看什么呢？' 还提到了魔道祖师和陈情令。你的汗当场就下来了。", effect: { san: -25, social: -10 }, tags: { sentiment: 'negative', contentTypes: ['san_loss', 'social_loss'] } },
+            { title: "实习生名场面", text: "实习期间偷偷在工位看{cp}漫画，同事凑过来问：'看什么呢？' 还提到了{cp}原作。你的汗当场就下来了。", effect: { san: -25, social: -10 }, tags: { sentiment: 'negative', contentTypes: ['san_loss', 'social_loss'] } },
             { title: "午休惊魂", text: "午休时间戴着耳机听{cp}广播剧，听到激动处没忍住笑出声，抬头发现全办公室都在看你。", effect: { san: -15, social: -5 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
             { title: "微信头像盘问", text: "领导突然问你微信头像是谁，你说是'一个游戏角色'。领导追问：'怎么两个人贴那么近？' 你恨不得原地消失。", effect: { san: -20, social: -8 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
             { title: "公司Wi-Fi翻车", text: "用公司Wi-Fi刷{cp}同人，IT居然发邮件提醒你'注意网络使用规范'。他们是不是看到了什么？", effect: { san: -30, social: -15 }, tags: { sentiment: 'negative', contentTypes: ['san_loss', 'social_loss'] } },
@@ -173,7 +173,7 @@ const DATA = {
             { title: "清水也是肉", text: "虽然{cp}全程连手都没牵，但你通过眼神拉丝和暧昧的指尖接触，写出了比R18还要色气的张力，评论区一片狼嚎。", effect: { tech: 20, myHeat: 15, works: 0.5 }, tags: { sentiment: 'positive', contentTypes: ['creation', 'heat_gain', 'cp_sweet'] } },
             { title: "甚至过度", text: "画人体练习时逐渐走偏，最后变成了一张尺度惊人的{cp}车图。你犹豫再三，打满厚码发到了小号上。", effect: { passion: 20, san: -5, myHeat: 30 }, tags: { sentiment: 'positive', contentTypes: ['creation', 'heat_gain', 'cp_sweet'] } },
             { title: "先婚后爱", text: "写了一个{cp}土得掉渣的'先婚后爱'带球跑剧本，虽然剧情狗血，但这种古早味的酸爽感让数据出奇的好。", effect: { myHeat: 40, social: 10, works: 0.5 }, tags: { sentiment: 'positive', contentTypes: ['creation', 'heat_gain', 'cp_sweet'] } },
-            { title: "互攻万岁", text: "写腻了单向攻受，你尝试给{cp}写了一篇互攻（里板）。两人在床上争夺主导权，从床头打架到床尾，这种势均力敌的性张力太香了。", effect: { tech: 15, myHeat: 20, works: 0.5 }, tags: { sentiment: 'positive', contentTypes: ['creation', 'heat_gain', 'cp_sweet'] } },
+            { title: "互攻万岁", text: "写腻了单向攻受，你尝试给{cp}写了一篇互攻。两人在床上争夺主导权，从床头打架到床尾，这种势均力敌的性张力太香了。", effect: { tech: 15, myHeat: 20, works: 0.5 }, tags: { sentiment: 'positive', contentTypes: ['creation', 'heat_gain', 'cp_sweet'] } },
             { title: "百合车文", text: "深夜灵感爆发，为{cp}写了一篇关于'手指'和'湿润'的R18G。虽然没有真的器官描写，但那种湿漉漉的氛围感让你自己写完都脸红。", effect: { passion: 25, san: -5, works: 0.5 }, tags: { sentiment: 'positive', contentTypes: ['creation', 'cp_sweet'] } },
             { title: "日常甜饼", text: "不想搞虐的，给{cp}写了个同居三十题。比如'帮对方吹头发'、'穿对方的衬衫'。这种平淡的幸福感让读者在评论区直呼想结婚。", effect: { san: 10, myHeat: 15, works: 0.5 }, tags: { sentiment: 'positive', contentTypes: ['creation', 'san_gain', 'cp_sweet'] } },
             { title: "校园考据", text: "为了写好{cp}校园文，你专门查了日本女子高中的课程表和制服构造。写出来的'在更衣室互相整理领结'的情节细节满满，被夸严谨。", effect: { tech: 15, stamina: -10, works: 0.5 }, tags: { sentiment: 'positive', contentTypes: ['creation', 'cp_sweet'] } },
@@ -213,7 +213,7 @@ const DATA = {
             { title: "直播名场面", text: "在看{cp}官方直播时，两位声优/演员互动超甜，弹幕全在刷'真的在一起了吧'。你激动得截了三十张图。", effect: { love: 30, passion: 25, san: 10 }, tags: { sentiment: 'positive', contentTypes: ['cp_sweet', 'san_gain'] } },
             { title: "限定秒没", text: "{cp}联动限定开售，你定了五个闹钟准时开抢，结果0.5秒售罄。看着'已售完'三个字，你想砸手机。", effect: { san: -25, passion: -10 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
             { title: "黄牛溢价", text: "抢不到的{cp}限定谷子在闲鱼上已经炒到原价五倍了。你咬咬牙下单，钱包在滴血，但谷子必须要。", effect: { money: -400, love: 15, san: -10 }, tags: { sentiment: 'negative', contentTypes: ['money_loss', 'purchase'] } },
-            { title: "官宣BE", text: "{cp}官方剧情走向BE了。你看着屏幕上的结局字幕，内心毫无波动，因为同人世界里他们永远HE。", effect: { san: -15, passion: 10, love: 5 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
+            { title: "官宣BE", text: "{cp}官方剧情走向BE了。你看着屏幕上的结局字幕，内心毫无波动，因为你画的结局比这更悲惨，被人问是不是辱追。", effect: { san: -15, passion: 10, love: 5 }, tags: { sentiment: 'negative', contentTypes: ['san_loss'] } },
             { title: "翻车鉴定", text: "高价收的{cp}绝版周边被群里姐妹鉴定为盗版。你看着那个几乎以假乱真的吧唧，陷入了沉默。", effect: { san: -40, money: -200, social: 10 }, tags: { sentiment: 'negative', contentTypes: ['san_loss', 'money_loss'] } }
         ],
 

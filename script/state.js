@@ -68,6 +68,7 @@ const State = {
     keyMoments: [],
 
     // 【v3.0】初始CP热度（用于圈子缔造者结局）
+    // 游戏开始时会在reset()中随机初始化
     initialCpHeat: 15,
 
     // 【v3.0】最低SAN值记录（用于浴火重生成就）
@@ -150,6 +151,34 @@ const State = {
         this.cp = "AB";
         this.rival = "BA";
         this.identity = { prefix: null, role: null };
+
+        // 随机初始化CP热度到一个等级
+        // 热度等级: 北极圈(0-10), 冷圈(11-25), 温冷(26-40), 温(41-55), 温热(56-70), 热(71-85), 烫圈(86-100)
+        const heatLevels = [
+            { name: '北极圈', min: 0, max: 10, weight: 15 },
+            { name: '冷圈', min: 11, max: 25, weight: 30 },
+            { name: '温冷', min: 26, max: 40, weight: 25 },
+            { name: '温', min: 41, max: 55, weight: 15 },
+            { name: '温热', min: 56, max: 70, weight: 10 },
+            { name: '热', min: 71, max: 85, weight: 4 },
+            { name: '烫圈', min: 86, max: 100, weight: 1 }
+        ];
+
+        // 按权重随机选择等级
+        const totalWeight = heatLevels.reduce((sum, l) => sum + l.weight, 0);
+        let rand = Math.random() * totalWeight;
+        let selectedLevel = heatLevels[0];
+        for (const level of heatLevels) {
+            rand -= level.weight;
+            if (rand <= 0) {
+                selectedLevel = level;
+                break;
+            }
+        }
+
+        // 在该等级范围内随机一个具体数值
+        const randomHeat = Math.floor(Math.random() * (selectedLevel.max - selectedLevel.min + 1)) + selectedLevel.min;
+
         this.stats = {
             san: 80,
             passion: 80,
@@ -160,7 +189,7 @@ const State = {
             combat: 0,
             love: 40,
             myHeat: 0,
-            cpHeat: 15
+            cpHeat: randomHeat
         };
         this.progress = { works: 0 };
         this.flags = { toxic: false, goddess: false, phoenixEligible: false };
@@ -172,7 +201,9 @@ const State = {
         this.actionCounts = { work: 0, create: 0, consume: 0, social: 0, rest: 0 };
         this.totalSpent = 0;
         this.keyMoments = [];
-        this.initialCpHeat = 15;
+        this.initialCpHeat = randomHeat;
         this.minSan = 80;
+
+        console.log(`[初始化] CP热度等级: ${selectedLevel.name}, 数值: ${randomHeat}`);
     }
 };
