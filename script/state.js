@@ -64,6 +64,16 @@ const State = {
     // 【v3.0】消费追踪（用于氪金鲸鱼成就）
     totalSpent: 0,
 
+    // 【v3.1】App内容缓存（每月更新一次）
+    appContentCache: {},      // { appId: { month: X, content: [...] } }
+    appLastViewed: {},        // { appId: lastViewedMonth }
+    appHasNewContent: {},     // { appId: true/false } 小红点状态
+
+    // 获取当前游戏月份 (每4回合=1个月)
+    getCurrentMonth() {
+        return Math.ceil(this.turn / 4);
+    },
+
     // 【v3.0】关键时刻记录（用于人生总结）
     keyMoments: [],
 
@@ -203,6 +213,11 @@ const State = {
         this.keyMoments = [];
         this.initialCpHeat = randomHeat;
         this.minSan = 80;
+
+        // 【v3.1】App缓存重置
+        this.appContentCache = {};
+        this.appLastViewed = {};
+        this.appHasNewContent = {};
 
         console.log(`[初始化] CP热度等级: ${selectedLevel.name}, 数值: ${randomHeat}`);
     }

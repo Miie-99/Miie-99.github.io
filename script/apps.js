@@ -209,6 +209,10 @@ const Apps = {
         this.createAppViewer();
         this.createToast();
         this.updateUnlockStatus();
+
+        // 初始化红点状态
+        this.checkAllAppsForNewContent();
+        this.updateFabBadge();
     },
 
     updateUnlockStatus() {
@@ -265,16 +269,38 @@ const Apps = {
         const grid = document.getElementById('app-menu-grid');
         if (!grid) return;
         this.updateUnlockStatus();
-        grid.innerHTML = this.list.map(app => `
+        this.checkAllAppsForNewContent(); // 检查所有App是否有新内容
+        grid.innerHTML = this.list.map(app => {
+            const hasNew = app.unlocked && State.appHasNewContent[app.id];
+            return `
             <div class="app-menu-item ${app.unlocked ? '' : 'locked'}" 
                  onclick="${app.unlocked ? `Apps.openApp('${app.id}')` : ''}"
                  title="${app.unlocked ? app.name : app.unlockDesc || '未解锁'}">
                 <div class="app-icon" style="background: ${app.unlocked ? app.color : '#444'}">
                     ${app.unlocked ? this.icons[app.icon] : this.icons.bookmark}
+                    ${hasNew ? '<span class="app-badge"></span>' : ''}
                 </div>
                 <div class="app-name">${app.name}</div>
             </div>
-        `).join('');
+        `}).join('');
+    },
+
+    // 检查所有App是否有新内容（每月更新）
+    checkAllAppsForNewContent() {
+        const currentMonth = State.getCurrentMonth();
+        this.list.forEach(app => {
+            if (!app.unlocked) return;
+            const lastViewed = State.appLastViewed[app.id] || 0;
+            const cachedMonth = State.appContentCache[app.id]?.month || 0;
+            // 如果当前月份大于缓存月份，标记为有新内容
+            if (currentMonth > cachedMonth) {
+                State.appHasNewContent[app.id] = true;
+            }
+            // 如果用户还没看过这个月的内容
+            if (lastViewed < currentMonth) {
+                State.appHasNewContent[app.id] = true;
+            }
+        });
     },
 
     createAppViewer() {
@@ -321,11 +347,38 @@ const Apps = {
         if (!app || !app.unlocked) return;
         this.currentApp = app;
         this.toggleMenu();
+
+        const currentMonth = State.getCurrentMonth();
+
+        // 清除小红点并记录查看时间
+        State.appHasNewContent[appId] = false;
+        State.appLastViewed[appId] = currentMonth;
+
         const viewer = document.getElementById('app-viewer');
         const content = document.getElementById('app-viewer-content');
         content.innerHTML = this.renderAppContent(app);
         viewer.classList.remove('hidden');
         this.bindAppEvents();
+
+        // 更新FAB上的红点显示
+        this.updateFabBadge();
+    },
+
+    // 更新FAB按钮上的红点（如果有任何App有新内容）
+    updateFabBadge() {
+        const fab = document.getElementById('app-fab');
+        if (!fab) return;
+        const hasAnyNew = this.list.some(app =>
+            app.unlocked && State.appHasNewContent[app.id]
+        );
+        if (hasAnyNew) {
+            if (!fab.querySelector('.fab-badge')) {
+                fab.innerHTML += '<span class="fab-badge"></span>';
+            }
+        } else {
+            const badge = fab.querySelector('.fab-badge');
+            if (badge) badge.remove();
+        }
     },
 
     closeApp() {
@@ -783,18 +836,18 @@ const Apps = {
 
     getWeiboPosts(cp, level) {
         const templates = [
-            { content: `${cp}太甜了救命！！！原作互动我直接原地去世`, media: `${cp}原作同框截图，两人眼神交汇` },
-            { content: `新产出！${cp}咖啡店AU 日常小甜饼~`, media: `${cp}插画，现代AU咖啡店背景` },
-            { content: `啊啊啊刚看完${cp}的BE结局我整个人裂开了`, media: `${cp}虐向同人图，雨中诀别` },
-            { content: `产出预警！${cp}双向暗恋梗 破镜重圆 HE`, media: `${cp}手绘漫画封面，两人背靠背` },
-            { content: `${cp}的病娇梗真的太绝了 黑化后更香`, media: `${cp}暗黑系同人图，A拥抱B` },
-            { content: `如果有平行世界，希望${cp}一定要幸福啊`, media: `${cp}同框合影，樱花树下` },
-            { content: `我宣布${cp}就是坠吊的！无人反驳！`, media: `${cp}原作动态截图` },
-            { content: `救命...这个眼神...${cp}是真的在谈吧？`, media: `${cp}细节放大图` },
-            { content: `冷圈产粮自割腿肉，求同担！#${cp}#`, media: `${cp}手稿草图` },
-            { content: `大半夜被${cp}刀傻了，为什么要这样对他俩呜呜`, media: `${cp}玻璃渣预警插图` },
-            { content: `这是什么绝美爱情...${cp}给我锁死！`, media: `${cp}同人Q版图` },
-            { content: `原作终于更新了！${cp}同框了整整三秒！`, media: `${cp}新番截图` }
+            { content: `${cp}太甜了救命！！！原作互动我直接原地去世`, media: `${cp}原作同框截图，两人眼神交汇`, contentType: 'image' },
+            { content: `新产出！${cp}咖啡店AU 日常小甜饼~`, media: `${cp}插画，现代AU咖啡店背景`, contentType: 'image' },
+            { content: `啊啊啊刚看完${cp}的BE结局我整个人裂开了`, media: `${cp}虐向同人图，雨中诀别`, contentType: 'image' },
+            { content: `产出预警！${cp}双向暗恋梗 破镜重圆 HE`, media: `${cp}手绘漫画封面，两人背靠背`, contentType: 'image' },
+            { content: `${cp}的病娇梗真的太绝了 黑化后更香`, media: `${cp}暗黑系同人图，A拥抱B`, contentType: 'image' },
+            { content: `如果有平行世界，希望${cp}一定要幸福啊`, media: `${cp}同框合影，樱花树下`, contentType: 'image' },
+            { content: `我宣布${cp}就是坠吊的！无人反驳！`, media: `${cp}原作动态截图`, contentType: 'image' },
+            { content: `救命...这个眼神...${cp}是真的在谈吧？`, media: `${cp}细节放大图`, contentType: 'image' },
+            { content: `冷圈产粮自割腿肉，求同担！#${cp}#`, media: `${cp}手稿草图`, contentType: 'image' },
+            { content: `大半夜被${cp}刀傻了，为什么要这样对他俩呜呜`, media: `${cp}玻璃渣预警插图`, contentType: 'image' },
+            { content: `这是什么绝美爱情...${cp}给我锁死！`, media: `${cp}同人Q版图`, contentType: 'image' },
+            { content: `原作终于更新了！${cp}同框了整整三秒！`, media: `${cp}新番截图`, contentType: 'image' }
         ];
         return templates.map((t, i) => ({
             ...t,
@@ -802,10 +855,7 @@ const Apps = {
             time: (i + 1) + '小时前',
             avatarColor: i % 2 === 0 ? '#ff6b9d' : '#6b9dff',
             ...this.calcStats(),
-            commentList: [
-                { name: this.getRandomUsername('weibo'), text: '啊啊啊我也觉得！是真的！', time: '10分钟前', likes: 20 },
-                { name: this.getRandomUsername('weibo'), text: '太太神仙产出，已关注', time: '5分钟前', likes: 15 }
-            ]
+            commentList: CommentPools.generateCommentList('weibo', t.contentType || 'image', 2 + Math.floor(Math.random() * 3))
         }));
     },
 
@@ -828,7 +878,8 @@ const Apps = {
             ...w,
             author: this.getRandomUsername('lofter'),
             avatarColor: '#e8d5c4',
-            ...this.calcStats()
+            ...this.calcStats(),
+            commentList: CommentPools.generateCommentList('lofter', 'image', 2 + Math.floor(Math.random() * 2))
         }));
     },
 
@@ -851,7 +902,8 @@ const Apps = {
             ...v,
             up: this.getRandomUsername('bilibili'),
             duration: '03:45',
-            views: '1.2万'
+            views: '1.2万',
+            commentList: CommentPools.generateCommentList('bilibili', 'video', 2 + Math.floor(Math.random() * 3))
         }));
     },
 
@@ -914,7 +966,8 @@ const Apps = {
             name: this.getRandomUsername('twitter'),
             avatarColor: '#1da1f2',
             ...t,
-            ...this.calcStats()
+            ...this.calcStats(),
+            commentList: CommentPools.generateCommentList('twitter', 'image', 1 + Math.floor(Math.random() * 3))
         }));
     },
 
@@ -935,7 +988,8 @@ const Apps = {
             username: this.getRandomUsername('instagram'),
             avatarColor: '#c13584',
             ...t,
-            likes: this.randomInRange(100, 5000)
+            likes: this.randomInRange(100, 5000),
+            commentList: CommentPools.generateCommentList('instagram', 'image', 2 + Math.floor(Math.random() * 2))
         }));
     }
 };
