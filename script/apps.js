@@ -67,43 +67,81 @@ const Apps = {
         burning: { name: '烫圈', min: 86, max: 100, likes: [8000, 30000], comments: [1200, 5000], views: [300000, 1000000] }
     },
 
-    // 同人女风格ID库
+    // 真实同人女/命苦ID库（来自用户提供的示例）
     usernames: {
+        mingku: [
+            '所有人上跑道', '后三排往前坐', '你给俺个说法', '视奸手滑点赞', '买完立刻降价',
+            '拉屎天天窜稀', '尿急没有厕所', '毕业等于失业', '论文忘记保存', '你一周干啥了',
+            '创新点在哪里', '拼好饭被偷吃', '前男友谈富婆', '把妹王没有把', '常灌好了攻呢',
+            '人在德国上学', '补考还是挂科', '作业一字未动', '明天即将返校', '拉黑还推对家',
+            '吃饭还打厨子', '嗯嗯继续打我', '买饭忘记领券', '老公在外做鸭', '大风吹走裤衩',
+            '好饭无人来拼', '也曾大喊来财', '四级差点及格', '睡觉遇见蟑螂', '现在进展如何',
+            '答辩没过延毕', '法考差一分过', '骂我真会爽到', '神券膨至两块', '摔倒误食鸡屎',
+            '耍帅被偷高低', '命苦ID征集', '一周六天早八', '神券无法膨胀', '黄焖鸡是土豆',
+            '后三排不坐人', '补考交四百块', '神券献给胖猫', '吃屎呛到了', '老公在外做零',
+            '一笑就滴尿', '这节课收手机', '恁咋不早说', '周末加到凌晨', '月初加到月末',
+            '明天又要上学', '明天又要上班', '神券不能膨胀', '好饭已被拼走', '买拼好饭被偷',
+            '期末没过六十', '下雨鞋里进水', '到家忘拿快递', '无早八忘关铃', '翘早八被点名',
+            '不要退货退款', '已读不回拉黑', '外卖忘用神券', '出门忘带钥匙', '科二三次没过',
+            '老公为爱当零', '每逢经期窜稀', '吃我兵线作甚', '还我中路血包', '每天连跪百把',
+            '实验做不出来', '导师叫你来下', '上班又迟到了', '大招框住不上', '拉屎忘记带纸',
+            '我外卖被偷了', '请假理由不当', '小组作业抓紧', '拉屎扣破手纸', '指甲缝里有屎',
+            '论文写完被删', '凑满减没付钱', '刚好错过地铁', '一周7天早八', '离家双非学医',
+            '怎么又周一了', '假期离开我了', '加班到半夜', '打车没补贴', '上课憋笑崩屁',
+            '刚逃课就签到', '加班没工资', '打工取钱被抢', '工作摸鱼被开', '抖腿被记玩脚',
+            '客户要第一版', '还是要第一版', '下周一开学', '论文打回重写'
+        ],
         weibo: [
-            '今天也在磕糖', '深夜产粮机器', '追更到天亮', '本命锁死', '冷圈自娱自乐',
-            '熬夜画图人', '日更三千字', '摸鱼摸出海', '只吃不产', '太太的小跟班',
-            '半夜爬墙党', '沙雕粉头', '肝完这章就睡', '氪金战士', '谷子收纳盒',
-            '催更专业户', '坑底蹲守人', '混圈老油条', '退圈预备役', '圈地自萌中'
+            '冷雨下玫瑰', '阮棠', '浅诉', '休止符', '茉莉降雪', '绿木', '碎玻璃心', '夏令时',
+            '杰约是种美德', '觅元素', '一碗元宵鱼', 'の訫澪学妹_🍀', '温良de主角嬷',
+            '梦违科学世纪', '太中四万了', 'Pinnxier-20th', '反线面', '于矿洞遇见你那湛蓝的眼眸',
+            '怪我星衍主义ovo', '爆汁蟑螂冰镇黄油煤气罐', '旧难一点', '碳氧循环', '冰岛大虾🍤',
+            '放射性尘埃', '绝望的女公10086', '独自一人走进旷野', '狡いカラス', '产品奴',
+            '家耀祖最严厉的母亲', '雪桃菓子', '弥儿心总如水', '精神状态十分美丽yyyy'
         ],
         lofter: [
-            '月下听风眠', '星河入梦来', '墨染青衫客', '浮生若梦吟', '临窗小憩人',
-            '孤舟蓑笠翁', '落花时节又', '清风徐来处', '半盏流年瘦', '烟雨江南客',
-            '执笔绘长安', '素手调朱砂', '琉璃月下魂', '长歌当酒饮', '青灯古卷旁'
+            '乱溪朝歌', '重楼引', '烟水迢迢共轻舟', '檀钰控', '光祈奴', '安帕就酱',
+            '重度依赖患者', '孤舟蓑笠翁', '落花时节又', '执笔绘长安', '素手调朱砂',
+            '琉璃月下魂', '清灯古卷旁', '彧行', '山佳十九见', '南隰有杨zh',
+            '乱絮飞花送行舟', '蓄力吃抛春恨', '昨夜秋雨兼风', '暗杀误触烹饪'
         ],
         bilibili: [
-            '肝帝本帝', '咕咕咕鸽王', '三连求求了', '下次一定更', '混剪小能手',
-            '手书画到秃', '鬼畜调教师', '弹幕护卫队', '硬币投手', '充电侠女装',
-            '追番到凌晨', '补档考古人', '冷门安利王', '整活儿达人', '素材搬运工'
+            '混剪小能手', '手书画到秃', '鬼畜调教师', '由于太冷自割腿肉', '白奶的起头',
+            '由于磕到昏厥申请去世', '弹幕护卫中心', '硬币投手', '充电侠女装',
+            '追番到凌晨', '补档考古人', '耶咻大惊失色地', '难全弈星不出传说不改名',
+            'Freestyle', '歪比巴卜', '三连求求了', '下次一定更'
         ],
         ao3: [
-            'midnightwriter', 'dreamweaver_cn', 'starlight_ink', 'moonlit_pages',
-            'silent_observer', 'words_in_dark', 'coffee_and_keys', 'sleepless_muse'
+            'midnight_writer', 'dream_weaver', 'starlight_ink', 'words_in_dark',
+            'silent_observer', 'coffee_and_keys', 'sleepless_muse', 'momo',
+            'rockbounce', 'Everglowww', 'Blessing', 'Bloodgarment'
         ],
         xianyu: [
-            '谷子回血中', '出坑大甩卖', '周边清仓啦', '理性消费人', '吃土也要买',
-            '求收留谷子', '血亏出周边', '二手本子铺', '挂件清理中', '再买剁手'
+            '谷子回血中', '出坑大甩卖', '周边清仓啦', '吃土也要买', '血亏出周边',
+            '掌上咪猪', '豆浆一杯', '南梦雪', '糕手', '好困', '福满', '小小情愿'
         ],
         twitter: [
-            '夜行猫又', '星屑収集家', '月下の絵師', '夢見る文字書き', '静かな観察者',
-            '深夜創作人', '孤独な蒐集家', 'ペン先の魔法', '物語紡ぎ手', '夜明けの読者'
+            '夜行猫又', '星屑収集家', '月下の絵師', 'ペン先の魔法', '物語纺ぎ手',
+            '孤独な蒐集家', '深夜創作人', '静かな观察者', '夜明けの读者'
         ],
         instagram: [
-            'cos_planet', 'merch_heaven', 'daily_fandom', 'itabag_life', 'event_hunter',
-            '谷圈快乐人', 'JK制服控', '痛包晒一晒', '展子选手', '拍照废人'
+            'itabag_life', 'event_hunter', '拍照废人', 'Hanaum杉夏', '芝士分子',
+            'cos_planet', 'merch_heaven', 'daily_fandom', '痛包晒一晒'
         ]
     },
 
-    // App定义列表（提高解锁门槛）
+    // CP相关ID模板
+    cpIdTemplates: [
+        '参赛者💞{cp}加油', '{cp}最严厉的司仪', '{cp}入{c0}来', '{cp}入{c1}来',
+        '全网最尊重{cp}的账号', '{cp}之女', '{cp}教忠诚孝女', '看{cp}草壁',
+        '{cp}力挺女友{c1}', '{cp}到底好甜ovo', '怪我{cp}主义', '家猫{cp}',
+        '神不磕{cp}我磕', '{cp}奴', '绝望的{cp}姐', '爱吃{cp}糖', '卖{cp}佛',
+        '{cp}武魂融合技', '{cp}啥时候结婚', '{cp}重度依赖', '{cp}全肯定bot',
+        '爱你{cp}明天见', '你爸妈是假的{cp}都是真的', '{cp}瘾', '{cp}癖',
+        '高举{cp}大旗', '{cp}唯爱{c0}', '{cp}携批夜袭{c1}'
+    ],
+
+    // App定义列表
     list: [
         { id: 'weibo', name: '围脖', icon: 'fire', unlocked: true, color: '#e6162d' },
         { id: 'lofter', name: '老福特', icon: 'bookmark', unlocked: true, color: '#2d5a88' },
@@ -131,7 +169,6 @@ const Apps = {
         return { key: 'arctic', ...this.heatLevels.arctic };
     },
 
-    // 根据热度等级生成随机数据
     randomInRange(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     },
@@ -147,13 +184,25 @@ const Apps = {
         };
     },
 
-    // 随机获取用户名
     getRandomUsername(platform) {
-        const names = this.usernames[platform] || this.usernames.weibo;
-        return names[Math.floor(Math.random() * names.length)];
+        const cp = State.cp || 'AB';
+        const roll = Math.random();
+        if (roll < 0.3) {
+            const mingkuIds = this.usernames.mingku;
+            return mingkuIds[Math.floor(Math.random() * mingkuIds.length)];
+        } else if (roll < 0.5) {
+            const templates = this.cpIdTemplates;
+            const template = templates[Math.floor(Math.random() * templates.length)];
+            let name = template.replace('{cp}', cp);
+            name = name.replace('{c0}', cp[0] || 'A');
+            name = name.replace('{c1}', cp[1] || 'B');
+            return name;
+        } else {
+            const names = this.usernames[platform] || this.usernames.weibo;
+            return names[Math.floor(Math.random() * names.length)];
+        }
     },
 
-    // 初始化
     init() {
         this.createFloatingButton();
         this.createMenuPanel();
@@ -162,7 +211,6 @@ const Apps = {
         this.updateUnlockStatus();
     },
 
-    // 检查解锁状态（提高门槛）
     updateUnlockStatus() {
         this.list.forEach(app => {
             switch (app.id) {
@@ -172,26 +220,21 @@ const Apps = {
                     app.unlocked = true;
                     break;
                 case 'ao3':
-                    // 技术≥50 或 完成3篇作品
                     app.unlocked = (State.stats.tech >= 50) || (State.progress.works >= 3);
                     break;
                 case 'xianyu':
-                    // 消费≥15次 或 金钱≥5000
                     app.unlocked = ((State.actionCounts?.consume || 0) >= 15) || (State.stats.money >= 5000);
                     break;
                 case 'twitter':
-                    // 社交≥60 且 热度≥80
                     app.unlocked = (State.stats.social >= 60) && (State.stats.myHeat >= 80);
                     break;
                 case 'instagram':
-                    // 个人热度≥60
                     app.unlocked = (State.stats.myHeat >= 60);
                     break;
             }
         });
     },
 
-    // 创建悬浮按钮
     createFloatingButton() {
         if (document.getElementById('app-fab')) return;
         const btn = document.createElement('div');
@@ -202,7 +245,6 @@ const Apps = {
         document.body.appendChild(btn);
     },
 
-    // 创建菜单面板
     createMenuPanel() {
         if (document.getElementById('app-menu')) return;
         const panel = document.createElement('div');
@@ -223,7 +265,6 @@ const Apps = {
         const grid = document.getElementById('app-menu-grid');
         if (!grid) return;
         this.updateUnlockStatus();
-
         grid.innerHTML = this.list.map(app => `
             <div class="app-menu-item ${app.unlocked ? '' : 'locked'}" 
                  onclick="${app.unlocked ? `Apps.openApp('${app.id}')` : ''}"
@@ -265,7 +306,6 @@ const Apps = {
         this.menuOpen = !this.menuOpen;
         const menu = document.getElementById('app-menu');
         const fab = document.getElementById('app-fab');
-
         if (this.menuOpen) {
             this.renderMenuGrid();
             menu.classList.remove('hidden');
@@ -279,13 +319,10 @@ const Apps = {
     openApp(appId) {
         const app = this.list.find(a => a.id === appId);
         if (!app || !app.unlocked) return;
-
         this.currentApp = app;
         this.toggleMenu();
-
         const viewer = document.getElementById('app-viewer');
         const content = document.getElementById('app-viewer-content');
-
         content.innerHTML = this.renderAppContent(app);
         viewer.classList.remove('hidden');
         this.bindAppEvents();
@@ -316,7 +353,6 @@ const Apps = {
         const itemId = btn.dataset.id;
         const countEl = btn.querySelector('.like-count');
         const iconEl = btn.querySelector('svg');
-
         if (this.likedItems.has(itemId)) {
             this.likedItems.delete(itemId);
             if (countEl) countEl.textContent = parseInt(countEl.textContent) - 1;
@@ -335,7 +371,6 @@ const Apps = {
         const container = btn.closest('.comment-item');
         const replies = container.querySelector('.comment-replies');
         const icon = btn.querySelector('svg');
-
         if (replies.classList.contains('collapsed')) {
             replies.classList.remove('collapsed');
             icon.outerHTML = this.icons.collapse;
@@ -352,11 +387,9 @@ const Apps = {
         const input = container.querySelector('input');
         const text = input.value.trim();
         if (!text) return;
-
         const postId = container.dataset.postId || 'default';
         if (!this.userComments[postId]) this.userComments[postId] = [];
         this.userComments[postId].push({ name: '我', text, time: '刚刚', likes: 0 });
-
         const commentsList = container.previousElementSibling;
         if (commentsList) {
             const newComment = document.createElement('div');
@@ -377,7 +410,6 @@ const Apps = {
             commentsList.appendChild(newComment);
             newComment.querySelector('.action-like').onclick = (e) => this.handleLike(e.currentTarget);
         }
-
         input.value = '';
         this.showToast('评论已发布');
     },
@@ -400,7 +432,6 @@ const Apps = {
         const month = this.getCurrentMonth();
         const cp = State.cp || 'AB';
         const rival = State.rival || 'BA';
-
         switch (app.id) {
             case 'weibo': return this.renderWeibo(month, cp, rival);
             case 'lofter': return this.renderLofter(month, cp, rival);
@@ -413,357 +444,327 @@ const Apps = {
         }
     },
 
-    // ========== 围脖 ==========
-    renderWeibo(month, cp, rival) {
-        const level = this.getHeatLevel();
-        const posts = this.getWeiboPosts(cp, level);
-
-        return `
-        <div class="app-weibo">
-            <div class="app-header weibo-header">
-                <span class="header-back" onclick="Apps.closeApp()">${this.icons.back}</span>
-                <span class="header-title">围脖</span>
-                <span class="header-action">${this.icons.search}</span>
-            </div>
-            
-            <div class="hot-section">
-                <div class="section-title">${this.icons.fire} 围脖热搜 <span class="heat-badge">${level.name}</span></div>
-                <div class="hot-list">
-                    ${this.getWeiboHotSearches(cp, level).map((item, i) => `
-                        <div class="hot-item">
-                            <span class="hot-rank ${i < 3 ? 'top' : ''}">${i + 1}</span>
-                            <span class="hot-text">${item.text}</span>
-                            ${item.tag ? `<span class="hot-tag ${item.tag}">${item.tagText}</span>` : ''}
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-            
-            <div class="feed-section">
-                <div class="section-title">#${cp}超话#</div>
-                ${posts.map((post, idx) => this.renderPost(post, `weibo-${idx}`)).join('')}
-            </div>
-        </div>
-        `;
-    },
-
     renderPost(post, postId) {
         return `
-        <div class="post-card" data-id="${postId}">
-            <div class="post-header">
-                <div class="post-avatar" style="background: ${post.avatarColor}"></div>
-                <div class="post-user-info">
-                    <div class="post-name">${post.name}</div>
-                    <div class="post-time">${post.time}</div>
+            <div class="post-card" data-id="${postId}">
+                <div class="post-header">
+                    <div class="post-avatar" style="background: ${post.avatarColor}"></div>
+                    <div class="post-user-info">
+                        <div class="post-name">${post.name}</div>
+                        <div class="post-time">${post.time}</div>
+                    </div>
+                </div>
+                <div class="post-content">${post.content}</div>
+                ${post.media ? `
+                <div class="media-placeholder">
+                    <div class="media-icon">${this.icons.image}</div>
+                    <div class="media-desc">[${post.media}]</div>
+                </div>
+                ` : ''}
+                <div class="post-actions">
+                    <button class="action-btn action-like" data-id="${postId}">
+                        ${this.icons.like}<span class="like-count">${post.likes}</span>
+                    </button>
+                    <button class="action-btn action-comment">
+                        ${this.icons.comment}<span>${post.comments}</span>
+                    </button>
+                    <button class="action-btn action-share">
+                        ${this.icons.share}<span>${post.reposts}</span>
+                    </button>
+                </div>
+                <div class="comments-section">
+                    <div class="comments-list">
+                        ${(post.commentList || []).map((c, i) => this.renderComment(c, `${postId}-c${i}`)).join('')}
+                    </div>
+                    <div class="comment-input-area" data-post-id="${postId}">
+                        <input type="text" placeholder="写评论..." class="comment-input">
+                        <button class="comment-submit">${this.icons.send}</button>
+                    </div>
                 </div>
             </div>
-            
-            <div class="post-content">${post.content}</div>
-            
-            ${post.media ? `
-            <div class="media-placeholder">
-                <div class="media-icon">${this.icons.image}</div>
-                <div class="media-desc">[${post.media}]</div>
-            </div>
-            ` : ''}
-            
-            <div class="post-actions">
-                <button class="action-btn action-like" data-id="${postId}">
-                    ${this.icons.like}<span class="like-count">${post.likes}</span>
-                </button>
-                <button class="action-btn action-comment">
-                    ${this.icons.comment}<span>${post.comments}</span>
-                </button>
-                <button class="action-btn action-share">
-                    ${this.icons.share}<span>${post.reposts}</span>
-                </button>
-            </div>
-            
-            <div class="comments-section">
-                <div class="comments-list">
-                    ${(post.commentList || []).map((c, i) => this.renderComment(c, `${postId}-c${i}`)).join('')}
-                </div>
-                <div class="comment-input-area" data-post-id="${postId}">
-                    <input type="text" placeholder="写评论..." class="comment-input">
-                    <button class="comment-submit">${this.icons.send}</button>
-                </div>
-            </div>
-        </div>
         `;
     },
 
     renderComment(comment, commentId) {
         const hasReplies = comment.replies && comment.replies.length > 0;
         return `
-        <div class="comment-item" data-id="${commentId}">
-            <div class="comment-avatar" style="background: ${comment.avatarColor || '#999'}"></div>
-            <div class="comment-body">
-                <span class="comment-name">${comment.name}</span>
-                <span class="comment-text">${comment.text}</span>
-                <div class="comment-meta">
-                    <span>${comment.time}</span>
-                    <button class="action-like mini" data-id="${commentId}">
-                        ${this.icons.like}<span class="like-count">${comment.likes || 0}</span>
-                    </button>
-                    <button class="action-reply">${this.icons.reply}</button>
-                </div>
-                
-                ${hasReplies ? `
-                <div class="comment-replies collapsed">
-                    ${comment.replies.map((r, i) => `
-                        <div class="reply-item">
-                            <span class="reply-name">${r.name}</span>
-                            <span class="reply-to">回复 @${r.replyTo || comment.name}</span>
-                            <span class="reply-text">${r.text}</span>
-                            <div class="reply-meta">
-                                <span>${r.time}</span>
-                                <button class="action-like mini" data-id="${commentId}-r${i}">
-                                    ${this.icons.like}<span class="like-count">${r.likes || 0}</span>
-                                </button>
+            <div class="comment-item" data-id="${commentId}">
+                <div class="comment-avatar" style="background: ${comment.avatarColor || '#999'}"></div>
+                <div class="comment-body">
+                    <span class="comment-name">${comment.name}</span>
+                    <span class="comment-text">${comment.text}</span>
+                    <div class="comment-meta">
+                        <span>${comment.time}</span>
+                        <button class="action-like mini" data-id="${commentId}">
+                            ${this.icons.like}<span class="like-count">${comment.likes || 0}</span>
+                        </button>
+                        <button class="action-reply">${this.icons.reply}</button>
+                    </div>
+                    ${hasReplies ? `
+                    <div class="comment-replies collapsed">
+                        ${comment.replies.map((r, i) => `
+                            <div class="reply-item">
+                                <span class="reply-name">${r.name}</span>
+                                <span class="reply-to">回复 @${r.replyTo || comment.name}</span>
+                                <span class="reply-text">${r.text}</span>
+                                <div class="reply-meta">
+                                    <span>${r.time}</span>
+                                    <button class="action-like mini" data-id="${commentId}-r${i}">
+                                        ${this.icons.like}<span class="like-count">${r.likes || 0}</span>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    `).join('')}
+                        `).join('')}
+                    </div>
+                    <button class="toggle-replies">
+                        ${this.icons.expand}
+                        <span class="toggle-text">展开${comment.replies.length}条回复</span>
+                    </button>
+                    ` : ''}
                 </div>
-                <button class="toggle-replies">
-                    ${this.icons.expand}
-                    <span class="toggle-text">展开${comment.replies.length}条回复</span>
-                </button>
-                ` : ''}
             </div>
-        </div>
         `;
     },
 
-    // ========== 老福特 ==========
+    renderWeibo(month, cp, rival) {
+        const level = this.getHeatLevel();
+        const posts = this.getWeiboPosts(cp, level);
+        return `
+            <div class="app-weibo">
+                <div class="app-header weibo-header">
+                    <span class="header-back" onclick="Apps.closeApp()">${this.icons.back}</span>
+                    <span class="header-title">围脖</span>
+                    <span class="header-action">${this.icons.search}</span>
+                </div>
+                <div class="hot-section">
+                    <div class="section-title">${this.icons.fire} 围脖热搜 <span class="heat-badge">${level.name}</span></div>
+                    <div class="hot-list">
+                        ${this.getWeiboHotSearches(cp, level).map((item, i) => `
+                            <div class="hot-item">
+                                <span class="hot-rank ${i < 3 ? 'top' : ''}">${i + 1}</span>
+                                <span class="hot-text">${item.text}</span>
+                                ${item.tag ? `<span class="hot-tag ${item.tag}">${item.tagText}</span>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="feed-section">
+                    <div class="section-title">#${cp}超话#</div>
+                    ${posts.map((post, idx) => this.renderPost(post, `weibo-${idx}`)).join('')}
+                </div>
+            </div>
+        `;
+    },
+
     renderLofter(month, cp, rival) {
         const works = this.getLofterWorks(cp);
         const level = this.getHeatLevel();
-
         return `
-        <div class="app-lofter">
-            <div class="app-header lofter-header">
-                <span class="header-back" onclick="Apps.closeApp()">${this.icons.back}</span>
-                <span class="header-title">老福特</span>
-                <span class="header-action">${this.icons.menu}</span>
-            </div>
-            
-            <div class="tags-bar">
-                <span class="tag-item active">#${cp}#</span>
-                <span class="tag-item">#同人文#</span>
-                <span class="tag-item">#同人图#</span>
-                <span class="heat-badge">${level.name}</span>
-            </div>
-            
-            <div class="feed-section">
-                ${works.map((work, idx) => `
-                <div class="lofter-card" data-id="lofter-${idx}">
-                    <div class="media-placeholder large">
-                        <div class="media-icon">${this.icons.image}</div>
-                        <div class="media-desc">[${work.mediaDesc}]</div>
-                    </div>
-                    <div class="card-info">
-                        <div class="card-title">${work.title}</div>
-                        <div class="card-author">
-                            <span class="author-avatar" style="background: ${work.avatarColor}"></span>
-                            <span class="author-name">${work.author}</span>
-                        </div>
-                        <div class="card-actions">
-                            <button class="action-like" data-id="lofter-${idx}">
-                                ${this.icons.like}<span class="like-count">${work.likes}</span>
-                            </button>
-                            <span class="action-btn">${this.icons.comment}<span>${work.comments}</span></span>
-                        </div>
-                    </div>
+            <div class="app-lofter">
+                <div class="app-header lofter-header">
+                    <span class="header-back" onclick="Apps.closeApp()">${this.icons.back}</span>
+                    <span class="header-title">老福特</span>
+                    <span class="header-action">${this.icons.menu}</span>
                 </div>
-                `).join('')}
+                <div class="tags-bar">
+                    <span class="tag-item active">#${cp}#</span>
+                    <span class="tag-item">#同人文#</span>
+                    <span class="tag-item">#同人图#</span>
+                    <span class="heat-badge">${level.name}</span>
+                </div>
+                <div class="feed-section">
+                    ${works.map((work, idx) => `
+                    <div class="lofter-card" data-id="lofter-${idx}">
+                        <div class="media-placeholder large">
+                            <div class="media-icon">${this.icons.image}</div>
+                            <div class="media-desc">[${work.mediaDesc}]</div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-title">${work.title}</div>
+                            <div class="card-author">
+                                <span class="author-avatar" style="background: ${work.avatarColor}"></span>
+                                <span class="author-name">${work.author}</span>
+                            </div>
+                            <div class="card-actions">
+                                <button class="action-like" data-id="lofter-${idx}">
+                                    ${this.icons.like}<span class="like-count">${work.likes}</span>
+                                </button>
+                                <span class="action-btn">${this.icons.comment}<span>${work.comments}</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    `).join('')}
+                </div>
             </div>
-        </div>
         `;
     },
 
-    // ========== 小破站 ==========
     renderBilibili(month, cp, rival) {
         const videos = this.getBilibiliVideos(cp);
         const level = this.getHeatLevel();
-
         return `
-        <div class="app-bilibili">
-            <div class="app-header bili-header">
-                <span class="header-back" onclick="Apps.closeApp()">${this.icons.back}</span>
-                <div class="bili-search">${this.icons.search} 搜索${cp}相关</div>
-            </div>
-            
-            <div class="tabs-bar">
-                <span class="tab-item active">推荐</span>
-                <span class="tab-item">动态</span>
-                <span class="tab-item">热门</span>
-                <span class="heat-badge">${level.name}</span>
-            </div>
-            
-            <div class="feed-section">
-                ${videos.map((v, idx) => `
-                <div class="bili-card" data-id="bili-${idx}">
-                    <div class="bili-cover">
-                        <div class="media-placeholder horizontal">
-                            <div class="media-icon">${this.icons.play}</div>
-                            <div class="media-desc">[${v.coverDesc}]</div>
-                        </div>
-                        <span class="bili-duration">${v.duration}</span>
-                    </div>
-                    <div class="bili-info">
-                        <div class="bili-title">${v.title}</div>
-                        <div class="bili-meta">
-                            <span class="bili-up">${v.up}</span>
-                            <span>${this.icons.play} ${v.views}</span>
-                        </div>
-                    </div>
+            <div class="app-bilibili">
+                <div class="app-header bili-header">
+                    <span class="header-back" onclick="Apps.closeApp()">${this.icons.back}</span>
+                    <div class="bili-search">${this.icons.search} 搜索${cp}相关</div>
                 </div>
-                `).join('')}
+                <div class="tabs-bar">
+                    <span class="tab-item active">推荐</span>
+                    <span class="tab-item">动态</span>
+                    <span class="tab-item">热门</span>
+                    <span class="heat-badge">${level.name}</span>
+                </div>
+                <div class="feed-section">
+                    ${videos.map((v, idx) => `
+                    <div class="bili-card" data-id="bili-${idx}">
+                        <div class="bili-cover">
+                            <div class="media-placeholder horizontal">
+                                <div class="media-icon">${this.icons.play}</div>
+                                <div class="media-desc">[${v.coverDesc}]</div>
+                            </div>
+                            <span class="bili-duration">${v.duration}</span>
+                        </div>
+                        <div class="bili-info">
+                            <div class="bili-title">${v.title}</div>
+                            <div class="bili-meta">
+                                <span class="bili-up">${v.up}</span>
+                                <span>${this.icons.play} ${v.views}</span>
+                            </div>
+                        </div>
+                    </div>
+                    `).join('')}
+                </div>
             </div>
-        </div>
         `;
     },
 
-    // ========== 3OA ==========
     renderAO3(month, cp, rival) {
         const works = this.getAO3Works(cp);
-
         return `
-        <div class="app-ao3">
-            <div class="app-header ao3-header">
-                <span class="header-back" onclick="Apps.closeApp()">${this.icons.back}</span>
-                <span class="header-title">我们自己的档案馆</span>
-            </div>
-            
-            <div class="ao3-search-info">
-                <div>${cp} 相关作品</div>
-                <div class="ao3-filter">筛选 · 按好评排序</div>
-            </div>
-            
-            <div class="feed-section">
-                ${works.map((w, idx) => `
-                <div class="ao3-work" data-id="ao3-${idx}">
-                    <div class="ao3-title">${w.title}</div>
-                    <div class="ao3-author">作者：${w.author}</div>
-                    <div class="ao3-tags">
-                        ${w.tags.map(t => `<span class="ao3-tag">${t}</span>`).join('')}
-                    </div>
-                    <div class="ao3-summary">${w.summary}</div>
-                    <div class="ao3-stats">
-                        <span>字数：${w.words}</span>
-                        <span>好评：${w.kudos}</span>
-                        <span class="action-like" data-id="ao3-${idx}">${this.icons.like}</span>
-                    </div>
+            <div class="app-ao3">
+                <div class="app-header ao3-header">
+                    <span class="header-back" onclick="Apps.closeApp()">${this.icons.back}</span>
+                    <span class="header-title">Archive of Our Own</span>
                 </div>
-                `).join('')}
+                <div class="ao3-search-info">
+                    <div>${cp} 相关作品</div>
+                    <div class="ao3-filter">筛选 · 按好评排序</div>
+                </div>
+                <div class="feed-section">
+                    ${works.map((w, idx) => `
+                    <div class="ao3-work" data-id="ao3-${idx}">
+                        <div class="ao3-title">${w.title}</div>
+                        <div class="ao3-author">作者：${w.author}</div>
+                        <div class="ao3-tags">
+                            ${w.tags.map(t => `<span class="ao3-tag">${t}</span>`).join('')}
+                        </div>
+                        <div class="ao3-summary">${w.summary}</div>
+                        <div class="ao3-stats">
+                            <span>字数：${w.words}</span>
+                            <span>好评：${w.kudos}</span>
+                            <span class="action-like" data-id="ao3-${idx}">${this.icons.like}</span>
+                        </div>
+                    </div>
+                    `).join('')}
+                </div>
             </div>
-        </div>
         `;
     },
 
-    // ========== 咸鱼 ==========
     renderXianyu(month, cp, rival) {
         const items = this.getXianyuItems(cp);
-
         return `
-        <div class="app-xianyu">
-            <div class="app-header xianyu-header">
-                <span class="header-back" onclick="Apps.closeApp()">${this.icons.back}</span>
-                <div class="xianyu-search">${this.icons.search} ${cp} 周边</div>
-            </div>
-            
-            <div class="xianyu-grid">
-                ${items.map((item, idx) => `
-                <div class="xianyu-item" data-id="xianyu-${idx}">
-                    <div class="media-placeholder square">
-                        <div class="media-icon">${this.icons.image}</div>
-                        <div class="media-desc">[${item.imgDesc}]</div>
-                    </div>
-                    <div class="xianyu-info">
-                        <div class="xianyu-title">${item.title}</div>
-                        <div class="xianyu-price">¥${item.price}</div>
-                        <div class="xianyu-seller">${item.seller}</div>
-                    </div>
+            <div class="app-xianyu">
+                <div class="app-header xianyu-header">
+                    <span class="header-back" onclick="Apps.closeApp()">${this.icons.back}</span>
+                    <div class="xianyu-search">${this.icons.search} ${cp} 周边</div>
                 </div>
-                `).join('')}
+                <div class="xianyu-grid">
+                    ${items.map((item, idx) => `
+                    <div class="xianyu-item" data-id="xianyu-${idx}">
+                        <div class="media-placeholder square">
+                            <div class="media-icon">${this.icons.image}</div>
+                            <div class="media-desc">[${item.imgDesc}]</div>
+                        </div>
+                        <div class="xianyu-info">
+                            <div class="xianyu-title">${item.title}</div>
+                            <div class="xianyu-price">¥${item.price}</div>
+                            <div class="xianyu-seller">${item.seller}</div>
+                        </div>
+                    </div>
+                    `).join('')}
+                </div>
             </div>
-        </div>
         `;
     },
 
-    // ========== 蓝鸟 ==========
     renderTwitter(month, cp, rival) {
         const tweets = this.getTwitterPosts(cp);
-
         return `
-        <div class="app-twitter">
-            <div class="app-header twitter-header">
-                <span class="header-back" onclick="Apps.closeApp()">${this.icons.back}</span>
-                <span class="header-title">蓝鸟</span>
+            <div class="app-twitter">
+                <div class="app-header twitter-header">
+                    <span class="header-back" onclick="Apps.closeApp()">${this.icons.back}</span>
+                    <span class="header-title">蓝鸟</span>
+                </div>
+                <div class="feed-section">
+                    ${tweets.map((tweet, idx) => `
+                    <div class="tweet-card" data-id="twitter-${idx}">
+                        <div class="post-header">
+                            <div class="post-avatar" style="background: ${tweet.avatarColor}"></div>
+                            <div class="post-name">${tweet.name}</div>
+                        </div>
+                        <div class="post-content">${tweet.content}</div>
+                        ${tweet.media ? `
+                        <div class="media-placeholder">
+                            <div class="media-icon">${this.icons.image}</div>
+                            <div class="media-desc">[${tweet.media}]</div>
+                        </div>
+                        ` : ''}
+                        <div class="post-actions">
+                            <span>${this.icons.comment} ${tweet.comments}</span>
+                            <span>${this.icons.share} ${tweet.reposts}</span>
+                            <span class="action-like" data-id="twitter-${idx}">${this.icons.like} ${tweet.likes}</span>
+                        </div>
+                    </div>
+                    `).join('')}
+                </div>
             </div>
-            
-            <div class="tabs-bar dark">
-                <span class="tab-item active">おすすめ</span>
-                <span class="tab-item">フォロー中</span>
-            </div>
-            
-            <div class="feed-section dark">
-                ${tweets.map((t, idx) => this.renderPost({
-            ...t,
-            avatarColor: t.avatarColor,
-            commentList: t.replies || []
-        }, `twitter-${idx}`)).join('')}
-            </div>
-        </div>
         `;
     },
 
-    // ========== SNI ==========
     renderInstagram(month, cp, rival) {
         const posts = this.getInstagramPosts(cp);
-
         return `
-        <div class="app-instagram">
-            <div class="app-header insta-header">
-                <span class="header-back" onclick="Apps.closeApp()">${this.icons.back}</span>
-                <span class="header-title insta-logo">SNI</span>
-                <span class="header-actions">${this.icons.like} ${this.icons.send}</span>
-            </div>
-            
-            <div class="stories-bar">
-                <div class="story-item"><div class="story-ring"></div><span>私</span></div>
-                <div class="story-item"><div class="story-ring"></div><span>絵師A</span></div>
-                <div class="story-item"><div class="story-ring"></div><span>絵師B</span></div>
-            </div>
-            
-            <div class="feed-section dark">
-                ${posts.map((p, idx) => `
-                <div class="insta-post" data-id="insta-${idx}">
-                    <div class="post-header dark">
-                        <div class="post-avatar" style="background: ${p.avatarColor}"></div>
-                        <span class="post-name">${p.username}</span>
-                    </div>
-                    <div class="media-placeholder full-width">
-                        <div class="media-icon">${this.icons.image}</div>
-                        <div class="media-desc">[${p.imgDesc}]</div>
-                    </div>
-                    <div class="post-actions dark">
-                        <button class="action-like" data-id="insta-${idx}">${this.icons.like}<span class="like-count">${p.likes}</span></button>
-                        <button class="action-btn">${this.icons.comment}</button>
-                        <button class="action-share">${this.icons.share}</button>
-                        <button class="action-bookmark">${this.icons.bookmark}</button>
-                    </div>
-                    <div class="insta-caption">
-                        <span class="cap-user">${p.username}</span> ${p.caption}
-                    </div>
+            <div class="app-instagram">
+                <div class="app-header ins-header">
+                    <span class="header-back" onclick="Apps.closeApp()">${this.icons.back}</span>
+                    <span class="header-title">SNI</span>
                 </div>
-                `).join('')}
+                <div class="ins-feed">
+                    ${posts.map((post, idx) => `
+                    <div class="ins-card" data-id="ins-${idx}">
+                        <div class="ins-header">
+                            <div class="ins-avatar" style="background: ${post.avatarColor}"></div>
+                            <span class="ins-username">${post.username}</span>
+                        </div>
+                        <div class="media-placeholder square">
+                            <div class="media-icon">${this.icons.image}</div>
+                            <div class="media-desc">[${post.imgDesc}]</div>
+                        </div>
+                        <div class="ins-actions">
+                            <span class="action-like" data-id="ins-${idx}">${this.icons.like}</span>
+                            ${this.icons.comment} ${this.icons.share}
+                        </div>
+                        <div class="ins-likes">${post.likes} 次赞</div>
+                        <div class="ins-caption"><b>${post.username}</b> ${post.caption}</div>
+                    </div>
+                    `).join('')}
+                </div>
             </div>
-        </div>
         `;
     },
 
-    // ========== 数据生成（二次元IP同人） ==========
+    // ========== 数据生成 ==========
     getWeiboHotSearches(cp, level) {
         const tagText = level.key === 'burning' ? '爆' : (level.key === 'hot' ? '热' : (level.key === 'warmHot' ? '沸' : ''));
         return [
@@ -771,228 +772,171 @@ const Apps = {
             { text: `#${cp}同人推荐#`, tag: 'new', tagText: '新' },
             { text: `#${cp}互动名场面#`, tag: '', tagText: '' },
             { text: `#同人女日常产出#`, tag: '', tagText: '' },
-            { text: `#今日份甜饼#`, tag: '', tagText: '' }
+            { text: `#今日份甜饼#`, tag: '', tagText: '' },
+            { text: `#原作党狂喜#`, tag: '', tagText: '' },
+            { text: `#${cp}BE美学#`, tag: 'hot', tagText: '热' },
+            { text: `#那些年我们追过的${cp}#`, tag: '', tagText: '' },
+            { text: `#同人女现状调查#`, tag: '', tagText: '' },
+            { text: `#${cp}瑞思拜#`, tag: '', tagText: '' }
         ];
     },
 
     getWeiboPosts(cp, level) {
-        const stats1 = this.calcStats();
-        const stats2 = this.calcStats();
-        // 同人经典梗内容
-        const contentTemplates = [
-            { content: `${cp}太甜了救命！！！原作互动我直接原地去世`, media: `${cp}原作同框截图，两人眼神交汇那一幕` },
-            { content: `新产出！${cp}咖啡店AU 日常小甜饼~甜到掉牙那种`, media: `${cp}同人插画，现代AU咖啡店场景，A在给B系围裙` },
-            { content: `啊啊啊刚看完${cp}的BE结局我整个人裂开了`, media: `${cp}虐向同人图，雨中诀别场景` },
-            { content: `产出预警！${cp}双向暗恋梗 破镜重圆 HE结局`, media: `${cp}手绘漫画封面，两人背靠背站立` },
-            { content: `${cp}的病娇梗真的太绝了 黑化后更香`, media: `${cp}暗黑系同人图，A紧紧拥抱着B` }
+        const templates = [
+            { content: `${cp}太甜了救命！！！原作互动我直接原地去世`, media: `${cp}原作同框截图，两人眼神交汇` },
+            { content: `新产出！${cp}咖啡店AU 日常小甜饼~`, media: `${cp}插画，现代AU咖啡店背景` },
+            { content: `啊啊啊刚看完${cp}的BE结局我整个人裂开了`, media: `${cp}虐向同人图，雨中诀别` },
+            { content: `产出预警！${cp}双向暗恋梗 破镜重圆 HE`, media: `${cp}手绘漫画封面，两人背靠背` },
+            { content: `${cp}的病娇梗真的太绝了 黑化后更香`, media: `${cp}暗黑系同人图，A拥抱B` },
+            { content: `如果有平行世界，希望${cp}一定要幸福啊`, media: `${cp}同框合影，樱花树下` },
+            { content: `我宣布${cp}就是坠吊的！无人反驳！`, media: `${cp}原作动态截图` },
+            { content: `救命...这个眼神...${cp}是真的在谈吧？`, media: `${cp}细节放大图` },
+            { content: `冷圈产粮自割腿肉，求同担！#${cp}#`, media: `${cp}手稿草图` },
+            { content: `大半夜被${cp}刀傻了，为什么要这样对他俩呜呜`, media: `${cp}玻璃渣预警插图` },
+            { content: `这是什么绝美爱情...${cp}给我锁死！`, media: `${cp}同人Q版图` },
+            { content: `原作终于更新了！${cp}同框了整整三秒！`, media: `${cp}新番截图` }
         ];
-        const template1 = contentTemplates[Math.floor(Math.random() * contentTemplates.length)];
-        const template2 = contentTemplates[Math.floor(Math.random() * contentTemplates.length)];
-
-        return [
-            {
-                name: this.getRandomUsername('weibo'),
-                time: '刚刚',
-                avatarColor: '#ff6b9d',
-                content: template1.content,
-                media: template1.media,
-                likes: stats1.likes,
-                comments: stats1.comments,
-                reposts: stats1.reposts,
-                commentList: [
-                    {
-                        name: this.getRandomUsername('weibo'),
-                        text: '啊啊啊啊我也觉得好甜！原作党狂喜！',
-                        time: '5分钟前',
-                        avatarColor: '#6b9dff',
-                        likes: this.randomInRange(level.comments[0], level.comments[1]),
-                        replies: [
-                            { name: this.getRandomUsername('weibo'), text: '疯狂点头！这对永远的白月光', time: '3分钟前', likes: this.randomInRange(1, 10) },
-                            { name: this.getRandomUsername('weibo'), text: '锁死锁死！', time: '2分钟前', likes: this.randomInRange(1, 5) }
-                        ]
-                    },
-                    { name: this.getRandomUsername('weibo'), text: '太太产粮了！我哭着收藏', time: '10分钟前', avatarColor: '#9dff6b', likes: this.randomInRange(5, 30) }
-                ]
-            },
-            {
-                name: this.getRandomUsername('weibo'),
-                time: '10分钟前',
-                avatarColor: '#6b9dff',
-                content: template2.content,
-                media: template2.media,
-                likes: stats2.likes,
-                comments: stats2.comments,
-                reposts: stats2.reposts,
-                commentList: [
-                    { name: this.getRandomUsername('weibo'), text: '太太神仙产出！已关注已收藏', time: '8分钟前', avatarColor: '#ff9d6b', likes: this.randomInRange(10, 50) }
-                ]
-            }
-        ];
+        return templates.map((t, i) => ({
+            ...t,
+            name: this.getRandomUsername('weibo'),
+            time: (i + 1) + '小时前',
+            avatarColor: i % 2 === 0 ? '#ff6b9d' : '#6b9dff',
+            ...this.calcStats(),
+            commentList: [
+                { name: this.getRandomUsername('weibo'), text: '啊啊啊我也觉得！是真的！', time: '10分钟前', likes: 20 },
+                { name: this.getRandomUsername('weibo'), text: '太太神仙产出，已关注', time: '5分钟前', likes: 15 }
+            ]
+        }));
     },
 
     getLofterWorks(cp) {
-        const stats1 = this.calcStats();
-        const stats2 = this.calcStats();
-        // 二次元同人经典题材
         const works = [
-            { title: `「${cp}」日常小甜饼`, mediaDesc: `${cp}同居日常，一起做饭的温馨画面` },
-            { title: `「${cp}」破镜重圆`, mediaDesc: `多年后重逢，两人隔着人海相望` },
-            { title: `「${cp}」双向暗恋`, mediaDesc: `A发现B的日记本里写满了自己的名字` },
-            { title: `「${cp}」年龄差AU`, mediaDesc: `青涩的少年时期的A遇见成年后的B` },
-            { title: `「${cp}」HE结局重写`, mediaDesc: `如果那时候选择了另一条路` },
-            { title: `「${cp}」BE美学`, mediaDesc: `绝美刀子，最后的告别场景` },
-            { title: `「${cp}」校园AU`, mediaDesc: `放学后的图书馆，两人隔着书架对视` }
+            { title: `「${cp}」日常小甜饼`, mediaDesc: `${cp}温馨同居画面` },
+            { title: `「${cp}」破镜重圆`, mediaDesc: `人海中相望的两人` },
+            { title: `「${cp}」双向暗恋`, mediaDesc: `A发现B日记本的秘密` },
+            { title: `「${cp}」年龄差AU`, mediaDesc: `少年A与成年B的邂逅` },
+            { title: `「${cp}」HE结局重写`, mediaDesc: `改变命运的那一个瞬间` },
+            { title: `「${cp}」BE美学`, mediaDesc: `绝美刀子告别场景` },
+            { title: `「${cp}」校园AU`, mediaDesc: `放学后的图书馆对视` },
+            { title: `「${cp}」哨向设定`, mediaDesc: `精神体互相依偎` },
+            { title: `「${cp}」如果你不曾离开`, mediaDesc: `IF线，平淡生活的剪影` },
+            { title: `「${cp}」abo/年下/强制爱`, mediaDesc: `充满张力的同人封面` },
+            { title: `「${cp}」神说要有光`, mediaDesc: `西幻AU，祭司与骑士` },
+            { title: `「${cp}」赛博朋克下的吻`, mediaDesc: `霓虹灯火中的拥抱` }
         ];
-        const w1 = works[Math.floor(Math.random() * works.length)];
-        const w2 = works[Math.floor(Math.random() * works.length)];
-        return [
-            {
-                title: w1.title,
-                author: this.getRandomUsername('lofter'),
-                avatarColor: '#e8d5c4',
-                mediaDesc: w1.mediaDesc,
-                likes: stats1.likes,
-                comments: stats1.comments
-            },
-            {
-                title: w2.title,
-                author: this.getRandomUsername('lofter'),
-                avatarColor: '#c4d5e8',
-                mediaDesc: w2.mediaDesc,
-                likes: stats2.likes,
-                comments: stats2.comments
-            }
-        ];
+        return works.map(w => ({
+            ...w,
+            author: this.getRandomUsername('lofter'),
+            avatarColor: '#e8d5c4',
+            ...this.calcStats()
+        }));
     },
 
     getBilibiliVideos(cp) {
-        const stats1 = this.calcStats();
-        const stats2 = this.calcStats();
         const videos = [
-            { title: `【${cp}】高甜混剪！心动警告！`, coverDesc: `${cp}原作名场面混剪封面，播放键特效` },
-            { title: `【手书】${cp}的故事`, coverDesc: `手绘动画封面，${cp}并肩站立` },
-            { title: `【${cp}】这对真的锁死了！双向奔赴`, coverDesc: `${cp}互动细节考据合集` },
-            { title: `【AMV】${cp} - 刀向心动`, coverDesc: `虐向剪辑封面，暗色调` },
-            { title: `【${cp}】冷知识科普 你不知道的细节`, coverDesc: `${cp}粉必看设定考据` }
+            { title: `【${cp}】高甜混剪！心动警告！`, coverDesc: `${cp}原作名场面混剪` },
+            { title: `【手书】${cp}的故事`, coverDesc: `手绘动画封面` },
+            { title: `【AMV】虐向预警！刀死我了`, coverDesc: `黑白灰滤镜剪辑` },
+            { title: `【${cp}】全员向/踩点剪辑`, coverDesc: `快节奏动感视频封面` },
+            { title: `【考古】原作第一季其实早就有糖了`, coverDesc: `细节分析PPT风格封面` },
+            { title: `【手办开箱】${cp}限定立牌太美了`, coverDesc: `实物拍摄展示图` },
+            { title: `【MMD】${cp}一起跳舞吧`, coverDesc: `3D建模模型渲染图` },
+            { title: `【配音剧】${cp}同人广播剧第一期`, coverDesc: `精美海报插画` },
+            { title: `【冷梗科普】关于${cp}你不知道的细节`, coverDesc: `文字排版风格封面` },
+            { title: `【绘画过程】${cp}同人图绘制分享`, coverDesc: `画师作画过程快进视频` },
+            { title: `【翻唱/原创曲】给${cp}写的角色歌`, coverDesc: `曲绘美文封面` },
+            { title: `【生肉剪贴】外网太太的${cp}神级剪辑`, coverDesc: `外语字幕视频封面` }
         ];
-        const v1 = videos[Math.floor(Math.random() * videos.length)];
-        const v2 = videos[Math.floor(Math.random() * videos.length)];
-        return [
-            {
-                title: v1.title,
-                up: this.getRandomUsername('bilibili'),
-                coverDesc: v1.coverDesc,
-                duration: '03:42',
-                views: this.formatNumber(stats1.views)
-            },
-            {
-                title: v2.title,
-                up: this.getRandomUsername('bilibili'),
-                coverDesc: v2.coverDesc,
-                duration: '02:15',
-                views: this.formatNumber(stats2.views)
-            }
-        ];
+        return videos.map(v => ({
+            ...v,
+            up: this.getRandomUsername('bilibili'),
+            duration: '03:45',
+            views: '1.2万'
+        }));
     },
 
     getAO3Works(cp) {
-        const stats1 = this.calcStats();
-        const stats2 = this.calcStats();
-        // AO3经典tag
         const works = [
-            { title: '星河入梦来', tags: [cp, '甜文', '双向暗恋', 'HE'], summary: '你是我没说出口的秘密，是我夜夜梦见的星光...' },
-            { title: '破镜重圆', tags: [cp, '重逢', '年下', 'HE'], summary: '三年后的机场，我以为再也不会见到你...' },
-            { title: '月光落在肩头', tags: [cp, '暗恋', '日久生情', 'HE'], summary: '每天都在偷偷看你，却不敢让你发现...' },
-            { title: '深海的鱼', tags: [cp, 'BE', '虐', '意难平'], summary: '我爱你，但我们注定是两个世界的人...' },
-            { title: '咖啡馆的下午', tags: [cp, '现代AU', '甜文'], summary: '那个每天点美式的客人，今天终于问了我的名字...' }
+            { title: 'The Way We Were', tags: ['Modern AU', 'Happy Ending'], summary: 'If things hadn\'t changed, maybe they\'d be like this.' },
+            { title: 'Silent Night', tags: ['Angst', 'Major Character Death'], summary: 'One final goodbye in the cold winter air.' },
+            { title: 'Butterflies', tags: ['First Love', 'Fluff'], summary: 'That feeling when their hands first touched.' },
+            { title: 'Rewrite the Stars', tags: ['Fantasy', 'Soulmates'], summary: 'Even the gods couldn\'t keep them apart.' },
+            { title: 'The Long Run', tags: ['Slice of Life'], summary: 'Just another ordinary day in their lives together.' },
+            { title: 'Fallen Leaves', tags: ['Missing Scene'], summary: 'What happened after that sunset conversation.' },
+            { title: 'Endless Summer', tags: ['Beach AU'], summary: 'Sun, sand, and a promise that would last forever.' },
+            { title: 'Broken Mirror', tags: ['Identity Crisis', 'Drama'], summary: 'A looking at the pieces that remain.' },
+            { title: 'Velvet Ribbon', tags: ['Historical AU'], summary: 'Letters hidden in the library of a crumbling estate.' },
+            { title: 'Neon Lights', tags: ['Cyberpunk'], summary: 'In a world of chrome, their love was the only thing real.' }
         ];
-        const w1 = works[Math.floor(Math.random() * works.length)];
-        const w2 = works[Math.floor(Math.random() * works.length)];
-        return [
-            {
-                title: w1.title,
-                author: this.getRandomUsername('ao3'),
-                tags: w1.tags,
-                summary: w1.summary,
-                words: (Math.floor(Math.random() * 20) + 3) + ',234',
-                kudos: stats1.likes
-            },
-            {
-                title: w2.title,
-                author: this.getRandomUsername('ao3'),
-                tags: w2.tags,
-                summary: w2.summary,
-                words: (Math.floor(Math.random() * 30) + 5) + ',890',
-                kudos: stats2.likes
-            }
-        ];
+        const stats = this.calcStats();
+        return works.map(w => ({
+            ...w,
+            author: this.getRandomUsername('ao3'),
+            words: this.randomInRange(2000, 50000).toLocaleString(),
+            kudos: this.randomInRange(50, 2000)
+        }));
     },
 
     getXianyuItems(cp) {
-        // 二次元周边类型
         const items = [
-            { title: `${cp}官方周边 立牌`, imgDesc: `${cp}官方立牌，全新未拆封` },
-            { title: `${cp}同人本 全新特典版`, imgDesc: `${cp}同人志封面，彩印精装本` },
-            { title: `${cp}亚克力挂件 整套`, imgDesc: `${cp}Q版亚克力挂件一套` },
-            { title: `${cp}定制抱枕套`, imgDesc: `${cp}双面印花抱枕套` },
-            { title: `${cp}手幅 场贩限定`, imgDesc: `${cp}应援手幅，现场限定款` },
-            { title: `${cp}海报 B2尺寸`, imgDesc: `${cp}高清海报，官方图柄` }
+            { title: `${cp}官方立牌 全新`, imgDesc: `原画版立牌，未拆封` },
+            { title: `${cp}同人志 特典齐全`, imgDesc: `画师签绘版同人本` },
+            { title: `${cp}亚克力挂件 绝版`, imgDesc: `限定场贩挂件` },
+            { title: `${cp}抱枕套 特殊柄`, imgDesc: `双面印花抱枕` },
+            { title: `${cp}应援手幅`, imgDesc: `演唱会现场派发款` },
+            { title: `${cp}吧唧 镭射款`, imgDesc: `闪闪发光的吧唧` },
+            { title: `${cp}官方场刊`, imgDesc: `剧场版限定手册` },
+            { title: `${cp}棉花美娃 20cm`, imgDesc: `一对小可爱的棉花娃娃` },
+            { title: `${cp}色纸 签绘版`, imgDesc: `精美原画色纸` },
+            { title: `${cp}透明书历`, imgDesc: `非常有质感的周边` }
         ];
-        return items.slice(0, 4).map(item => ({
+        return items.map(item => ({
             ...item,
-            price: this.randomInRange(28, 168),
+            price: this.randomInRange(30, 300),
             seller: this.getRandomUsername('xianyu')
         }));
     },
 
     getTwitterPosts(cp) {
-        const stats = this.calcStats();
-        const contents = [
-            { content: `${cp}の新作イラスト完成！三日かかったけど満足です`, media: `${cp}同人イラスト、ロマンチックな夕暮れシーン` },
-            { content: `${cp}のファンアート描きました！いいねくれると嬉しい`, media: `${cp}デジタル絵、ふたりで本を読む場面` },
-            { content: `${cp}について考えすぎて眠れない...好きすぎる`, media: `${cp}落書き、ちびキャラ版` }
+        const templates = [
+            { content: `${cp}の新刊描き上がりました！`, media: `${cp}同人誌表紙イラスト` },
+            { content: `${cp}推しと繋がりたい`, media: `${cp}デジタルイラスト` },
+            { content: `今日の${cp}も最高でしたね...`, media: `${cp}落書き漫画` },
+            { content: `${cp}の尊さを叫びたい`, media: `${cp}イメージイラスト` },
+            { content: `コミケの新刊サンプルです #${cp}`, media: `${cp}誌面サンプル` },
+            { content: `朝から${cp}のことしか考えてない`, media: `${cp}らくがき图` },
+            { content: `${cp}が好きすぎてつらい`, media: `${cp}深夜のテンション絵` },
+            { content: `ワンドロの${cp}です`, media: `${cp}60分一本勝負作品` },
+            { content: `やっと${cp}ぬいが届いた！`, media: `${cp}ぬいぐるみ写真` },
+            { content: `${cp}結婚して...`, media: `${cp}婚姻届風イラスト` }
         ];
-        const c = contents[Math.floor(Math.random() * contents.length)];
-        return [
-            {
-                name: this.getRandomUsername('twitter'),
-                time: '2時間前',
-                avatarColor: '#1da1f2',
-                content: c.content,
-                media: c.media,
-                likes: stats.likes,
-                comments: stats.comments,
-                reposts: stats.reposts
-            }
-        ];
+        return templates.map(t => ({
+            name: this.getRandomUsername('twitter'),
+            avatarColor: '#1da1f2',
+            ...t,
+            ...this.calcStats()
+        }));
     },
 
     getInstagramPosts(cp) {
-        const stats1 = this.calcStats();
-        const stats2 = this.calcStats();
-        const posts = [
-            { imgDesc: `${cp}コスプレ撮影、再現度高い二人組`, caption: `ついにコス完成！#${cp.replace(/\s/g, '')} #コスプレ` },
-            { imgDesc: `${cp}グッズ開封、机いっぱいの宝物`, caption: '新しいグッズ届いた！嬉しい' },
-            { imgDesc: `${cp}同人誌の表紙、美しい装丁`, caption: '新刊できました！' }
+        const templates = [
+            { caption: `Finally finished! #${cp}`, imgDesc: `${cp} Cosplay photography` },
+            { caption: `New merch arrived~`, imgDesc: `${cp} Merchandise collection` },
+            { caption: `My fanart for ${cp}`, imgDesc: `${cp} Digital art display` },
+            { caption: `Happy birthday ${cp}!`, imgDesc: `${cp} Birthday celebration layout` },
+            { caption: `Itabag in progress...`, imgDesc: `${cp} Dedicated itabag` },
+            { caption: `The cafe date AU ❤️`, imgDesc: `${cp} Fanart in a cafe setting` },
+            { caption: `Missing them so much`, imgDesc: `${cp} Scene redraw` },
+            { caption: `Look at this cutie!`, imgDesc: `${cp} Chibi art` },
+            { caption: `Our local fan meet!`, imgDesc: `${cp} Group photo with posters` },
+            { caption: `Details of the original manga`, imgDesc: `${cp} Close-up of manga pages` }
         ];
-        const p1 = posts[Math.floor(Math.random() * posts.length)];
-        const p2 = posts[Math.floor(Math.random() * posts.length)];
-        return [
-            {
-                username: this.getRandomUsername('instagram'),
-                avatarColor: '#c13584',
-                imgDesc: p1.imgDesc,
-                likes: stats1.likes,
-                caption: p1.caption
-            },
-            {
-                username: this.getRandomUsername('instagram'),
-                avatarColor: '#6b9dff',
-                imgDesc: p2.imgDesc,
-                likes: stats2.likes,
-                caption: p2.caption
-            }
-        ];
+        return templates.map(t => ({
+            username: this.getRandomUsername('instagram'),
+            avatarColor: '#c13584',
+            ...t,
+            likes: this.randomInRange(100, 5000)
+        }));
     }
 };
 
