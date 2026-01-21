@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>同人女跳坑模拟器 </title>
     <meta name="description" content="赛马娘版">
 
@@ -22,15 +23,29 @@
     <link rel="stylesheet" href="assets/theme.css">
 
     <style>
+        * {
+            touch-action: manipulation;
+            /* 消除点击延迟 */
+            -webkit-tap-highlight-color: transparent;
+        }
+
         /* 基础重置和保障 */
         html,
         body {
             height: 100%;
-            overflow: hidden;
+            height: 100dvh;
+            overflow: hidden !important;
+            position: fixed;
+            /* 防止橡皮筋效果 */
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             font-family: 'Noto Sans SC', sans-serif;
+            display: flex;
+            flex-direction: column;
         }
 
         .hidden {
@@ -39,13 +54,15 @@
 
         .page-section {
             display: none !important;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            max-height: 100dvh;
+            overflow: hidden;
         }
 
         .page-section.active-screen {
             display: flex !important;
-            flex-direction: column;
-            height: 100vh;
-            width: 100%;
         }
 
         /* 老虎机动画 */

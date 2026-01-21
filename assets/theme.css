@@ -660,13 +660,14 @@ body.theme-cute {
 /* === 结局画面 - 复古相册风格 === */
 .ending-screen {
     background: linear-gradient(135deg, #3d3a34 0%, #2a2824 50%, #1a1815 100%);
-    min-height: 100vh;
-    height: 100vh;
+    min-height: 100dvh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    overflow-y: auto;
+    padding: 10px;
+    overflow-y: auto !important;
+    /* 强制模态可滚动 */
     -webkit-overflow-scrolling: touch;
 }
 
@@ -674,15 +675,18 @@ body.theme-cute {
     background: var(--sticker-paper);
     border: 4px solid var(--primary-300);
     border-radius: 4px;
-    padding: 24px;
+    padding: 20px;
     max-width: 400px;
-    width: 100%;
+    width: 95%;
     text-align: center;
     flex-shrink: 0;
-    margin-bottom: 20px;
+    margin: 10px auto;
     box-shadow: var(--shadow-sticker-hover);
     position: relative;
-    transform: rotate(-1deg);
+    transform: rotate(-0.5deg);
+    max-height: 90%;
+    display: flex;
+    flex-direction: column;
 }
 
 /* 相册角贴效果 */
