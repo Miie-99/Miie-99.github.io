@@ -1052,7 +1052,7 @@ input[type="text"]:focus {
 .app-menu {
     position: fixed;
     right: 16px;
-    bottom: 170px;
+    bottom: calc(170px + env(safe-area-inset-bottom, 0px));
     width: 200px;
     background: #1a1a2e;
     border: 2px solid var(--primary-400);
@@ -1061,6 +1061,9 @@ input[type="text"]:focus {
     z-index: 999;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
     animation: menu-pop 0.3s var(--transition-bounce);
+    max-height: 60dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .app-menu.hidden {
@@ -1171,8 +1174,10 @@ input[type="text"]:focus {
 .app-viewer-content {
     width: 100%;
     max-width: 400px;
-    max-height: 90vh;
+    height: 90dvh;
+    max-height: 90dvh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     background: #000;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
