@@ -1,6 +1,6 @@
 // ==========================================
 // MODULE: LOGIC (js/logic.js)
-// 业务逻辑控制 - v2.0 数值重平衡版
+// 业务逻辑控制 - v3.2 游戏平衡重构版
 // ==========================================
 const Logic = {
     // 连续事件触发概率
@@ -16,6 +16,14 @@ const Logic = {
         consume: { stamina: -8, passion: 3, time: 1 },   // 嗑糖轻松
         social: { stamina: -12, passion: -2, time: 1 },  // 社交有消耗
         rest: { stamina: 0, passion: -3, time: 1 }   // 休息略降热情
+    },
+
+    // 【v3.2新增】行动默认效果（基础收益）
+    actionBaseEffects: {
+        work: { money: 300 },           // 打工：+300金钱
+        create: { tech: 2, cpHeat: 500 }, // 产粮：+2技术，+500热度
+        consume: { san: 5 },            // 磕糖：+5 SAN
+        social: { myHeat: 1000 }        // 社交：+1000个人热度
     },
 
     // 【新增】难度阶段配置
@@ -68,7 +76,7 @@ const Logic = {
         return modified;
     },
 
-    // 【新增】热度联动修正 - 让热度影响行动收益
+    // 【v3.2更新】热度联动修正 - 使用新量级阈值
     applyHeatModifier(effect, actionType) {
         const modified = { ...effect };
         const cpHeat = State.stats.cpHeat;
@@ -76,29 +84,31 @@ const Logic = {
 
         // 创作行动：个人热度越高，myHeat和作品进度加成越大
         if (actionType === 'create') {
-            if (myHeat > 100) {
-                // 大V创作事半功倍
+            if (myHeat > 1000000) {
+                // 大V创作事半功倍（100万粉以上）
                 if (modified.myHeat) modified.myHeat = Math.floor(modified.myHeat * 1.5);
                 if (modified.works) modified.works = modified.works * 1.2;
-            } else if (myHeat < 20) {
-                // 小透明努力不一定有回报
+            } else if (myHeat < 10000) {
+                // 小透明努力不一定有回报（1万以下）
                 if (modified.myHeat) modified.myHeat = Math.floor(modified.myHeat * 0.5);
             }
             // CP热度影响作品传播
-            if (cpHeat > 80) {
+            if (cpHeat > 10000000) {
+                // 热门CP（1000万以上）
                 if (modified.myHeat) modified.myHeat = Math.floor(modified.myHeat * 1.3);
-            } else if (cpHeat < 20) {
+            } else if (cpHeat < 10000) {
+                // 冷门CP（1万以下）
                 if (modified.myHeat) modified.myHeat = Math.floor(modified.myHeat * 0.6);
             }
         }
 
         // 消费行动：CP热度影响嗑糖体验
         if (actionType === 'consume') {
-            if (cpHeat > 60) {
-                // 热门CP糖多
+            if (cpHeat > 1000000) {
+                // 热门CP糖多（100万以上）
                 if (modified.love) modified.love = Math.floor(modified.love * 1.3);
-            } else if (cpHeat < 15) {
-                // 冷门CP糖少
+            } else if (cpHeat < 5000) {
+                // 冷门CP糖少（5000以下）
                 if (modified.love) modified.love = Math.floor(modified.love * 0.7);
                 modified.passion = (modified.passion || 0) - 3; // 冷圈嗑糖略显孤独
             }
@@ -106,12 +116,13 @@ const Logic = {
 
         // 社交行动：个人热度影响社交结果
         if (actionType === 'social') {
-            if (myHeat > 80) {
-                // 有名气的人社交更顺利
+            if (myHeat > 500000) {
+                // 有名气的人社交更顺利（50万以上）
                 if (modified.social) modified.social = Math.floor(modified.social * 1.3);
                 if (modified.myHeat) modified.myHeat = Math.floor(modified.myHeat * 1.2);
-            } else if (myHeat > 150) {
-                // 但太红也容易招来是非
+            }
+            if (myHeat > 10000000) {
+                // 但太红也容易招来是非（1000万以上）
                 modified.san = (modified.san || 0) - 5;
             }
         }
@@ -298,6 +309,12 @@ const Logic = {
             State.actionCounts[actionType]++;
         }
 
+        // 【v3.2】记录当前回合执行的行动（用于条件扣除判断）
+        if (!State.currentTurnActions) State.currentTurnActions = [];
+        if (!State.currentTurnActions.includes(actionType)) {
+            State.currentTurnActions.push(actionType);
+        }
+
         // 【重平衡】休息行动 - 降低恢复量
         if (actionType === 'rest') {
             State.turn += 1;
@@ -346,6 +363,17 @@ const Logic = {
         const cost = this.costs[actionType] || {};
         State.modify(cost);
         State.turn += 1;
+
+        // 【v3.2新增】应用行动默认效果（基础收益）
+        const baseEffect = this.actionBaseEffects[actionType];
+        if (baseEffect) {
+            State.modify(baseEffect);
+            // 记录基础收益日志
+            const effectStr = Object.entries(baseEffect)
+                .map(([k, v]) => `${k}${v > 0 ? '+' : ''}${k.includes('Heat') ? State.formatHeat(v) : v}`)
+                .join(', ');
+            UI.log(`📌 【${actionType === 'work' ? '打工' : actionType === 'create' ? '产粮' : actionType === 'consume' ? '磕糖' : '社交'}基础】${effectStr}`, "neutral");
+        }
 
         // 连续事件触发
         if (actionType === 'create') {
@@ -409,7 +437,7 @@ const Logic = {
             this.checkAchievements();
         }
 
-        // 【新增】每周自然衰减
+        // 【v3.2】每周条件衰减
         this.applyWeeklyDecay();
 
         // 检查游戏结束
@@ -417,21 +445,62 @@ const Logic = {
         UI.render();
     },
 
-    // 【新增】每周自然衰减
+    // 【v3.2重写】每周条件衰减 - 只有未执行对应行动时才扣除
     applyWeeklyDecay() {
+        const actions = State.currentTurnActions || [];
         const phase = this.getCurrentPhase();
+        let decayLog = [];
+
+        // 没打工 → 扣金钱（生活费）
+        if (!actions.includes('work')) {
+            const expense = 200;
+            State.stats.money -= expense;
+            decayLog.push(`金钱-${expense}`);
+        }
+
+        // 没产粮 → 扣技术和CP热度
+        if (!actions.includes('create')) {
+            // 技术遗忘
+            if (State.stats.tech > 0) {
+                State.stats.tech = Math.max(0, State.stats.tech - 1);
+                decayLog.push('技术-1');
+            }
+            // CP热度衰减2%
+            const heatDecay = Math.floor(State.stats.cpHeat * 0.02);
+            if (heatDecay > 0) {
+                State.stats.cpHeat -= heatDecay;
+                decayLog.push(`CP热度-${State.formatHeat(heatDecay)}`);
+            }
+        }
+
+        // 没社交 → 扣个人热度
+        if (!actions.includes('social')) {
+            // 个人热度衰减3%
+            const myHeatDecay = Math.floor(State.stats.myHeat * 0.03);
+            if (myHeatDecay > 0) {
+                State.stats.myHeat -= myHeatDecay;
+                decayLog.push(`个人热度-${State.formatHeat(myHeatDecay)}`);
+            }
+        }
 
         // SAN值自然衰减（后期更快）
         let sanDecay = 1;
         if (phase === 'fatigue') sanDecay = 2;
         if (phase === 'climax') sanDecay = 3;
-
         State.stats.san -= sanDecay;
+        decayLog.push(`SAN-${sanDecay}`);
 
-        // CP热度自然波动
-        const heatChange = Math.floor(Math.random() * 5) - 2; // -2 到 +2
-        State.stats.cpHeat += heatChange;
+        // 热度下限保护
         if (State.stats.cpHeat < 0) State.stats.cpHeat = 0;
+        if (State.stats.myHeat < 0) State.stats.myHeat = 0;
+
+        // 显示衰减日志
+        if (decayLog.length > 0) {
+            UI.log(`📉 【周结算】${decayLog.join(', ')}`, "neutral");
+        }
+
+        // 清空当前回合行动记录
+        State.currentTurnActions = [];
     },
 
     // 优先检查特殊触发器

@@ -25,7 +25,14 @@ const UI = {
             const key = keyMap[short] || short;
             const el = document.getElementById(id);
             const val = (State.stats && typeof State.stats[key] !== 'undefined') ? State.stats[key] : 0;
-            if (el) el.innerText = Number.isFinite(val) ? Math.floor(val) : 0;
+            if (el) {
+                // 【v3.2】热度使用格式化显示
+                if (key === 'myHeat' || key === 'cpHeat') {
+                    el.innerText = State.formatHeat ? State.formatHeat(val) : val;
+                } else {
+                    el.innerText = Number.isFinite(val) ? Math.floor(val) : 0;
+                }
+            }
         });
 
         // 更新进度条
@@ -53,6 +60,11 @@ const UI = {
         if (phaseEl && typeof Logic !== 'undefined') {
             const phase = Logic.getCurrentPhase();
             phaseEl.innerText = Logic.getPhaseDisplayName(phase);
+        }
+
+        // 【v3.2】更新新闻播报
+        if (typeof DATA !== 'undefined' && DATA.getRandomNews) {
+            this.updateNewsTicker(DATA.getRandomNews(5));
         }
 
         // 【新增】更新属性条样式（低值警告）

@@ -1,6 +1,6 @@
 // ==========================================
 // MODULE: STATE (js/state.js)
-// 管理游戏核心数值 - v2.0
+// 管理游戏核心数值 - v3.2 热度重构版
 // ==========================================
 const State = {
     turn: 1,
@@ -9,18 +9,18 @@ const State = {
     rival: "BA",
     identity: { prefix: null, role: null },
 
-    // 【v2.0】核心属性 - 调整初始值
+    // 【v3.2】核心属性 - 热度改为大数值
     stats: {
-        san: 80,        // 精神值 (从100降到80，增加压力感)
-        passion: 80,    // 热情 (从100降到80)
+        san: 80,        // 精神值
+        passion: 80,    // 热情
         stamina: 100,   // 体力
         money: 1000,    // 金钱
-        social: 40,     // 社交 (从50降到40)
+        social: 40,     // 社交
         tech: 10,       // 技术
         combat: 0,      // 战斗力
-        love: 40,       // 厨力 (从50降到40)
-        myHeat: 0,      // 个人热度
-        cpHeat: 15      // CP热度 (从10提高到15)
+        love: 40,       // 厨力
+        myHeat: 0,      // 个人热度（0-1亿）
+        cpHeat: 15000   // CP热度（0-1亿）
     },
 
     progress: { works: 0 },
@@ -61,6 +61,9 @@ const State = {
         rest: 0
     },
 
+    // 【v3.2】当前回合执行的行动（用于条件扣除）
+    currentTurnActions: [],
+
     // 【v3.0】消费追踪（用于氪金鲸鱼成就）
     totalSpent: 0,
 
@@ -78,11 +81,29 @@ const State = {
     keyMoments: [],
 
     // 【v3.0】初始CP热度（用于圈子缔造者结局）
-    // 游戏开始时会在reset()中随机初始化
-    initialCpHeat: 15,
+    initialCpHeat: 15000,
 
     // 【v3.0】最低SAN值记录（用于浴火重生成就）
     minSan: 80,
+
+    // 【v3.2】获取热度等级名称
+    getHeatLevelName(heat) {
+        if (heat >= 50000000) return '烫圈';
+        if (heat >= 10000000) return '热';
+        if (heat >= 1000000) return '温热';
+        if (heat >= 100000) return '温';
+        if (heat >= 10000) return '温冷';
+        if (heat >= 1000) return '冷圈';
+        return '北极圈';
+    },
+
+    // 【v3.2】格式化热度显示
+    formatHeat(heat) {
+        if (heat >= 100000000) return (heat / 100000000).toFixed(1) + '亿';
+        if (heat >= 10000) return (heat / 10000).toFixed(1) + 'w';
+        if (heat >= 1000) return (heat / 1000).toFixed(1) + 'k';
+        return heat.toString();
+    },
 
     // 状态修改器
     modify(effects) {
@@ -118,6 +139,10 @@ const State = {
                 }
                 if (key === 'love') {
                     if (this.stats[key] > 100) this.stats[key] = 100;
+                }
+                // 【v3.2】热度下限
+                if (key === 'cpHeat' || key === 'myHeat') {
+                    if (this.stats[key] < 0) this.stats[key] = 0;
                 }
                 // 【v3.0】追踪消费
                 if (key === 'money' && effects[key] < 0) {
@@ -162,16 +187,15 @@ const State = {
         this.rival = "BA";
         this.identity = { prefix: null, role: null };
 
-        // 随机初始化CP热度到一个等级
-        // 热度等级: 北极圈(0-10), 冷圈(11-25), 温冷(26-40), 温(41-55), 温热(56-70), 热(71-85), 烫圈(86-100)
+        // 【v3.2】随机初始化CP热度到一个等级（新量级：0-1亿）
         const heatLevels = [
-            { name: '北极圈', min: 0, max: 10, weight: 15 },
-            { name: '冷圈', min: 11, max: 25, weight: 30 },
-            { name: '温冷', min: 26, max: 40, weight: 25 },
-            { name: '温', min: 41, max: 55, weight: 15 },
-            { name: '温热', min: 56, max: 70, weight: 10 },
-            { name: '热', min: 71, max: 85, weight: 4 },
-            { name: '烫圈', min: 86, max: 100, weight: 1 }
+            { name: '北极圈', min: 0, max: 1000, weight: 15 },
+            { name: '冷圈', min: 1000, max: 10000, weight: 30 },
+            { name: '温冷', min: 10000, max: 100000, weight: 25 },
+            { name: '温', min: 100000, max: 1000000, weight: 15 },
+            { name: '温热', min: 1000000, max: 10000000, weight: 10 },
+            { name: '热', min: 10000000, max: 50000000, weight: 4 },
+            { name: '烫圈', min: 50000000, max: 100000000, weight: 1 }
         ];
 
         // 按权重随机选择等级
@@ -209,6 +233,7 @@ const State = {
         this.achievements = [];
         this.newsHistory = [];
         this.actionCounts = { work: 0, create: 0, consume: 0, social: 0, rest: 0 };
+        this.currentTurnActions = [];
         this.totalSpent = 0;
         this.keyMoments = [];
         this.initialCpHeat = randomHeat;
@@ -219,6 +244,7 @@ const State = {
         this.appLastViewed = {};
         this.appHasNewContent = {};
 
-        console.log(`[初始化] CP热度等级: ${selectedLevel.name}, 数值: ${randomHeat}`);
+        console.log(`[初始化] CP热度等级: ${selectedLevel.name}, 数值: ${this.formatHeat(randomHeat)}`);
     }
 };
+
